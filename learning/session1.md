@@ -1,21 +1,14 @@
 # Lesson Plan: Prompting vs Fine-Tuning with LoRA and QLoRA
 
-**Duration:** 2 hours
-**Format:** Lecture with live demos
-**Audience:** Mixed (10–50 participants) with undergraduate-level programming and ML background
-**Tech Stack:** Hugging Face + PEFT + LoRA/QLoRA (pre-baked demo notebooks)
-
----
-
-## 1. Learning Objective
+## Reusable Learning Objective (RLO)
 
 By the end of this session, participants will understand how LoRA and QLoRA enable efficient fine-tuning of large language models and will be able to follow a complete fine-tuning workflow conceptually and in practice.
 
 The focus is on building intuition for when prompting is sufficient, when fine-tuning is necessary, and how parameter-efficient fine-tuning works in modern LLM systems.
 
----
 
-## 2. Narrative
+
+## Narrative
 
 The session is structured around a single practical problem:
 
@@ -29,9 +22,9 @@ Participants will observe how the same task behaves under:
 
 The goal is to show how model behavior shifts from flexible but inconsistent outputs to structured and reliable predictions.
 
----
 
-## 3. Session Structure
+
+## Session Structure
 
 ### 0:00 – 0:10 — Introduction and Problem Framing
 
@@ -47,9 +40,9 @@ The goal is to show how model behavior shifts from flexible but inconsistent out
   * We are not just improving prompts
   * We are changing how the model behaves
 
-Key idea: Prompting is powerful but limited when consistency and structure matter.
+Central idea: Prompting is powerful but limited when consistency and structure matter.
 
----
+
 
 ### 0:10 – 0:30 — Prompting as the Baseline
 
@@ -69,7 +62,7 @@ Discussion:
 Transition:
 Prompting alone is often not enough when outputs must be reliable and standardized.
 
----
+
 
 ### 0:30 – 0:50 — Why Fine-Tuning Exists
 
@@ -86,10 +79,10 @@ Explain limitations of full fine-tuning:
 * Separate full model per task
 * Risk of catastrophic forgetting
 
-Key idea:
+Central idea:
 Full fine-tuning is powerful but often impractical for most teams and use cases.
 
----
+
 
 ### 0:50 – 1:20 — LoRA: Parameter-Efficient Fine-Tuning
 
@@ -116,10 +109,10 @@ Benefits:
 * Faster training
 * Modular task adapters
 
-Key takeaway:
-We are not retraining the model, we are steering it using small learned updates.
+Central idea:
+We are not retraining the model, we are steering it using small updates.
 
----
+
 
 ### 1:20 – 1:45 — QLoRA: Making Fine-Tuning Practical
 
@@ -143,18 +136,14 @@ Why this matters:
 Key idea:
 QLoRA turns fine-tuning from an expensive research operation into a practical engineering workflow.
 
----
 
-### 1:45 – 2:00 — End-to-End Demo (Pre-Baked)
 
-A guided walkthrough using Hugging Face + PEFT:
+### Mini-project
+
 
 1. Load biomedical dataset (structured extraction format)
-2. Show tokenization and preprocessing
-3. Attach LoRA adapters using PEFT
-4. Run or display training results (pre-baked checkpoint if needed)
-5. Compare outputs:
-
+1. Attach LoRA adapters using PEFT
+1. Compare outputs:
    * Base model with prompting
    * Fine-tuned LoRA model
 
@@ -169,9 +158,9 @@ Final takeaway:
 * LoRA enables targeted behavioral changes
 * QLoRA makes this approach accessible in practice
 
----
 
-## 4. Concepts
+
+## Concepts
 
 * Prompting modifies input behavior, not model parameters
 * Fine-tuning modifies model behavior through weight updates
@@ -179,29 +168,19 @@ Final takeaway:
 * QLoRA enables efficient fine-tuning via quantization
 * Real-world ML systems prioritize reliability and consistency over flexibility alone
 
----
 
-## 5. Visuals to Prepare
 
-* Diagram: Prompting vs Fine-tuning vs LoRA vs QLoRA
-* LoRA structure: frozen weights + low-rank adapters
-* Memory comparison: full fine-tuning vs LoRA vs QLoRA
-* Biomedical extraction schema example
-* Before/after output comparison table
-
----
-
-## 6. Teaching Strategy Notes
+## Notes
 
 * Reinforce one idea repeatedly: improving behavior does not require retraining everything
 * Anchor explanations in the biomedical extraction example
 * Avoid deep mathematical derivations; focus on intuition and system behavior
 * Use comparisons frequently to show tradeoffs
-* Keep attention on “why this matters in practice”
+* Keep attention on "why this matters in practice"
 
----
 
-## 7. Expected Outcome
+
+## Expected Outcomes
 
 Participants leave with:
 
