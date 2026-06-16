@@ -105,6 +105,8 @@ Benefits:
 Central idea:
 We are not retraining the model, we are steering it using small updates.
 
+Supporting Material:
+* Code: [TA2026_Transformers from ion](https://eclass.aueb.gr/modules/document/index.php?course=INF312&openDir=/696120c1xPUf)
 
 ### 1:20 – 1:45 — QLoRA: Making Fine-Tuning Practical
 
@@ -149,6 +151,7 @@ QLoRA turns fine-tuning from an expensive research operation into a practical en
   1. Train a separate model (the RM) to assign a scalar score (a ""reward"") to every possible output.
   1. PPO Loop: The LLM generates an output. The RM scores it. The PPO algorithm uses this score to update the LLM's weights, pushing it toward higher scores.
   1. However, is computationally massive. It requires training and maintaining two models (the LLM and the RM), making it overkill for many standard consistency tasks.
+* Connection with slide 41 from [ion slides](https://eclass.aueb.gr/modules/document/file.php/INF210/slides_2025_26/nlp_slides_part06_nlp_with_transformers.pdf)
    
 
 ### 2:15 - 2:35 — DPO: Direct Preference Optimization (20 min)
@@ -158,6 +161,7 @@ QLoRA turns fine-tuning from an expensive research operation into a practical en
   * Instead of asking the model to maximize a reward score, DPO directly minimizes a "ranking loss." (some math here, enough for students to understand the underlying mechanism)
 * Why DPO?
   * Extremely practical, making high-quality alignment accessible even with limited compute (tying back to the QLoRA efficiency theme).
+* Connection with slides 42,43,44 from [ion slides](https://eclass.aueb.gr/modules/document/file.php/INF210/slides_2025_26/nlp_slides_part06_nlp_with_transformers.pdf)
 
 
 ### 2:35-2:45 — Pulling it all together
