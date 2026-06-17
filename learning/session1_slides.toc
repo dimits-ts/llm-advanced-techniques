@@ -1,0 +1,2 @@
+\beamer@sectionintoc {1}{Practically Finetuning LLMs}{2}{0}{1}
+\beamer@sectionintoc {2}{Parameter Efficient Fine-Tuning (PEFT)}{6}{0}{2}

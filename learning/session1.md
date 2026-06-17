@@ -13,7 +13,7 @@ The focus is on building intuition for when prompting is sufficient, when fine-t
 
 The session is structured around a single practical problem:
 
-**Biomedical information extraction from unstructured text into a structured schema**
+**Legal information extraction from unstructured text into a structured schema**
 
 Participants will observe how the same task behaves under:
 
@@ -29,9 +29,9 @@ The goal is to show how model behavior shifts from flexible but inconsistent out
 
 ### 0:00 – 0:10 — Introduction and Problem Framing
 
-* Introduce the biomedical extraction task:
+* Introduce the legal extraction task:
 
-  * Extract entities such as disease, gene, drug, and outcome from abstracts
+  * Extract entities such as persons, groups and creative works.
 * Show why this is a realistic ML problem:
 
   * Structured outputs are required in real systems
@@ -46,7 +46,7 @@ Central idea: Prompting is powerful but limited when consistency and structure m
 
 ### 0:10 – 0:30 — Prompting as the Baseline
 
-* Demonstrate a few-shot prompt for biomedical extraction
+* Demonstrate a few-shot prompt for legal extraction
 * Show typical failure modes:
 
   * Missing fields
@@ -107,6 +107,8 @@ We are not retraining the model, we are steering it using small updates.
 
 Supporting Material:
 * Code: [TA2026_Transformers from ion](https://eclass.aueb.gr/modules/document/index.php?course=INF312&openDir=/696120c1xPUf)
+* Slides: [ion slides 33, 34](https://eclass.aueb.gr/modules/document/file.php/INF210/slides_2025_26/nlp_slides_part06_nlp_with_transformers.pdf)
+
 
 ### 1:20 – 1:45 — QLoRA: Making Fine-Tuning Practical
 
@@ -136,9 +138,9 @@ QLoRA turns fine-tuning from an expensive research operation into a practical en
 * Introduction to Alignment: Encouraging a model to behave according to desired human values (consistency, safety, format adherence).
   * SFT asks, "What is the correct output?" (A single labeled answer).Alignment asks, ""Of these two outputs, which one is better?"" (A comparative judgment).
     
-* Biomedical Example: Given an input abstract, the model generates two outputs:
+* Legal POS tagging example: Given an input abstract, the model generates two outputs:
   * Choice A: Complete, valid JSON structure, but includes a minor semantic error (e.g., wrong gene symbol).
-  * Choice B: Perfect JSON structure, but misses one critical entity (e.g., null for drug).
+  * Choice B: Perfect JSON structure, but misses one critical entity.
   * If we prioritize perfect format/structure, the preference data dictates that Choice A is worse because it violates the structural constraint, even if the semantics are closer.
   * Discuss how preference data can be gathered automatically (rule-based validators, automated checks for JSON syntax) or through human labeling.
 
