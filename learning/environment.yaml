@@ -1,0 +1,19 @@
+name: llm-advanced-techniques-m3
+channels:
+  - conda-forge
+dependencies:
+  - scipy
+  - scikit-learn
+  - datasets
+  - python
+  - ipykernel
+  - notebook
+  - pip
+  - pip:
+    - transformers
+    - peft 
+    - evaluate 
+    - seqeval 
+    - accelerate
+    - bitsandbytes 
+    - trl

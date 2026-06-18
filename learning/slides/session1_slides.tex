@@ -7,7 +7,7 @@
 \usepackage{amssymb} \usepackage{booktabs} \usepackage{algpseudocodex}
 \usepackage{xurl} \usepackage{multicol}
 
-\setbeamerfont{caption}{size=\tiny}
+\setbeamerfont{caption}{size=\tiny} \graphicspath{{resources}}
 
 \title[LLM Optimization]{Fine-tuning, Reinforcement Learning and Parameter-Efficient Adaptation}
 \author{Dimitris Tsirmpas} \date{\today}
@@ -20,20 +20,18 @@
     \begin{frame}
         \titlepage
     \end{frame}
-    
+
     \begin{frame}
-    	\frametitle{What we will be talking about}
-    	
-    	\tableofcontents
+        \frametitle{What we will be talking about}
+
+        \tableofcontents
     \end{frame}
 
-
     \section{Naively Finetuning LLMs}
-    
-	\begin{frame}
-		\sectionpage
-	\end{frame}
- 
+
+    \begin{frame}
+        \sectionpage
+    \end{frame}
 
     \begin{frame}
         \frametitle{Why finetune LLMs?}
@@ -51,17 +49,69 @@
         \end{block}
     \end{frame}
 
-    % =========================================================
-    % SLIDE 2: The Pitfall of Full Fine-Tuning (0:30 - 0:50)
-    % =========================================================
+    \begin{frame}
+        \frametitle{Example: Domain-specific tasks}
+
+        \begin{columns}
+            \begin{column}{0.45\textwidth}
+                \begin{block}{Part-of-Speech (POS) Tagging}
+                    The process of assigning
+                    grammatical categories to each word in a sentence.
+                \end{block}
+            \end{column}
+
+            \begin{column}{0.45\textwidth}
+                \begin{figure}
+                    \includegraphics[width=\columnwidth]{pos-tagging.jpg}
+                    \centering \caption{\url{https://byteiota.com/pos-tagging/}}
+                \end{figure}
+            \end{column}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Example: Domain-specific tasks}
+
+        \begin{columns}
+            \begin{column}{0.45\textwidth}
+                \begin{block}{Biomedical POS Tagging}
+                    \begin{itemize}
+                        \item Patterns absent or rare in general-domain text.
+                        \item Prompting probably not enough due to
+                        \alert{missing knowledge}.
+                    \end{itemize}
+                \end{block}
+            \end{column}
+
+            \begin{column}{0.45\textwidth}
+                \begin{table}[h]
+                    \centering
+                    \begin{tabular}{cc}
+                        \toprule \textbf{Word} & \textbf{POS Tag} \\
+                        \midrule Homozygous & JJ \\
+                        null & JJ \\
+                        mutants & NNS \\
+                        die & VBP \\
+                        shortly & IN \\
+                        after & RB \\
+                        birth & NN \\
+                        \bottomrule
+                    \end{tabular}
+                    \caption{Example from the CRAFT dataset.}
+                \end{table}
+            \end{column}
+        \end{columns}
+    \end{frame}
 
     \begin{frame}
         \frametitle{Why not finetune LLMs?}
         \begin{itemize}
             \item \textbf{High Resource Cost:}
             \begin{itemize}
-                \item \textbf{Computational Power:} Full FT requires \alert{massive hardware requirements} and
-                \alert{thousands of compute hours} for large models (e.g., Llama-70B).
+                \item \textbf{Computational Power:} Full FT requires
+                \alert{massive hardware requirements} and
+                \alert{thousands of compute hours} for large models (e.g.,
+                Llama-70B).
 
                 \item \textbf{Storage:} Each specialized task requires a
                 separate, full copy of the massive foundational model.
@@ -120,11 +170,10 @@
         \end{center}
     \end{frame}
 
-
     \section{Making finetuning practical through LoRA}
-    
+
     \begin{frame}
-    	\sectionpage
+        \sectionpage
     \end{frame}
 
     \begin{frame}
@@ -153,73 +202,76 @@
             \item Low rank matrices enable us to \alert{scalably} represent
             information.
         \end{itemize}
-        
     \end{frame}
-    
+
     \begin{frame}
-    	\frametitle{Low-rank matrices}
-    	\begin{block}{What is a matrix?}
-    		A matrix is essentially a organized collection of data (rows and columns). For large datasets, these matrices can become incredibly complex, requiring massive storage and computational power.
-    	\end{block}
-    	
-    	\begin{exampleblock}{Example: Data matrix}
-    		\[
-    		\begin{bmatrix}
-    			2 & 4 & 6 & 8 & 10\\
-    			1 & 2 & 3 & 4 & 5\\
-    			3 & 6 & 9 & 12 & 15\\
-    			4 & 8 & 12 & 16 & 20
-    		\end{bmatrix}
-    		\]
-    	\end{exampleblock}
-    	
+        \frametitle{Low-rank matrices}
+        \begin{block}{What is a matrix?}
+            A matrix is essentially a organized collection of data (rows and
+            columns). For large datasets, these matrices can become incredibly
+            complex, requiring massive storage and computational power.
+        \end{block}
+
+        \begin{exampleblock}{Example: Data matrix}
+            \[
+            \begin{bmatrix}
+                2 & 4 & 6 & 8 & 10\\
+                1 & 2 & 3 & 4 & 5\\
+                3 & 6 & 9 & 12 & 15\\
+                4 & 8 & 12 & 16 & 20
+            \end{bmatrix}
+            \]
+        \end{exampleblock}
     \end{frame}
-    
+
     \begin{frame}
-    	\frametitle{Low-rank matrices}
-    	
-    	\begin{block}{Matrix rank}
-    			\begin{itemize}
-    			\item The 'true complexity' or the number of genuinely independent patterns within the matrix $M$.
-    			\item Intuitively, it tells us how many underlying 'ingredients' or fundamental directions are needed to describe the entire matrix.
-    		\end{itemize}
-    	\end{block}
- 
-    	\begin{exampleblock}{Example: Cooking}
-    		Think of a restaurant with 100 dishes but only 3 main food styles: Italian, Mexican, and Vegetarian. Each dish can be described as a mix of these few styles.
-    	\end{exampleblock}
+        \frametitle{Low-rank matrices}
+
+        \begin{block}{Matrix rank}
+            \begin{itemize}
+                \item The 'true complexity' or the number of genuinely
+                independent patterns within the matrix $M$. \item Intuitively,
+                it tells us how many underlying 'ingredients' or fundamental
+                directions are needed to describe the entire matrix.
+            \end{itemize}
+        \end{block}
+
+        \begin{exampleblock}{Example: Cooking}
+            Think of a restaurant with 100 dishes but only 3 main food styles:
+            Italian, Mexican, and Vegetarian. Each dish can be described as a
+            mix of these few styles.
+        \end{exampleblock}
     \end{frame}
-    
-    
-    % SLIDE 2: The Solution and its Application
+
     \begin{frame}
-    	\frametitle{Low-rank matrices}
-    	
-    	\begin{block}{Rank Factorization}
-    		If a matrix $M$ has a low rank $k$, we can approximate it (or exactly represent it) by factoring it into a product of two simpler matrices.
-    	\end{block}
-    	
-    	\begin{exampleblock}{Example: Rank 1 matrix}
-    		 \[
-    		\begin{bmatrix}
-    			2 & 4 & 6 & 8 & 10\\
-    			1 & 2 & 3 & 4 & 5\\
-    			3 & 6 & 9 & 12 & 15\\
-    			4 & 8 & 12 & 16 & 20
-    		\end{bmatrix}
-    		=
-    		\begin{bmatrix}
-    			2\\
-    			1\\
-    			3\\
-    			4
-    		\end{bmatrix}
-    		\begin{bmatrix}
-    			1 & 2 & 3 & 4 & 5
-    		\end{bmatrix}.
-    		\]
-    	\end{exampleblock}
-    	
+        \frametitle{Low-rank matrices}
+
+        \begin{block}{Rank Factorization}
+            If a matrix $M$ has a low rank $k$, we can approximate it (or
+            exactly represent it) by factoring it into a product of two simpler
+            matrices.
+        \end{block}
+
+        \begin{exampleblock}{Example: Rank 1 matrix}
+            \[
+            \begin{bmatrix}
+                2 & 4 & 6 & 8 & 10\\
+                1 & 2 & 3 & 4 & 5\\
+                3 & 6 & 9 & 12 & 15\\
+                4 & 8 & 12 & 16 & 20
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                2\\
+                1\\
+                3\\
+                4
+            \end{bmatrix}
+            \begin{bmatrix}
+                1 & 2 & 3 & 4 & 5
+            \end{bmatrix}.
+            \]
+        \end{exampleblock}
     \end{frame}
 
     \begin{frame}
@@ -370,17 +422,17 @@
                     \begin{itemize}
                         \item You can use the same model with \alert{many}
                         finetuned adapters which are
-                        \alert{dynamically selected} depending on your task.\note{Mention storage requirements}
+                        \alert{dynamically selected} depending on your
+                        task.\note{Mention storage requirements}
                     \end{itemize}
                 \end{block}
             \end{column}
         \end{columns}
     \end{frame}
-    
-    
+
     \section{Making finetuning scalable through QLoRA}
     \begin{frame}
-    	\sectionpage
+        \sectionpage
     \end{frame}
 
     \begin{frame}
@@ -488,11 +540,10 @@
             \begin{column}{0.4\columnwidth}
                 \begin{block}{Pros}
                     \begin{itemize}
-                        \item Frozen weights
-                        no longer monopolize \alert{GPU memory} and inference
-                        \alert{time}. \item Allows training in
-                        \alert{consumer-grade} hardware. \item Massively
-                        \alert{reduces training} times.
+                        \item Frozen weights no longer monopolize
+                        \alert{GPU memory} and inference \alert{time}. \item
+                        Allows training in \alert{consumer-grade} hardware.
+                        \item Massively \alert{reduces training} times.
                     \end{itemize}
                 \end{block}
             \end{column}
@@ -505,24 +556,22 @@
                             less
                             powerful
                         }
-                        model. \item Dequantization imposes a $\approx 10\%$
-                        tax on training times. \item Merging is now much
-                        messier.
+                        model. \item Dequantization imposes a $\approx 10\%$ tax
+                        on training times. \item Merging is now much messier.
                     \end{itemize}
                 \end{block}
             \end{column}
         \end{columns}
     \end{frame}
-    
-    
-   \begin{frame}
-   	\frametitle{Summing up}
-   	
-   	\begin{itemize}
-   		\item Full finetuning for LLMs is out of the question.
-   		\item However, weight updates are usually \alert{low-rank}.
-   		\item Thus, we can \alert{approximate} full finetuning with LoRA.
-   		\item We may use QLoRA instead to make it much more \alert{scalable}.
-   	\end{itemize}
-   \end{frame}
+
+    \begin{frame}
+        \frametitle{Summing up}
+
+        \begin{itemize}
+            \item Full finetuning for LLMs is out of the question. \item
+            However, weight updates are usually \alert{low-rank}. \item Thus, we
+            can \alert{approximate} full finetuning with LoRA. \item We may use
+            QLoRA instead to make it much more \alert{scalable}.
+        \end{itemize}
+    \end{frame}
 \end{document}
