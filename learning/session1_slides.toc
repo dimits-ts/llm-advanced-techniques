@@ -1,3 +1,0 @@
-\beamer@sectionintoc {1}{Naively Finetuning LLMs}{3}{0}{1}
-\beamer@sectionintoc {2}{Making finetuning practical through LoRA}{8}{0}{2}
-\beamer@sectionintoc {3}{Making finetuning scalable through QLoRA}{20}{0}{3}
