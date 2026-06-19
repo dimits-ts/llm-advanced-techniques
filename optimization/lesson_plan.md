@@ -22,8 +22,7 @@ To transition participants from merely *using* Large Language Models to *archite
 | :--- | :--- | :--- | :--- |
 | **The LLM as a System Component** | The fundamental limitations of base LLMs (hallucination, lack of domain scope, narrow thought). Deciding when overcoming these limitations using multi-agent systems may be preferable compared to prompting or finetuning. | Identifying when an LLM needs external structure. Designing the boundaries of the LLM's action-space versus the surrounding execution environment. | Drafting and justifying the high-level strategy used to tackle the Case Study. |
 | **Tool-Based Reasoning (ReACT)** | The ReACT framework: *Integrating Thought $\rightarrow$ Action $\rightarrow$ Observation*. | How LLM agents already use tools such as coding, CoT prompting, self-critique to tackle complex tasks. | Use an agent to dynamically receive non-standardized documents, and produce input that will be fed to the system. |
-| **Persona Prompting** | Defining the AI's role, expertise, constraints, and tone (The "System Prompt"). Techniques for maintaining role consistency and ensuring the LLM acts as a true domain expert. | Prompt Engineering for *identity*. Controlling output quality and style through constraints and meta-prompts. | Demo focused on implementing agent configurations (personas, prompts).|
-| **Agent-to-Agent Interaction** | The concept of multiple specialized agents collaborating (e.g., summarizer agent, stakeholder agents, decision-maker agent). Using LLM-only synthetic discussions as an example of internal validation. | Orchestration patterns (defining conversational/task flow templates). Managing state between collaborating components. | Workflow Diagram |
+| **LLMs in Code Development** | Architectural patterns for integrating LLMs into the Software Development Lifecycle. Moving beyond simple generation to advanced roles (e.g., code review, test case generation, architecture planning). | How LLMs can not only generate code, but also help with project structure and architectural decisions. | Synthetic test-suite, documentation and code-review using LLMs. |
 
 **Mini-Project Milestone**: High-level documentation of the proposed system.
 
@@ -44,7 +43,7 @@ Supporting Material:
 ### 00:30 - 01:15: Tool-Based Reasoning (ReACT)
 
 Deep dive into the ReACT loop
-1. Thought -> Action -> Observation. Focus on the internal mechanism: how the LLM decides what tool to use and how to structure the tool call (structured output). Analyze the role of the execution environment (the "sandbox").
+1. Thought -> Action -> Observation. Focus on the internal mechanism: how the LLM decides what tool to use and how to structure the tool call (structured output). Analyze the role of the execution environment ( "sandbox").
 1. Layers of agent autonomy in the ReACT framework (see AthNLP Lab 6)
 1. Introduce tool-calling and demonstrate how it is connected with CoT during agent execution
 1. Live Demo: Solving math tasks using a simple tool (e.g., a Python script or API call) and tracing the ReACT loop. Participants should analyze a sample ReACT trace log and identify the 'Thought' step and the 'Action' taken.
@@ -54,7 +53,39 @@ Supporting Material:
 * Slides: [ion slides 52, 53](https://eclass.aueb.gr/modules/document/file.php/INF210/slides_2025_26/nlp_slides_part06_nlp_with_transformers.pdf)
 
 
-### 01:15 - 01:45 Persona Prompting
+### 01:15 - 02:00: LLMs in Code Development
+
+* The difference between "Code Generation" (low complexity, quick output) and "Code Augmentation/Refinement" (high complexity, iterative feedback, systemic thinking).
+    * Connect former with ReACT: calculator vs Claude in identifying bugs in a library
+    * Connect latter with model capabilities (local model vs proprietary model)
+    * When should we use either?
+* In what other domains can we use LLMs?
+    * Documentation: Docstrings and sphinx
+    * Tests (Test-driven development?)
+    * Code reviews: Potential, challenges, limitations
+
+Supporting material:
+* Code: [AthNLP 2025 Lab 5](https://github.com/athnlp/athnlp-labs-2025/blob/main/labs/AthensNLP_Summer_School_Lab5_prompting.ipynb)
+* Slides: [ion slides 50-53](https://eclass.aueb.gr/modules/document/file.php/INF210/slides_2025_26/nlp_slides_part06_nlp_with_transformers.pdf)
+
+
+## Autonomous LLM agents: Costs, safety, scalability (2 Hours)
+
+**Focus:** Building *functional* applications. How do we make LLMs act on the real world and correct their own mistakes? Making applications *efficient, affordable, and safe* in a production environment.
+
+| Topic | Concepts Covered | Impact | Deliverable |
+| :--- | :--- | :--- | :--- |
+| **Persona Prompting** | Defining the AI's role, expertise, constraints, and tone (The "System Prompt"). Techniques for maintaining role consistency and ensuring the LLM acts as a true domain expert. | Prompt Engineering for *identity*. Controlling output quality and style through constraints and meta-prompts. | Demo focused on implementing agent configurations (personas, prompts).|
+| **Agent-to-Agent Interaction** | The concept of multiple specialized agents collaborating (e.g., summarizer agent, stakeholder agents, decision-maker agent). Using LLM-only synthetic discussions as an example of internal validation. | Orchestration patterns (defining conversational/task flow templates). Managing state between collaborating components. | Workflow Diagram |
+| **Cost & Latency Trade-offs** | The financial and performance realities of LLM deployment. Benchmarking large vs. small models vs. local inference. Strategic model selection based on task complexity vs. budget. | **Economics/DevOps:** Analyzing the total cost of ownership (TCO) for an LLM system. Designing application logic to minimize redundant API calls and excessive token generation. | Cost analysis |
+| **Inference Optimization** | Conceptual understanding of model optimization techniques: **Quantization** (reducing precision for memory/speed) and its impact on model accuracy. | **Deployment:** Understanding the operational side of model serving (e.g., choosing optimized inference engines). | Optimization Strategy Plan |
+
+
+
+**Mini-Project Milestone**: Create a prototype of the end-to-end system using LLMs as coding and design assistants.
+
+
+### 00:00 - 00:30 Persona Prompting
 
 Advanced prompting pattern: Injecting sociodemographic information
 * What is the idea behind it?
@@ -72,7 +103,7 @@ Supporting material:
 * Code: [AthNLP 2026 Lab6](https://github.com/athnlp/athnlp-labs-2026/blob/main/labs/lab6.ipynb)
 
 
-### 01:45 - 02:00 Agent-to-Agent Interaction
+### 00:30 - 01:00 Agent-to-Agent Interaction
 Serves as an introduction to the final project for the module.
 * Introduce roles, instructions, context as building blocks
 * Explain different ways of solving a problem (prompting, one agent, multiple agents, discussion)
@@ -82,20 +113,7 @@ Supporting material:
 * Code: [AthNLP 2026 Lab6](https://github.com/athnlp/athnlp-labs-2026/blob/main/labs/lab6.ipynb)
 
 
-## Autonomous LLM agents: Costs, safety, scalability (2 Hours)
-**Focus:** Building *functional* applications. How do we make LLMs act on the real world and correct their own mistakes? Making applications *efficient, affordable, and safe* in a production environment.
-
-| Topic | Concepts Covered | Impact | Deliverable |
-| :--- | :--- | :--- | :--- |
-| **Cost & Latency Trade-offs** | The financial and performance realities of LLM deployment. Benchmarking large vs. small models vs. local inference. Strategic model selection based on task complexity vs. budget. | **Economics/DevOps:** Analyzing the total cost of ownership (TCO) for an LLM system. Designing application logic to minimize redundant API calls and excessive token generation. | Cost analysis |
-| **Inference Optimization** | Conceptual understanding of model optimization techniques: **Quantization** (reducing precision for memory/speed) and its impact on model accuracy. | **Deployment:** Understanding the operational side of model serving (e.g., choosing optimized inference engines). | Optimization Strategy Plan |
-| **LLMs in Code Development** | Architectural patterns for integrating LLMs into the Software Development Lifecycle. Moving beyond simple generation to advanced roles (e.g., code review, test case generation, architecture planning). | How LLMs can not only generate code, but also help with project structure and architectural decisions. | Synthetic test-suite, documentation and code-review using LLMs. |
-
-
-**Mini-Project Milestone**: Create a prototype of the end-to-end system using LLMs as coding and design assistants.
-
-
-### 00:00 - 00:45 Cost & Latency Trade-offs
+### 01:00 - 01:30 Cost & Latency Trade-offs
 
 
 * Pros and cons of proprietary LLMs (connect with Katerina)
@@ -107,30 +125,13 @@ Supporting material:
 * When should we use proprietary LLMs?
 
 
-### 00:45 - 01:30: Quantization
+### 01:30 - 02:00: Quantization
 
 * VRAM and speed constraints
 * Quantization as a scalable solution
 * The mathematics behind quantization
 * Tradeoff: accuracy vs. cost
 * Connection with QLora and parameter-aware pretraining
-
-
-### 01:30 - 02:00: LLMs in Code Development
-
-* The difference between "Code Generation" (low complexity, quick output) and "Code Augmentation/Refinement" (high complexity, iterative feedback, systemic thinking).
-    * Connect former with ReACT: calculator vs Claude in identifying bugs in a library
-    * Connect latter with model capabilities (local model vs proprietary model)
-    * When should we use either?
-* In what other domains can we use LLMs?
-    * Documentation: Docstrings and sphinx
-    * Tests (Test-driven development?)
-    * Code reviews: Potential, challenges, limitations
-
-Supporting material:
-* Code: [AthNLP 2025 Lab 5](https://github.com/athnlp/athnlp-labs-2025/blob/main/labs/AthensNLP_Summer_School_Lab5_prompting.ipynb)
-* Slides: [ion slides 50-53](https://eclass.aueb.gr/modules/document/file.php/INF210/slides_2025_26/nlp_slides_part06_nlp_with_transformers.pdf)
-
 
 
 ## Bringing everything together, evaluation and student presentations (2 hours)
