@@ -1,15 +1,16 @@
 \documentclass[24pt]{beamer}
 
-\usetheme{Jacquenetta}
-
-% Required packages
 \usepackage[utf8]{inputenc} \usepackage{amsmath} \usepackage{amsfonts}
 \usepackage{amssymb} \usepackage{booktabs} \usepackage{algpseudocodex}
-\usepackage{xurl} \usepackage{multicol} \usepackage{eurosym} \usepackage{pythonhighlight}
+\usepackage{xurl} \usepackage{multicol} \usepackage{dejavu} \usepackage{eurosym} \usepackage{pythonhighlight}
+
+\usetheme{Antibes}
+
+\usefonttheme{serif}
+\setbeamerfont{caption}{size=\tiny} 
+\graphicspath{{resources}}
 
 \newcommand{\code}[1]{\texttt{#1}}
-
-\setbeamerfont{caption}{size=\tiny} \graphicspath{{resources}}
 
 \title[LLM Optimization]{Creating and Deploying Production-Ready Agentic Systems}
 \author{Dimitris Tsirmpas} \date{\today}

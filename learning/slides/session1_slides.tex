@@ -1,15 +1,16 @@
 \documentclass[24pt]{beamer}
 
-\usetheme{Jacquenetta}
-
-% Required packages
 \usepackage[utf8]{inputenc} \usepackage{amsmath} \usepackage{amsfonts}
 \usepackage{amssymb} \usepackage{booktabs} \usepackage{algpseudocodex}
-\usepackage{xurl} \usepackage{multicol}
+\usepackage{xurl} \usepackage{multicol} \usepackage{dejavu}
 
-\setbeamerfont{caption}{size=\tiny} \graphicspath{{resources}}
+\usetheme{Antibes}
 
-\title[LLM Optimization]{Fine-tuning, Reinforcement Learning and Parameter-Efficient Adaptation}
+\usefonttheme{serif}
+\setbeamerfont{caption}{size=\tiny} 
+\graphicspath{{resources}}
+
+\title[LLM Learning]{Fine-tuning, Reinforcement Learning and Parameter-Efficient Adaptation}
 \author{Dimitris Tsirmpas} \date{\today}
 \institute{Athens University of Economics and Business \and Archimedes, Athena Research Center}
 
@@ -297,8 +298,8 @@
     	\begin{exampleblock}{}
     		\begin{itemize}
     			\item Imagine a piano with 88 keys.
-    			\item Most songs don't require arbitrary use of all 88 keys; they can be described by general patterns (e.g., melody, rhythm).
-    			\item Low-rank updates capture \alert{changes in general patterns}.
+    			\item Most songs don't require all 88 keys; they can be described by melody, rhythm etc.
+    			\item Low-rank updates capture changing \alert{general patterns}.
     		\end{itemize}
     	\end{exampleblock}
     \end{frame}
