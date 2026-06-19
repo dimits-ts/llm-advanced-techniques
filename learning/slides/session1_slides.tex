@@ -21,20 +21,26 @@
         \titlepage
     \end{frame}
 
-    \begin{frame}
-        \frametitle{What we will be talking about}
-
+    \begin{frame}{What we will be talking about}
         \tableofcontents
     \end{frame}
 
-    \section{Naively Finetuning LLMs}
 
+    \section{Naively Finetuning LLMs}
+    
+    \subsection{What is finetuning?}
+
+    \begin{frame}{Outline}
+    	\tableofcontents[currentsection]
+    \end{frame}
+    
     \begin{frame}
-        \sectionpage
+    	\sectionpage
+    	\subsectionpage
     \end{frame}
 
-    \begin{frame}
-        \frametitle{Why finetune LLMs?}
+    \begin{frame}{Why finetune LLMs?}
+    	
         \begin{itemize}
             \item \textbf{Prompting:} Changes \alert{input behavior}. We guide
             the model with instructions and examples. \item
@@ -48,15 +54,23 @@
             general knowledge to a specialized task.
         \end{block}
     \end{frame}
+    
+    \begin{frame}{Pretraining vs Finetuning}
+    	\begin{block}{Reminder}
+    		%Link with Katerinas lesson
+    		\begin{itemize}
+    			\item \alert{Pre-training} provides the model with initial, \alert{general} knowledge by utilizing \alert{any} and all data sources. 
+    			\item \alert{Finetuning} shifts existing knowledge, to \alert{specific} domains using \alert{domain-specific} datasets.
+    		\end{itemize}
+    	\end{block}
+    \end{frame}
 
-    \begin{frame}
-        \frametitle{Example: Domain-specific tasks}
-
+    \begin{frame}{Example: Domain-specific tasks}
         \begin{columns}
             \begin{column}{0.45\textwidth}
                 \begin{block}{Part-of-Speech (POS) Tagging}
-                    The process of assigning
-                    grammatical categories to each word in a sentence.
+                    The process of assigning grammatical categories to each word
+                    in a sentence.
                 \end{block}
             \end{column}
 
@@ -69,9 +83,7 @@
         \end{columns}
     \end{frame}
 
-    \begin{frame}
-        \frametitle{Example: Domain-specific tasks}
-
+    \begin{frame}{Example: Domain-specific tasks}
         \begin{columns}
             \begin{column}{0.45\textwidth}
                 \begin{block}{Biomedical POS Tagging}
@@ -102,12 +114,17 @@
             \end{column}
         \end{columns}
     \end{frame}
-
-    \begin{frame}
-        \frametitle{Why not finetune LLMs?}
+    
+    
+    \subsection{Why not (fully) finetune LLMs?}
+	
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+	
+    \begin{frame}{High Resource Cost}
         \begin{itemize}
-            \item \textbf{High Resource Cost:}
-            \begin{itemize}
                 \item \textbf{Computational Power:} Full FT requires
                 \alert{massive hardware requirements} and
                 \alert{thousands of compute hours} for large models (e.g.,
@@ -115,15 +132,12 @@
 
                 \item \textbf{Storage:} Each specialized task requires a
                 separate, full copy of the massive foundational model.
-            \end{itemize}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}
-        \frametitle{Why not finetune LLMs?}
+    \begin{frame}{Operational Overhead}
         \begin{itemize}
-            \item \textbf{Operational Overhead:}
-            \begin{itemize}
+          
                 \item Training is \alert{slow}. \item Deployment becomes
                 complex, managing \alert{multiple large models} for different
                 applications.
@@ -133,12 +147,10 @@
                 \end{itemize}
                 \item High risk of \alert{Catastrophic Forgetting}---the model
                 forgets its general knowledge while learning the specific task.
-            \end{itemize}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}
-        \frametitle{Why not finetune LLMs?}
+    \begin{frame}{Scalability issues}
         \begin{columns}
             \begin{column}{0.45\textwidth}
                 \begin{block}{BERT}
@@ -169,31 +181,34 @@
             to?
         \end{center}
     \end{frame}
+    
+    %Should we discuss older or not popular methods?
+    \begin{frame}{Parameter-Efficient Fine-Tuning (PEFT)}
+    	\begin{definition}
+    		\textbf{PEFT}:  A set of techniques used to adapt large pre-trained LLMs to specific tasks by updating only a \alert{small subset of their parameters}, rather than retraining the entire model.
+    	\end{definition}
+    	\vspace{2em}
+    	\begin{itemize}
+    		\item Many algorithms developed through the years (adapters, prompt/prefix tuning etc.).
+    		\item However, the \alert{LoRA}  family of methods has dominated the LLM space in the last few years.
+    	\end{itemize}
+    \end{frame}
+
 
     \section{Making finetuning practical through LoRA}
+    
+    \subsection{Understanding why LoRA works}
 
+    \begin{frame}{Outline}
+    	\tableofcontents[currentsection]
+    \end{frame}
+    
     \begin{frame}
-        \sectionpage
+    	\sectionpage
+    	\subsectionpage
     \end{frame}
 
-    \begin{frame}
-        \frametitle{Parameter-Efficient Fine-Tuning (PEFT)}
-
-        \begin{itemize}
-            \item Instead of finetuning the whole model, why not finetune
-            \alert{only a small part}?
-            \begin{itemize}
-                \item Similar in concept to finetuning a classification head.
-                \item Introduce and train a tiny number of new, small matrices.
-            \end{itemize}
-            \item \textbf{Goal:} Achieve performance benefits of Fine-Tuning
-            while \alert{drastically reducing the computational burden}.
-        \end{itemize}
-    \end{frame}
-
-    \begin{frame}
-        \frametitle{PEFT: LoRA}
-
+    \begin{frame}{PEFT: LoRA}
         \begin{itemize}
             \item Low-Rank (LoRA) Matrix Decomposition is a specific PEFT
             algorithm that exploits the fact that weight updates in LLMs have a
@@ -204,8 +219,7 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}
-        \frametitle{Low-rank matrices}
+    \begin{frame}{Low-rank matrices}
         \begin{block}{What is a matrix?}
             A matrix is essentially a organized collection of data (rows and
             columns). For large datasets, these matrices can become incredibly
@@ -224,9 +238,7 @@
         \end{exampleblock}
     \end{frame}
 
-    \begin{frame}
-        \frametitle{Low-rank matrices}
-
+    \begin{frame}{Low-rank matrices}
         \begin{block}{Matrix rank}
             \begin{itemize}
                 \item The 'true complexity' or the number of genuinely
@@ -243,9 +255,7 @@
         \end{exampleblock}
     \end{frame}
 
-    \begin{frame}
-        \frametitle{Low-rank matrices}
-
+    \begin{frame}{Low-rank matrices}
         \begin{block}{Rank Factorization}
             If a matrix $M$ has a low rank $k$, we can approximate it (or
             exactly represent it) by factoring it into a product of two simpler
@@ -273,10 +283,44 @@
             \]
         \end{exampleblock}
     \end{frame}
+    
+    \begin{frame}{Why are LLM updates typically low-rank?}
+    	\note{This is a hypothesis of the seminal paper. These explanations originate from prior work of that paper, verified by other studies.}
+    	
+    	\begin{block}{Many possible explanations}
+    		\begin{itemize}
+    			\item Updates generally follow the direction of existing knowledge $\rightarrow$ the updates may often just be \alert{re-weighting} of existing weights.
+    			\item Underlying \alert{ML problems} are usually inherently low-rank.
+    		\end{itemize}
+    	\end{block}
+    	
+    	\begin{exampleblock}{}
+    		\begin{itemize}
+    			\item Imagine a piano with 88 keys.
+    			\item Most songs don't require arbitrary use of all 88 keys; they can be described by general patterns (e.g., melody, rhythm).
+    			\item Low-rank updates capture \alert{changes in general patterns}.
+    		\end{itemize}
+    	\end{exampleblock}
+    \end{frame}
+    
+    \begin{frame}{Why are LLM updates typically low-rank?}
+    	\begin{columns}
+    		\begin{column}{0.45\columnwidth}
+    			\begin{figure}
+    				\includegraphics[width=\columnwidth]{embeddings.png}
+    				\caption{\url{https://aclanthology.org/2025.emnlp-main.1410.pdf}}
+    			\end{figure}
+    		\end{column}
+    		
+    		\begin{column}{0.45\columnwidth}
+    			\begin{block}{Large embedding spaces}
+    					Modern NLP models are \alert{over-parameterized} $\rightarrow$ not enough information to fill in higher ranks of weights.
+    			\end{block}
+    		\end{column}
+    	\end{columns}
+    \end{frame}
 
-    \begin{frame}
-        \frametitle{LoRA: Low-rank decomposition}
-
+    \begin{frame}{LoRA: Low-rank decomposition}
         \[
         \underbrace{
             A_{m \times n}
@@ -305,9 +349,7 @@
         \]
     \end{frame}
 
-    \begin{frame}
-        \frametitle{LoRA: Mathematical Foundation}
-
+    \begin{frame}{LoRA: Mathematical Foundation}
         \begin{figure}
             \includegraphics[width=0.8\textwidth]{LoRA.jpeg} \centering
             \caption{
@@ -325,10 +367,16 @@
             \end{itemize}
         \end{multicols}
     \end{frame}
-
+    
+    
+    \subsection{How to use LoRA}
+    
     \begin{frame}
-        \frametitle{LoRA: Algorithm}
+    	\sectionpage
+    	\subsectionpage
+    \end{frame}
 
+    \begin{frame}{LoRA: Algorithm}
         \begin{algorithmic}
             \LComment{====Initialization====} \ForAll{$W \in all\_weights$}
             \State Set $\mathbf{W}$ to read-only
@@ -349,8 +397,7 @@
     \end{frame}
 
     \begin{frame}
-        \frametitle{LoRA: Practical Considerations}
-
+    {LoRA: Practical Considerations}
         \begin{itemize}
             \item How many ranks do I use?
             \begin{itemize}
@@ -372,8 +419,7 @@
     \end{frame}
 
     \begin{frame}
-        \frametitle{LoRA: Practical Considerations}
-
+    {LoRA: Practical Considerations}
         \begin{itemize}
             \item What modules do I change? \item Start from the top of this
             list and go down as required:
@@ -393,8 +439,7 @@
     \end{frame}
 
     \begin{frame}
-        \frametitle{LoRA: Practical Considerations}
-
+    {LoRA: Practical Considerations}
         \begin{itemize}
             \item Should we merge the LoRA weights?
         \end{itemize}
@@ -430,14 +475,21 @@
         \end{columns}
     \end{frame}
 
+
     \section{Making finetuning scalable through QLoRA}
+    
+    \subsection{Quantizing LLMs: Why and how?}
+    
+    \begin{frame}{Outline}
+    	\tableofcontents[currentsection]
+    \end{frame}
+    
     \begin{frame}
-        \sectionpage
+    	\sectionpage
+    	\subsectionpage
     \end{frame}
 
-    \begin{frame}
-        \frametitle{QLoRA: Quantization}
-
+    \begin{frame}{QLoRA: Quantization}
         \begin{columns}
             \begin{column}{0.45\textwidth}
                 \begin{itemize}
@@ -465,9 +517,7 @@
         \end{columns}
     \end{frame}
 
-    \begin{frame}
-        \frametitle{QLoRA: Quantization}
-
+    \begin{frame}{QLoRA: Quantization}
         \begin{columns}
             \begin{column}{0.45\textwidth}
                 \begin{itemize}
@@ -492,10 +542,16 @@
             \end{column}
         \end{columns}
     \end{frame}
-
-    \begin{frame}
-        \frametitle{QLoRA: Concept}
-
+	
+	
+	\subsection{How does it differ from LoRA?}
+	
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+	
+    \begin{frame}{QLoRA: Concept}
         \begin{columns}
             \begin{column}{0.45\textwidth}
                 \begin{itemize}
@@ -518,9 +574,7 @@
         \end{columns}
     \end{frame}
 
-    \begin{frame}
-        \frametitle{QLoRA: Algorithm}
-
+    \begin{frame}{QLoRA: Algorithm}
         \begin{algorithmic}
             \LComment{====Initialization====} \LComment{Same as before}
 
@@ -533,9 +587,7 @@
         \end{algorithmic}
     \end{frame}
 
-    \begin{frame}
-        \frametitle{QLoRA: Pros and cons}
-
+    \begin{frame}{QLoRA: Pros and cons}
         \begin{columns}
             \begin{column}{0.4\columnwidth}
                 \begin{block}{Pros}
@@ -564,8 +616,7 @@
         \end{columns}
     \end{frame}
 
-    \begin{frame}
-        \frametitle{Summing up}
+    \begin{frame}{Summing up}
 
         \begin{itemize}
             \item Full finetuning for LLMs is out of the question. \item
