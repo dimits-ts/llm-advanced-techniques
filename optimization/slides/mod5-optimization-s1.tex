@@ -17,24 +17,40 @@
 \institute{Athens University of Economics and Business \and Archimedes, Athena Research Center}
 
 \begin{document}
-    % =========================================================
-    % SLIDE 1: Transition and Defining Fine-Tuning (0:30)
-    % =========================================================
     \begin{frame}
         \titlepage
     \end{frame}
+    
+    \part{Autonomous LLM Agents}
 
     \begin{frame}
         \frametitle{What we will be talking about}
 
-        \tableofcontents
+        \tableofcontents	
     \end{frame}
     
     
     \section{The LLM as a System Component}
     
+    \subsection{Inherent LLM limitations}
+    
+     \begin{frame}
+    	\sectionpage
+    	\subsectionpage
+    \end{frame}
+    
+    \subsection{What do LLMs bring to the table?}
+    
     \begin{frame}
     	\sectionpage
+    	\subsectionpage
+    \end{frame}
+    
+    \subsection{When to use LLMs?}
+    
+    \begin{frame}
+    	\sectionpage
+    	\subsectionpage
     \end{frame}
     
     \begin{frame}{LLMs are not just task-specific tools}
@@ -54,27 +70,7 @@
     	\end{exampleblock}
     \end{frame}
     
-    \begin{frame}{... you treat everything as if it were a nail}
-    	\begin{block}{The easy solution}
-    		We instruct an LLM to retrieve reviews via RAG. We isolate the reviews using prompting, then instruct the LLM to find whether our product is mentioned.
-    	\end{block}
-    	
-    	\begin{alertblock}{Result}
-    		Code is deployed \alert{within the day}. Management is billed \alert{50,000\euro} in a week.
-    	\end{alertblock}
-    \end{frame}
-    
-    \begin{frame}{But maybe we can do better}
-    	\begin{block}{The system solution}
-    		We use a traditional scrapper to find relevant reviews. For each page, we instruct the LLM to extract the reviews. We then run \code{reviews.str.contains(product\_name).sum()}.
-    	\end{block}
-    	
-    	\begin{alertblock}{Result}
-    		Code is deployed within \alert{two days}. Management is billed \alert{20\euro} in a week.
-    	\end{alertblock}
-    \end{frame}
-    
-    \begin{frame}{Decomposing the problem}   	
+    \begin{frame}{When you are holding a hammer...}   	
     	\begin{block}{Our problem could be decomposed in three parts}  		
     		\begin{enumerate}
     			\item Discovery: Find pages containing reviews.
@@ -88,13 +84,37 @@
     	\end{alertblock}
     \end{frame}
     
+    \begin{frame}{... you treat everything as if it were a nail}
+    	\begin{block}{The easy solution}
+    		We instruct an LLM to retrieve reviews via RAG. We isolate the reviews using prompting, then instruct the LLM to find whether our product is mentioned.
+    	\end{block}
+    	
+    	\begin{exampleblock}{Result}
+    		Code is deployed \alert{within the day}. Management is billed \alert{50,000\euro} in a week.
+    	\end{exampleblock}
+    \end{frame}
     
+    \begin{frame}{But maybe we can do better}
+    	\begin{block}{The system solution}
+    		We use a traditional scrapper to find relevant reviews. For each page, we instruct the LLM to extract the reviews. We then run \code{reviews.str.contains(product\_name).sum()}.
+    	\end{block}
+    	
+    	\begin{exampleblock}{Result}
+    		Code is deployed within \alert{two days}. Management is billed \alert{20\euro} in a week.
+    	\end{exampleblock}
+    \end{frame}
     
+
     \section{Tool-Based Reasoning using ReAct}
     
-    \begin{frame}
-    	\sectionpage
-    \end{frame}
+    \subsection{LLM tool-calling}
+    
+    \subsection{Thought, Action, Observation}
+    
+   \begin{frame}
+	   	\sectionpage
+	   	\subsectionpage
+   \end{frame}
     
     \begin{frame}{What is ReAct?}
     	\begin{figure}
@@ -125,18 +145,17 @@
     		\end{python}
     	
     	\end{exampleblock}
-    	
     \end{frame}
     
     \begin{frame}{High-level Concept}
     		\begin{columns}
-	    		\begin{column}{0.45\textwidth}
+	    		\begin{column}{0.6\textwidth}
 	    			\begin{figure}
 	    				\includegraphics[width=\textwidth]{ReAct-example3.png}
 	    				\caption{\url{https://arxiv.org/abs/2210.03629}}
 	    			\end{figure}
 	    		\end{column}
-	    		\begin{column}{0.45\textwidth}
+	    		\begin{column}{0.4\textwidth}
 	    			\begin{block}{ReAct loop}
 	    					\begin{itemize}
 	    					\item Create a plan.
@@ -168,6 +187,14 @@
     
     \end{frame}
     
+    
+    \subsection{How much autonomy should we give the agent?}
+
+   \begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+	
     \begin{frame}{Agency levels}
     	\begin{figure}
     		\includegraphics[width=\textwidth]{agent-levels.png}
@@ -176,12 +203,27 @@
     \end{frame}
     
     
-    
-    
-    \section{LLMs in Code Development}
+    \section{Agent-to-Agent Interaction}
+  
+    \subsection{Single-Agent vs. Multi-Agent}
     
     \begin{frame}
     	\sectionpage
+    	\subsectionpage
+    \end{frame}
+    
+    \subsection{Orchestrating Interaction}
+    
+    \begin{frame}
+    	\sectionpage
+    	\subsectionpage
+    \end{frame}
+    
+    \subsection{What do we actually need?}
+    
+    \begin{frame}
+    	\sectionpage
+    	\subsectionpage
     \end{frame}
 
 \end{document}
