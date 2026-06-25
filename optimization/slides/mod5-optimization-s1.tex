@@ -66,7 +66,7 @@
     		\item Suppose you are given the following task, with appropriate resources from management.
     	\end{itemize}
     	\begin{exampleblock}{Use case}
-    		Find all reviews that concern competitors of our product, and tell us what percentage of them mention our product.
+    		Find all reviews that concern competitors of our product, and tell us what percentage of them mention it.
     	\end{exampleblock}
     \end{frame}
     
@@ -115,6 +115,25 @@
 	   	\sectionpage
 	   	\subsectionpage
    \end{frame}
+   
+   \begin{frame}[fragile]{Tool-Calling}
+   	\begin{exampleblock}{Tool example}
+   		
+   		\begin{python}[gobble=8]
+   			from smolagents import tool
+   			@tool
+   			def calculator(expr: str) -> float:
+   			"""
+   			Evaluate a basic arithmetic expression.
+   			
+   			Args:
+   			expr: The math expression to evaluate, such as "2 + 3 * (4 / 2)".
+   			"""
+   			return eval(expr, {"__builtins__": None}, {})
+   		\end{python}
+   		
+   	\end{exampleblock}
+   \end{frame}
     
     \begin{frame}{What is ReAct?}
     	\begin{figure}
@@ -126,25 +145,6 @@
     		\textbf{ReAct}:
     		A technique that interleaves reasoning steps (``Thought'') with Actions and Observations to guide an LLM through planning and tool use.\note{No standard definition}
     	\end{definition}
-    \end{frame}
-    
-    \begin{frame}[fragile]{ReAct: Tool-Calling}
-    	\begin{exampleblock}{Tool example}
-
-    		\begin{python}[gobble=8]
-    			from smolagents import tool
-    			@tool
-    			def calculator(expr: str) -> float:
-	    			"""
-	    			Evaluate a basic arithmetic expression.
-	    			
-	    			Args:
-	    				expr: The math expression to evaluate, such as "2 + 3 * (4 / 2)".
-	    			"""
-    				return eval(expr, {"__builtins__": None}, {})
-    		\end{python}
-    	
-    	\end{exampleblock}
     \end{frame}
     
     \begin{frame}{High-level Concept}
@@ -168,16 +168,16 @@
 	    	\end{columns}
     \end{frame}
     
-    \begin{frame}{ReAct: Early examples}
+    \begin{frame}{Early examples}
     	
     	\begin{columns}
-    		\begin{column}{0.45\textwidth}
+    		\begin{column}{0.5\textwidth}
     				\begin{figure}
 	    				\includegraphics[width=\textwidth]{ReAct-example1.png}
 	    				\caption{\url{https://rdi.berkeley.edu/llm-agents/f24}}
 	    			\end{figure}
     		\end{column}
-    		\begin{column}{0.45\textwidth}
+    		\begin{column}{0.5\textwidth}
     			\begin{figure}
     				\includegraphics[width=\textwidth]{ReAct-example2.png}
     				\caption{\url{https://rdi.berkeley.edu/llm-agents/f24}}
