@@ -39,6 +39,21 @@
     	\subsectionpage
     \end{frame}
     
+    \begin{frame}{Example: Mathematics}
+    	\begin{block}{LLMs are really bad at math}
+    		\begin{itemize}
+    			\item Predict the most likely sequence of tokens, not the logically necessary derivation.
+    			\item Probabilistic nature $\rightarrow$ prone to hallucinations.
+    			\item Tokenization absolutely destroys numbers.
+    		\end{itemize}
+    	\end{block}
+    	
+    	\begin{alertblock}{}
+    		While OK for small numbers (they can memorize some patterns), they generally fail at larger ones.
+    	\end{alertblock}
+    \end{frame}
+    
+    
     \subsection{What do LLMs bring to the table?}
     
     \begin{frame}
@@ -147,6 +162,50 @@
     	\end{exampleblock}
     \end{frame}
     
+    \begin{frame}[fragile]
+    	\begin{exampleblock}{Tool calling example}
+    		\begin{python}[gobble=8]
+    			{
+    				"tool_calls": [
+    				{
+    					"id": "calc1",
+    					"function": {
+    						"name": "calculate",
+    						"arguments": {
+    							"command": "calculator('2 + 3 * (4 / 2)')"
+    						}
+    					}
+    				}
+    				]
+    			}
+    			
+    			>>> 8
+    		\end{python}
+    	\end{exampleblock}
+    \end{frame}
+ 
+	 \begin{frame}[fragile]
+		\begin{exampleblock}{Tool calling chaining example}
+			\begin{python}[gobble=8]
+				{"tool_calls": [
+					{
+						"id": "stock_call_1",
+						"function": {
+							"name": "get_stock_price",
+							"arguments": {"ticker": "TSLA"}
+						}
+					},
+					{
+						"id": "news_call_2",
+						"function": {
+							"name": "fetch_news_summary",
+							"arguments": {"ticker": "TSLA", "days": 7}
+					}
+					]
+				}
+			\end{python}
+		\end{exampleblock}
+	\end{frame}   
     \begin{frame}{High-level Concept}
     		\begin{columns}
 	    		\begin{column}{0.6\textwidth}

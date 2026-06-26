@@ -3,6 +3,7 @@
 ## Module Information
 
 ### Goal
+
 To transition participants from merely *using* Large Language Models to *architecting* resilient, scalable, and efficient LLM-powered production systems. The focus is on systemic design and trade-off analysis, rather than specific, proprietary coding implementations.
 
 ### Reusable Learning Objectives (RLOs)
