@@ -242,23 +242,24 @@
     \begin{frame}{Low-rank matrices}
         \begin{block}{Matrix rank}
             \begin{itemize}
-                \item The 'true complexity' or the number of genuinely
-                independent patterns within the matrix $M$. \item Intuitively,
+                \item Rank $r$ represents the number of genuinely independent patterns within the matrix $M$.\note{Can't be inferred by the rest of the information.} \item Intuitively,
                 it tells us how many underlying 'ingredients' or fundamental
                 directions are needed to describe the entire matrix.
             \end{itemize}
         \end{block}
 
-        \begin{exampleblock}{Example: Cooking}
-            Think of a restaurant with 100 dishes but only 3 main food styles:
-            Italian, Mexican, and Vegetarian. Each dish can be described as a
-            mix of these few styles.
-        \end{exampleblock}
+       	\begin{exampleblock}{}
+	       	\begin{itemize}
+	       		\item Imagine a piano with 88 keys.
+	       		\item Most songs don't require all 88 keys; they can be described by melody, rhythm etc.
+	       		\item Low-rank updates capture changing \alert{general patterns}.
+	       	\end{itemize}
+       \end{exampleblock}
     \end{frame}
 
     \begin{frame}{Low-rank matrices}
         \begin{block}{Rank Factorization}
-            If a matrix $M$ has a low rank $k$, we can approximate it (or
+            If a matrix $M$ has a low rank $r$, we can approximate it (or
             exactly represent it) by factoring it into a product of two simpler
             matrices.
         \end{block}
@@ -294,14 +295,6 @@
     			\item Underlying \alert{ML problems} are usually inherently low-rank.
     		\end{itemize}
     	\end{block}
-    	
-    	\begin{exampleblock}{}
-    		\begin{itemize}
-    			\item Imagine a piano with 88 keys.
-    			\item Most songs don't require all 88 keys; they can be described by melody, rhythm etc.
-    			\item Low-rank updates capture changing \alert{general patterns}.
-    		\end{itemize}
-    	\end{exampleblock}
     \end{frame}
     
     \begin{frame}{Why are LLM updates typically low-rank?}
@@ -351,50 +344,92 @@
     \end{frame}
 
     \begin{frame}{LoRA: Mathematical Foundation}
-        \begin{figure}
-            \includegraphics[width=0.8\textwidth]{LoRA.jpeg} \centering
-            \caption{
-                \url{https://huggingface.co/docs/peft/main/conceptual_guides/lora}
-            }
-        \end{figure}
-
-        \begin{multicols}{2}
-            \begin{itemize}
-                \item $W \in \mathbb{R}^{d \times k}$ weights. \item $x$ input,
-                $h$ output. \item We add $BAx$ to the output. \item
-                $B  \in \mathbb{R}^{d \times r} \rightarrow$ zeros. \item
-                $A \in \mathbb{R}^{r \times k} \rightarrow$ Gaussian. \item
-                $r \ll \min(d, k)$, hence $A, B$ are much smaller than $W$.
-            \end{itemize}
-        \end{multicols}
+    	\begin{columns}
+    		\begin{column}{0.5\textwidth}
+    			 \begin{figure}
+    				\includegraphics[height=0.7\textheight]{lora1.drawio.png} \centering
+    			\end{figure}
+    		\end{column}
+    		
+    		\begin{column}{0.5\textwidth}
+    			\begin{block}{Full SFT}
+    					\begin{itemize}
+    					\item $W \in \mathbb{R}^{d \times k}$ weights. \item $X$ input,
+    					$h$ output.  
+    					\item Fwd pass: $h = WX$.
+    					\item Bckwd pass: $W = W + \alpha \nabla h $
+    					%\item $B  \in \mathbb{R}^{d \times r} \rightarrow$ zeros. \item	$A \in \mathbb{R}^{r \times k} \rightarrow$ Gaussian. \item $r \ll \min(d, k)$, hence $A, B$ are much smaller than $W$.
+    				\end{itemize}
+    			\end{block}
+    		\end{column}
+    	\end{columns}
+	\end{frame}
+	
+	\begin{frame}{LoRA: Mathematical Foundation}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[height=0.7\textheight]{lora2.drawio.png} \centering
+				\end{figure}
+			\end{column}
+			
+			\begin{column}{0.5\textwidth}
+				\begin{block}{LoRA}
+					\begin{itemize}
+						\item	$A \in \mathbb{R}^{r \times k} \rightarrow$ Gaussian.
+						\item $B  \in \mathbb{R}^{d \times r} \rightarrow$ zeros.  \item $r \ll \min(d, k)$, hence $A, B$ are much smaller than $W$.
+						\item $\Delta W = \frac{\alpha}{r} A B$
+						\item $H = W X + \Delta W X$
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+	\end{frame}
+    
+    \begin{frame}{LoRA: Mathematical Foundation}
+    	\begin{columns}
+    		\begin{column}{0.5\textwidth}
+    			\begin{figure}
+    				\includegraphics[height=0.7\textheight]{lora3.drawio.png} \centering
+    			\end{figure}
+    		\end{column}
+    		
+    		\begin{column}{0.5\textwidth}
+    			\begin{block}{LoRA}
+    				\begin{itemize}
+    					\item During inference, we compute $H = W X + \Delta W X$.
+    					\item Alternatively, merge weights: $W' = W + \frac{\alpha}{r} (A B)$
+    				\end{itemize}
+    			\end{block}
+    		\end{column}
+    	\end{columns}
     \end{frame}
     
+    \begin{frame}{LoRA: Algorithm}
+    	\begin{algorithmic}
+    		\LComment{====Initialization====} \ForAll{$W \in all\_weights$}
+    		\State Set $\mathbf{W}$ to read-only
+    		\Comment{Original knowledge preserved} \EndFor
+    		
+    		\ForAll{$W_u \in target\_modules$} \State Initialize $\mathbf{A}$
+    		randomly \State Initialize $\mathbf{B} = \mathbf{0}$
+    		\Comment{Contributes zero to the output initially} \EndFor
+    		
+    		\LComment{====Backpropagation====} \ForAll{$X \in input\_embeds$}
+    		\State $\mathbf{\Delta W} = \frac{\alpha}{r} \mathbf{A} \mathbf{B}$
+    		\State $\mathbf{H} = \mathbf{W} X + \mathbf{\Delta W} X$
+    		\Comment{Output = original + adaptation} \EndFor
+    		\LComment{====End of training====} \State
+    		$\mathbf{W}' = \mathbf{W} + \frac{\alpha}{r} (\mathbf{A} \mathbf{B})$
+    		\Comment{Merge original and adaptation}
+    	\end{algorithmic}
+    \end{frame}
     
     \subsection{How to use LoRA}
     
     \begin{frame}
     	\sectionpage
     	\subsectionpage
-    \end{frame}
-
-    \begin{frame}{LoRA: Algorithm}
-        \begin{algorithmic}
-            \LComment{====Initialization====} \ForAll{$W \in all\_weights$}
-            \State Set $\mathbf{W}$ to read-only
-            \Comment{Original knowledge preserved} \EndFor
-
-            \ForAll{$W_u \in target\_modules$} \State Initialize $\mathbf{A}$
-            randomly \State Initialize $\mathbf{B} = \mathbf{0}$
-            \Comment{Contributes zero to the output initially} \EndFor
-
-            \LComment{====Backpropagation====} \ForAll{$X \in input\_embeds$}
-            \State $\mathbf{\Delta W} = \frac{\alpha}{r} \mathbf{A} \mathbf{B}$
-            \State $\mathbf{H} = \mathbf{W} X + \mathbf{\Delta W} X$
-            \Comment{Output = original + adaptation} \EndFor
-            \LComment{====End of training====} \State
-            $\mathbf{W}' = \mathbf{W} + \frac{\alpha}{r} (\mathbf{A} \mathbf{B})$
-            \Comment{Merge original and adaptation}
-        \end{algorithmic}
     \end{frame}
 
     \begin{frame}
