@@ -242,13 +242,11 @@
     \begin{frame}{Low-rank matrices}
         \begin{block}{Matrix rank}
             \begin{itemize}
-                \item Rank $r$ represents the number of genuinely independent patterns within the matrix $M$.\note{Can't be inferred by the rest of the information.} \item Intuitively,
-                it tells us how many underlying 'ingredients' or fundamental
-                directions are needed to describe the entire matrix.
+                \item Rank $r$ represents the number of genuinely independent columns (or rows!) within the matrix $M$.\note{Can't be inferred by the rest of the information.} \item If $M \in \mathbb{R}^{m\times n}$, then $rank(M) \leq min(m, n)$.
             \end{itemize}
         \end{block}
 
-       	\begin{exampleblock}{}
+       	\begin{exampleblock}{Example: Music}
 	       	\begin{itemize}
 	       		\item Imagine a piano with 88 keys.
 	       		\item Most songs don't require all 88 keys; they can be described by melody, rhythm etc.
@@ -378,10 +376,12 @@
 					\begin{itemize}
 						\item	$A \in \mathbb{R}^{r \times k} \rightarrow$ Gaussian.
 						\item $B  \in \mathbb{R}^{d \times r} \rightarrow$ zeros.  \item $r \ll \min(d, k)$, hence $A, B$ are much smaller than $W$.
-						\item $\Delta W = \frac{\alpha}{r} A B$
-						\item $H = W X + \Delta W X$
 					\end{itemize}
 				\end{block}
+				
+				\begin{exampleblock}{Example: Music}
+					$A$ could represent the genre of music, while $B$ the melody, rhythm etc.
+				\end{exampleblock}
 			\end{column}
 		\end{columns}
 	\end{frame}
