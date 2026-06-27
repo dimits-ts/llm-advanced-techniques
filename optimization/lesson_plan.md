@@ -50,7 +50,8 @@ Supporting Material:
 * Slides: [ion slides 52, 53](https://eclass.aueb.gr/modules/document/file.php/INF210/slides_2025_26/nlp_slides_part06_nlp_with_transformers.pdf)
 
 
-### 01:00 - 01:00 Agent-to-Agent Interaction
+### 01:00 - 02:00 Agent-to-Agent Interaction
+
 Serves as an introduction to the final project for the module.
 * Introduce roles, instructions, context as building blocks
 * Explain different ways of solving a problem (prompting, one agent, multiple agents, discussion)

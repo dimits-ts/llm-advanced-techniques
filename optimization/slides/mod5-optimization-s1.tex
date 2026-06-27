@@ -39,7 +39,7 @@
     	\subsectionpage
     \end{frame}
     
-    \begin{frame}{Example: Mathematics}
+    \begin{frame}{Mathematics}
     	\begin{block}{LLMs are really bad at math}
     		\begin{itemize}
     			\item Predict the most likely sequence of tokens, not the logically necessary derivation.
@@ -51,6 +51,98 @@
     	\begin{alertblock}{}
     		While OK for small numbers (they can memorize some patterns), they generally fail at larger ones.
     	\end{alertblock}
+    \end{frame}
+    
+    \begin{frame}{Word counting}
+    	\begin{figure}
+    		\centering
+    		\includegraphics[width=\textwidth]{word-counting.png}
+    		\caption{Percentage of words with errors on when counting letters for the different models \url{https://arxiv.org/html/2412.18626v1}.}
+    	\end{figure}
+    \end{frame}
+    
+    \begin{frame}[fragile]{Character counting}
+    	\begin{exampleblock}{Example}
+    		\begin{python}[gobble=8]
+    			model.prompt("How many 'r's are in 'carr'?")
+    			>>> "There is one 'r' in 'carr'".
+    		\end{python}
+    	\end{exampleblock}
+    	
+    	\begin{block}{Indicative explanation}
+    		\begin{itemize}
+    			\item The model can not find the word ``carr'' in its knowledge base...
+    			\item ...but it knows the word ``car'' and the fact that ``carr'' and ``car'' are highly correlated...
+    			\item ...``car'' has one ``r'', therefore this is the answer.
+    		\end{itemize}
+    	\end{block}
+    \end{frame}
+    
+    \begin{frame}{Deductive reasoning}
+    	\begin{figure}
+    		\centering
+    		\includegraphics[width=\textwidth]{hanoi.png}
+    		\caption{Percentage of words with errors on when counting letters for the different models \url{https://arxiv.org/html/2412.18626v1}.}
+    	\end{figure}
+    	\note{Explain the problem of the towers of hanoi. Then, how this is represented through text. Then, how LLMs fail at it. Then, why LLMs fail at it.}
+    \end{frame}
+    
+    \begin{frame}{General Limitations}
+    	\begin{alertblock}{LLMs cannot:}
+    		\begin{itemize}
+    			\item Think.
+    			\item Behave.
+    			\item Deduct.
+    		\end{itemize}
+    	\end{alertblock}
+    	
+    	\begin{block}{Why?}
+    		\begin{itemize}
+    			\item LLMs are generally \alert{excellent stochastic parrots}. Their \alert{next-word-prediction} nature prevents them from understanding the world and its mechanisms.
+    			\item Finetuning, reasoning and in-context learning alleviate, but do not bypass this restriction.
+    		\end{itemize}
+    		  \note{Debate on whether LLMs are excellent Type I or very poor Type II systems. Also tie-in with debate around ML statistical field and symbolic AI.}
+    	\end{block}
+    \end{frame}
+    
+    \begin{frame}{A Note on Benchmarks}
+    	\begin{columns}
+    		\begin{column}{0.5\textwidth}
+    			\begin{figure}
+    				\includegraphics[width=\textwidth]{contamination.png}
+    				\caption{Credit to Electra Maria Papadopoulou---generated with Gemini.}
+    			\end{figure}
+    		\end{column}
+    		\begin{column}{0.5\textwidth}
+    			\begin{block}{Data Contamination}
+    				\begin{itemize}
+    					\item Evaluation data appears in training.
+    					\item Web-scraping may include datasets used as
+    					training, validation, or
+    					benchmarks, unknowingly inflating reported performance.
+    					\item Sometimes on purpose (``benchmark-maxxing'').
+    				\end{itemize}
+    			\end{block}
+    		\end{column}
+    	\end{columns}
+    \end{frame}
+    
+    \begin{frame}{A Note on Benchmarks}
+    		\begin{columns}
+    		\begin{column}{0.5\textwidth}
+    			\begin{figure}
+    				\includegraphics[width=\textwidth]{contamination.png}
+    				\caption{Credit to Electra Maria Papadopoulou---generated with Gemini.}
+    			\end{figure}
+    		\end{column}
+    		\begin{column}{0.5\textwidth}
+	    		\begin{exampleblock}{Behavior replication}
+	    			\item LLMs 
+	    		\end{exampleblock}
+    		\end{column}
+    	\end{columns}
+    
+    	
     \end{frame}
     
     
@@ -205,7 +297,8 @@
 				}
 			\end{python}
 		\end{exampleblock}
-	\end{frame}   
+	\end{frame}
+	  
     \begin{frame}{High-level Concept}
     		\begin{columns}
 	    		\begin{column}{0.6\textwidth}
@@ -256,7 +349,7 @@
 	
     \begin{frame}{Agency levels}
     	\begin{figure}
-    		\includegraphics[width=\textwidth]{agent-levels.png}
+    		\includegraphics[width=0.9\textwidth]{agent-levels.png}
     		\caption{\url{https://huggingface.co/docs/smolagents/en/conceptual_guides/intro_agents}}
     	\end{figure}
     \end{frame}
