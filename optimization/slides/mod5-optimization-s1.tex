@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc} \usepackage{amsmath} \usepackage{amsfonts}
 \usepackage{amssymb} \usepackage{booktabs} \usepackage{algpseudocodex}
 \usepackage{xurl} \usepackage{multicol} \usepackage{dejavu} \usepackage{eurosym} \usepackage{pythonhighlight}
+\usepackage{tabularx}
 
 \usetheme{Antibes}
 
@@ -22,6 +23,10 @@
     \end{frame}
     
     \part{Autonomous LLM Agents}
+    
+    \begin{frame}
+    	\partpage
+    \end{frame}
 
     \begin{frame}
         \frametitle{What we will be talking about}
@@ -513,7 +518,7 @@
    		\begin{column}{0.5\textwidth}
    			\begin{itemize}
    				\item Execute query with \alert{limited permissions} and \alert{tag} it (e.g., \texttt{READ} label) in case of further processing in the server.
-   				\item Adapter unpacks response and \alert{re-packages} it into a JSON object inside an HTTP response.
+   				\item Adapter unpacks response and \alert{re-packages} it into a JSON object inside an HTTPS response.
    			\end{itemize}
    		\end{column}
    	\end{columns}
@@ -532,8 +537,165 @@
     
     \subsection{What do we actually need?}
     
+    
+    \part{Cost, Scalability, Accountability}
+    
+	\begin{frame}
+		\partpage
+	\end{frame}
+    
+    
+    \section{Opex vs capex in LLM systems}
+    
     \begin{frame}
-    	...
+    	\frametitle{What we will be talking about}
+    	
+    	\tableofcontents
     \end{frame}
-
+	
+	\begin{frame}{Different Cost Profiles}
+		\begin{table}[ht]
+			\centering
+			\begin{tabularx}{\textwidth}{lXX}
+				\toprule
+				& \textbf{OpEx} & \textbf{CapEx} \\
+				\midrule
+				Constraints & Volume & Capabilities \\
+				Funding & Continuous & Upfront \\
+				Consumption & Immediate\note{electricity/API} & Depreciation \\
+				\midrule
+				Local Model & Low & Variable \\
+				Propr. Model & High & None \\
+				Human & Very High & None \\
+				\bottomrule
+			\end{tabularx}
+			\caption{\url{https://arxiv.org/abs/2503.16505}}
+		\end{table}
+		
+		\begin{alertblock}{}
+			There is no right or wrong answer generally. Depending on your resources, either option is justifiable.
+		\end{alertblock}
+	\end{frame}
+	
+	\begin{frame}{Local vs Proprietary: Costs}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{Local LLMs}
+					\begin{itemize}
+						\item Need some setup.
+						\item Need infrastucture.
+						\item Very low inference costs.
+						\item Can generally host smaller models.
+					\end{itemize}
+				\end{block}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{Propr. LLMs}
+					\begin{itemize}
+						\item No setup.
+						\item No infrastucture.
+						\item Medium-to-very high costs depending on provider.
+						\item Very capable models, but extremely expensive.\note{Costs will rise.}
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+		
+		\begin{alertblock}{}
+			The comparison doesn't end here! We will come back to this comparison later on in this lecture.
+		\end{alertblock}
+	\end{frame}
+	
+	\begin{frame}{Analyzing Costs}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{Local LLMs}
+					\begin{itemize}
+						\item Calculate hardware depreciation.\note{Not a consideration for small runs.}
+						\item Add electricity costs (depending on utilization).\note{Empirical estimate best.}
+						\item Add personnel and other costs.\note{Sysadmin, licenses etc.}
+					\end{itemize}
+				\end{block}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{Propr. LLMs}
+					\begin{itemize}
+						\item Most companies bill by \alert{input} and \alert{output} tokens.
+						\item Output tokens much more \alert{expensive}.
+						\item But input tokens much more \alert{numerous} (context).
+						\item Exact calculation varies by provider.
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{A Framework for Estimating Costs}
+		\begin{itemize}
+			\item There is currently no agreed-upon framework for estimating costs for LLMs.
+			\item But we can still try!
+			\item Let CPT (Cost Per Task) the cost for completing an arbitrary task.
+			\item Then, $\text{Total Cost} = \text{CPT} \times N_{\text{tasks}}$
+		\end{itemize}
+		
+		\begin{exampleblock}{Example: Product reviews}
+			The task is to find in a single webpage how many times our product was mentioned.
+			We crawl an average of 10{,}000 pages per day.
+		\end{exampleblock}
+	\end{frame}
+	
+	\begin{frame}{Local Hosting Costs}
+		\begin{itemize}
+			\item $\text{TCO} = \text{CapEx} + \text{PowerCost}$.
+			\item $
+			\text{CapEx} =	
+			C_{\text{server}} \cdot N_{\text{servers}}
+			\cdot
+			\frac{D}{365 \cdot Y}
+			$
+			\item $PowerCost$ can be estimated empirically.
+			\item Keep in mind that $PowerCost$ is partially a function of inference speed; the longer each task takes, the more the GPU is span up.
+		\end{itemize}
+		
+		\begin{alertblock}{Reminder}
+			The purpose of this estimation is not to have a solid budgetary limit, but rather for comparing available options.
+		\end{alertblock}
+	\end{frame}
+	
+	\begin{frame}{Comparing Costs Between Options}
+		\begin{exampleblock}{Example: Social Science Experiments}
+			\begin{table}[ht]
+				\centering
+				\begin{tabular}{cccc}
+					\toprule
+					& CPT & \textbf{Total cost} & \textbf{Infrastructure} \\
+					\midrule
+					Humans & \$ 9.31 & \$ 16{,}758 & None \\
+					GPT-5.1 & \$ 0.25 & \$ 446.32 & None \\
+					Local Host& \$ 0.03 & \$ 58.82 & GPU server \\
+					Small models & \$ 0.01 & \$ 9.80 & Consumer-grade \\
+					\bottomrule
+				\end{tabular}
+				\caption{\url{https://arxiv.org/abs/2503.16505}}
+			\end{table}
+		\end{exampleblock}
+	\end{frame}
+	
+	
+	
+	\section{Quantization}
+	
+	
+	
+	
+	
+	\section{Beyond the money: Constraints}
+	
+	\subsection{Legal \& ethical considerations}
+	
+	\subsection{Practical considerations}
+	
+	\begin{frame}
+		content...
+	\end{frame}
 \end{document}
