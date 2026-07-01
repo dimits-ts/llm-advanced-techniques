@@ -131,27 +131,41 @@
     		\begin{columns}
     		\begin{column}{0.5\textwidth}
     			\begin{figure}
-    				\includegraphics[width=\textwidth]{contamination.png}
+    				\includegraphics[width=\textwidth]{milgram.jpg}
     				\caption{Credit to Electra Maria Papadopoulou---generated with Gemini.}
     			\end{figure}
     		\end{column}
+    		
     		\begin{column}{0.5\textwidth}
 	    		\begin{exampleblock}{Behavior replication}
-	    			\item LLMs 
+	    			\begin{itemize}
+	    				\item LLMs replicate the Milgram study.
+	    				\item Emergent social property!
+	    				\item ...or is it that the LLMs already know the results of the study?
+	    				\item Perhaps, they implicitly follow what they know humans do.
+	    			\end{itemize}
 	    		\end{exampleblock}
     		\end{column}
     	\end{columns}
+    \end{frame}
     
+    \begin{frame}{A Note on Benchmarks}
+    	\begin{block}{Benchmaxxing}
+    		Optimizing a LLM's performance primarily for high scores on public \alert{leaderboards} and \alert{benchmarks}, rather than practical, and reliable real-world capability. 
+    	\end{block}
     	
+    	\begin{block}{How?}
+    		\begin{itemize}
+    			\item Training Data Contamination.
+    			\item Format Overfitting.\note{A model fine-tuned heavily on the specific format of the benchmark learns to exploit statistical quirks—such as predicting that the correct answer is disproportionately in position 'C', or applying specific elimination heuristics—rather than improving its underlying knowledge or reasoning ability. }
+    			\item Checkpoint Cherry-Picking.
+    			\item Prompt Engineering.\note{A lab can tune the evaluation ""harness""—the system prompts, the chain-of-thought templates, and the answer extraction methods—to maximize the score on a specific benchmark, potentially adding several percentage points without changing the model's actual underlying weights.}
+    		\end{itemize}
+    	\end{block}
     \end{frame}
     
     
-    \subsection{What do LLMs bring to the table?}
     
-    \begin{frame}
-    	\sectionpage
-    	\subsectionpage
-    \end{frame}
     
     \subsection{When to use LLMs?}
     
