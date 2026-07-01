@@ -32,6 +32,10 @@
     
     \section{The LLM as a System Component}
     
+     \begin{frame}{Outline}
+    	\tableofcontents[currentsection]
+    \end{frame}
+    
     \subsection{Inherent LLM limitations}
     
      \begin{frame}
@@ -165,8 +169,6 @@
     \end{frame}
     
     
-    
-    
     \subsection{When to use LLMs?}
     
     \begin{frame}
@@ -228,7 +230,9 @@
 
     \section{Tool-Based Reasoning using ReAct}
     
-    \subsection{LLM tool-calling}
+    \begin{frame}{Outline}
+    	\tableofcontents[currentsection]
+    \end{frame}
     
     \subsection{Thought, Action, Observation}
     
@@ -335,7 +339,6 @@
     \end{frame}
     
     \begin{frame}{Early examples}
-    	
     	\begin{columns}
     		\begin{column}{0.5\textwidth}
     				\begin{figure}
@@ -343,6 +346,7 @@
 	    				\caption{\url{https://rdi.berkeley.edu/llm-agents/f24}}
 	    			\end{figure}
     		\end{column}
+    		
     		\begin{column}{0.5\textwidth}
     			\begin{figure}
     				\includegraphics[width=\textwidth]{ReAct-example2.png}
@@ -350,11 +354,10 @@
     			\end{figure}
     		\end{column}
     	\end{columns}
-    
     \end{frame}
     
-    
-    \subsection{How much autonomy should we give the agent?}
+   
+   \subsection{Standardization}
 
    \begin{frame}
 		\sectionpage
@@ -368,28 +371,169 @@
     	\end{figure}
     \end{frame}
     
+    \begin{frame}{MCP: What is it?}
+    	\begin{columns}
+    		\begin{column}{0.5\textwidth}
+    			\begin{figure}
+    				\includegraphics[width=\textwidth]{mcp.png}
+    				\caption{\url{https://velog.io}}
+    			\end{figure}
+    		\end{column}
+    		\begin{column}{0.5\textwidth}
+    			\begin{definition}
+    				MCP \alert{(Model Context Protocol)} is a standardized framework that connects LLMs with external tools, APIs, and live data sources.
+    			\end{definition}
+    		\end{column}
+    	\end{columns}
+    \end{frame}
+    
+    \begin{frame}{MCP: How does it work?}
+    	\begin{columns}
+    		\begin{column}{0.5\textwidth}
+    			\begin{figure}
+    				\includegraphics[width=\textwidth]{mcp.png}
+    				\caption{\url{https://velog.io}}
+    			\end{figure}
+    		\end{column}
+    		\begin{column}{0.5\textwidth}
+    			\begin{itemize}
+    				\item \textbf{MCP Server}: Backend executing standardized API calls.
+    				\item \textbf{MCP Client}: Translates LLM command to the MCP server.
+    				\item \textbf{MCP Host}: The LLM and UI.
+    			\end{itemize}
+    		\end{column}
+    	\end{columns}
+    \end{frame}
+    
+     \begin{frame}{MCP: Real-Use Example}
+		\begin{figure}
+			\includegraphics[width=0.6\textwidth]{mcp-ui.png}
+			\includegraphics[width=\textwidth]{mcp-logs.png}
+		\end{figure}
+    \end{frame}
+    
+    \begin{frame}{MCP: How does it work?}
+    	\begin{columns}
+    		\begin{column}{0.5\textwidth}
+    			\begin{figure}
+    				\includegraphics[width=\textwidth]{mcp.png}
+    				\caption{\url{https://velog.io}}
+    			\end{figure}
+    		\end{column}
+    		\begin{column}{0.5\textwidth}
+    			\begin{itemize}
+    				\item \textbf{MCP Server}: Backend executing standardized API calls.
+    				\item \textbf{MCP Client}: Translates LLM command to the MCP server.
+    				\item \textbf{MCP Host}: The LLM and UI.
+    			\end{itemize}
+    		\end{column}
+    	\end{columns}
+    \end{frame}
+    
+    \begin{frame}{MCP: How does it work?}
+    	\begin{columns}
+    		\begin{column}{0.5\textwidth}
+    			\begin{figure}
+    				\includegraphics[width=\textwidth]{mcp.png}
+    				\caption{\url{https://velog.io}}
+    			\end{figure}
+    		\end{column}
+    		\begin{column}{0.5\textwidth}
+    			\begin{itemize}
+    				\item \textbf{MCP Server}: Backend executing standardized API calls.
+    				\item \textbf{MCP Client}: Translates LLM command to the MCP server.
+    				\item \textbf{MCP Host}: The LLM and UI.
+    			\end{itemize}
+    		\end{column}
+    	\end{columns}
+    \end{frame}
+    
+    \begin{frame}{MCP: Internals}
+    	\begin{columns}
+    		\begin{column}{0.5\textwidth}
+    			\begin{figure}
+    				\includegraphics[height=0.8\textheight]{mcp-process1.png}
+    				\caption{\url{https://velog.io}}
+    			\end{figure}
+    		\end{column}
+    		\begin{column}{0.5\textwidth}
+    			\begin{itemize}
+    				\item The \alert{MCP Client} sends a JSON query.
+    				\item Query wrapped in a HTTPS request for validation and security.
+    			\end{itemize}
+    		\end{column}
+    	\end{columns}
+    \end{frame}
+    
+   \begin{frame}{MCP: Internals}
+   	\begin{columns}
+   		\begin{column}{0.5\textwidth}
+   			\begin{figure}
+   				\includegraphics[height=0.8\textheight]{mcp-process2.png}
+   				\caption{\url{https://velog.io}}
+   			\end{figure}
+   		\end{column}
+   		\begin{column}{0.5\textwidth}
+   			\begin{itemize}
+   				\item The \alert{Adapter} receives the request.
+   				\item Attaches metadata (id, length etc.).
+   				\item Forwards the message to the \alert{Scheduler} which creates a session for the user.
+   				\item Enables concurrent requests by multiple users.
+   			\end{itemize}
+   		\end{column}
+   	\end{columns}
+   \end{frame}
+   
+   \begin{frame}{MCP: Internals}
+   	\begin{columns}
+   		\begin{column}{0.5\textwidth}
+   			\begin{figure}
+   				\includegraphics[height=0.8\textheight]{mcp-process3.png}
+   				\caption{\url{https://velog.io}}
+   			\end{figure}
+   		\end{column}
+   		\begin{column}{0.5\textwidth}
+   			\begin{itemize}
+   				\item Adapter's message contains a pointer to an \alert{existing template} (e.g., \texttt{customer.balance}).
+   				\item Retrieve standardized template (e.g., \texttt{SELECT balance FROM Accounts WHERE ...})
+   				\item Ensure that query has \alert{necessary permissions} (in this case, \texttt{READ} access).
+   			\end{itemize}
+   		\end{column}
+   	\end{columns}
+   \end{frame}
+   
+   \begin{frame}{MCP: Internals}
+   	\begin{columns}
+   		\begin{column}{0.5\textwidth}
+   			\begin{figure}
+   				\includegraphics[height=0.8\textheight]{mcp-process4.png}
+   				\caption{\url{https://velog.io}}
+   			\end{figure}
+   		\end{column}
+   		\begin{column}{0.5\textwidth}
+   			\begin{itemize}
+   				\item Execute query with \alert{limited permissions} and \alert{tag} it (e.g., \texttt{READ} label) in case of further processing in the server.
+   				\item Adapter unpacks response and \alert{re-packages} it into a JSON object inside an HTTP response.
+   			\end{itemize}
+   		\end{column}
+   	\end{columns}
+   \end{frame}
+    
     
     \section{Agent-to-Agent Interaction}
   
     \subsection{Single-Agent vs. Multi-Agent}
     
-    \begin{frame}
-    	\sectionpage
-    	\subsectionpage
+    \begin{frame}{Outline}
+    	\tableofcontents[currentsection]
     \end{frame}
     
     \subsection{Orchestrating Interaction}
     
-    \begin{frame}
-    	\sectionpage
-    	\subsectionpage
-    \end{frame}
-    
     \subsection{What do we actually need?}
     
     \begin{frame}
-    	\sectionpage
-    	\subsectionpage
+    	...
     \end{frame}
 
 \end{document}
