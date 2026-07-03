@@ -18,7 +18,7 @@ To transition participants from merely *using* Large Language Models to *archite
 
 **Focus:** Building *smart* applications. How do we give LLMs expertise and autonomy through structure and role?
 
-**Case Study Focus:** Designing a collaborative system for complex task completion. Example used: Paper peer review (subject to change).
+**Case Study Focus:** Designing a collaborative system for complex task completiReAon. Example used: Paper peer review (subject to change).
 
 **Mini-Project Milestone**: High-level documentation of the proposed system.
 
