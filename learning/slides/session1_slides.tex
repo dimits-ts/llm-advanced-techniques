@@ -527,34 +527,45 @@
 
     \begin{frame}{QLoRA: Quantization}
         \begin{columns}
+        	
+        	\begin{column}{0.45\textwidth}
+        		\begin{figure}
+        			\includegraphics[width=\columnwidth]{quantization-fp.png}
+        			\centering
+        			\caption{
+        				\url{https://developer.nvidia.com/blog/model-quantization-concepts-methods-and-why-it-matters}
+        			}
+        		\end{figure}
+        	\end{column}
+        	
             \begin{column}{0.45\textwidth}
                 \begin{itemize}
                     \item Quantization refers to dropping the size (not number)
                     of the LLM parameters.
 
-                    \item Normally, each parameter is stored in a 16 bit
+                    \item Normally, each parameter is stored in a 32 bit
                     floating point.
 
                     \item Quantization can drop them to usually 4 bits,
-                    resulting in \alert{$\times 4$ less} GPU memory and
+                    resulting in \alert{$\times 8$ less} GPU memory and
                     inference costs.
                 \end{itemize}
-            \end{column}
-
-            \begin{column}{0.45\textwidth}
-                \begin{figure}
-                    \includegraphics[width=\columnwidth]{quantization-fp.png}
-                    \centering
-                    \caption{
-                        \url{https://developer.nvidia.com/blog/model-quantization-concepts-methods-and-why-it-matters}
-                    }
-                \end{figure}
             \end{column}
         \end{columns}
     \end{frame}
 
     \begin{frame}{QLoRA: Quantization}
         \begin{columns}
+        	\begin{column}{0.45\textwidth}
+        		\begin{figure}
+        			\includegraphics[width=\columnwidth]{quantization-fp.png}
+        			\centering
+        			\caption{
+        				\url{https://developer.nvidia.com/blog/model-quantization-concepts-methods-and-why-it-matters}
+        			}
+        		\end{figure}
+        	\end{column}
+        	
             \begin{column}{0.45\textwidth}
                 \begin{itemize}
                     \item Quantization is one of the \alert{most useful tools}
@@ -565,16 +576,6 @@
 
                     \item We will return to this in Module 5.
                 \end{itemize}
-            \end{column}
-
-            \begin{column}{0.45\textwidth}
-                \begin{figure}
-                    \includegraphics[width=\columnwidth]{quantization-fp.png}
-                    \centering
-                    \caption{
-                        \url{https://developer.nvidia.com/blog/model-quantization-concepts-methods-and-why-it-matters}
-                    }
-                \end{figure}
             \end{column}
         \end{columns}
     \end{frame}
@@ -589,6 +590,12 @@
 	
     \begin{frame}{QLoRA: Concept}
         \begin{columns}
+        	 \begin{column}{0.45\textwidth}
+        		\begin{figure}
+        			\includegraphics[width=\columnwidth]{qlora.drawio.png}
+        			\centering
+        		\end{figure}
+        	\end{column}
             \begin{column}{0.45\textwidth}
                 \begin{itemize}
                     \item Load a 4-bit quantized model using a normal
@@ -599,13 +606,6 @@
 
                     \item Continue as normal.
                 \end{itemize}
-            \end{column}
-
-            \begin{column}{0.45\textwidth}
-                \begin{figure}
-                    \includegraphics[width=\columnwidth]{qlora.drawio.png}
-                    \centering
-                \end{figure}
             \end{column}
         \end{columns}
     \end{frame}
