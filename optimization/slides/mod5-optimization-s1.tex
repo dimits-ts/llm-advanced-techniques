@@ -2,8 +2,21 @@
 
 \usepackage[utf8]{inputenc} \usepackage{amsmath} \usepackage{amsfonts}
 \usepackage{amssymb} \usepackage{booktabs} \usepackage{algpseudocodex}
-\usepackage{xurl} \usepackage{multicol} \usepackage{dejavu} \usepackage{eurosym} \usepackage{pythonhighlight}
+\usepackage{xurl} \usepackage{multicol} \usepackage{dejavu} \usepackage{eurosym} \usepackage{listings}\usepackage{xcolor}
 \usepackage{tabularx}
+
+\lstset{
+	language=Python,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{purple},
+	stringstyle=\color{blue},
+	commentstyle=\color{gray},
+	showstringspaces=false,
+	showtabs=false,
+	keepspaces=true,
+	tabsize=4,
+	columns=flexible
+}
 
 \usetheme{Antibes}
 
@@ -72,17 +85,17 @@
     
     \begin{frame}[fragile]{Character counting}
     	\begin{exampleblock}{Example}
-    		\begin{python}[gobble=8]
-    			model.prompt("How many 'r's are in 'carr'?")
-    			>>> "There is one 'r' in 'carr'".
-    		\end{python}
+\begin{lstlisting}
+model.prompt("How many 'r's are in 'carr'?")
+>>> "There is one 'r' in 'carr'".
+\end{lstlisting}
     	\end{exampleblock}
     	
     	\begin{block}{Indicative explanation}
     		\begin{itemize}
-    			\item The model can not find the word ``carr'' in its knowledge base...
-    			\item ...but it knows the word ``car'' and the fact that ``carr'' and ``car'' are highly correlated...
-    			\item ...``car'' has one ``r'', therefore this is the answer.
+    			\item The model can not find the word ``carr'' in its knowledge base.
+    			\item But it knows the word ``car'' and the fact that ``carr'' and ``car'' are highly correlated.
+    			\item ``car'' has one ``r'', therefore this is the answer.
     		\end{itemize}
     	\end{block}
     \end{frame}
@@ -249,18 +262,18 @@
    \begin{frame}[fragile]{Tool-Calling}
    	\begin{exampleblock}{Tool example}
    		
-   		\begin{python}[gobble=8]
-   			from smolagents import tool
-   			@tool
-   			def calculator(expr: str) -> float:
-   			"""
-   			Evaluate a basic arithmetic expression.
-   			
-   			Args:
-   			expr: The math expression to evaluate, such as "2 + 3 * (4 / 2)".
-   			"""
-   			return eval(expr, {"__builtins__": None}, {})
-   		\end{python}
+\begin{lstlisting}
+from smolagents import tool
+
+@tool
+def calculator(expr: str) -> float:
+    """
+    Evaluate a basic arithmetic expression.
+    Args:
+    expr: The math expression to evaluate, such as "2 + 3 * (4 / 2)".
+    """
+    return eval(expr, {"__builtins__": None}, {})
+\end{lstlisting}
    		
    	\end{exampleblock}
    \end{frame}
@@ -277,50 +290,57 @@
     	\end{definition}
     \end{frame}
     
-    \begin{frame}[fragile]
-    	\begin{exampleblock}{Tool calling example}
-    		\begin{python}[gobble=8]
-    			{
-    				"tool_calls": [
-    				{
-    					"id": "calc1",
-    					"function": {
-    						"name": "calculate",
-    						"arguments": {
-    							"command": "calculator('2 + 3 * (4 / 2)')"
-    						}
-    					}
-    				}
-    				]
-    			}
-    			
-    			>>> 8
-    		\end{python}
-    	\end{exampleblock}
-    \end{frame}
- 
-	\begin{frame}[fragile]
-		\begin{exampleblock}{Tool calling chaining example}
-			\begin{python}[gobble=8]
-				{"tool_calls": [
-					{
-						"id": "stock_call_1",
-						"function": {
-							"name": "get_stock_price",
-							"arguments": {"ticker": "TSLA"}
-						}
-					},
-					{
-						"id": "news_call_2",
-						"function": {
-							"name": "fetch_news_summary",
-							"arguments": {"ticker": "TSLA", "days": 7}
-					}
-					]
-				}
-			\end{python}
-		\end{exampleblock}
-	\end{frame}
+\begin{frame}[fragile]
+	\begin{exampleblock}{Tool calling example}
+\begin{lstlisting}
+{
+    "tool_calls": [
+    {
+        "id": "calc1",
+        "function": {
+            "name": "calculate",
+            "arguments": {
+                "command": "calculator('2 + 3 * (4 / 2)')"
+            }
+        }
+    }
+    ]
+}
+
+>>> 8
+\end{lstlisting}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{exampleblock}{Tool calling chaining example}
+		\begin{lstlisting}
+{
+    "tool_calls": [
+         {
+            "id": "stock_call_1",
+            "function": {
+                "name": "get_stock_price",
+                "arguments": {
+                    "ticker": "TSLA"
+                }
+          }
+         },
+        {
+            "id": "news_call_2",
+            "function": {
+                "name": "fetch_news_summary",
+                "arguments": {
+                    "ticker": "TSLA",
+                    "days": 7
+			    }
+		     }
+	    }
+    ]
+}
+		\end{lstlisting}
+	\end{exampleblock}
+\end{frame}
 	  
     \begin{frame}{High-level Concept}
     		\begin{columns}
