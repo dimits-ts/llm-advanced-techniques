@@ -578,10 +578,15 @@ def calculator(expr: str) -> float:
     
     \section{Opex vs capex in LLM systems}
     
-    \begin{frame}
-    	\frametitle{What we will be talking about}
-    	
+    \begin{frame}{What we will be talking about}
     	\tableofcontents
+    \end{frame}
+    
+    
+    \subsection{Local vs. Cloud Models}
+    
+    \begin{frame}{Outline}
+    	\tableofcontents[currentsection]
     \end{frame}
 	
 	\begin{frame}{Different Cost Profiles}
@@ -637,6 +642,7 @@ def calculator(expr: str) -> float:
 		\end{alertblock}
 	\end{frame}
 	
+	
 	\begin{frame}{Analyzing Costs}
 		\begin{columns}
 			\begin{column}{0.5\textwidth}
@@ -661,12 +667,20 @@ def calculator(expr: str) -> float:
 		\end{columns}
 	\end{frame}
 	
+	
+	\subsection{Estimating Costs}
+	
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+	
 	\begin{frame}{A Framework for Estimating Costs}
 		\begin{itemize}
 			\item There is currently no agreed-upon framework for estimating costs for LLMs.
 			\item But we can still try!
 			\item Let CPT (Cost Per Task) the cost for completing an arbitrary task.
-			\item Then, $\text{Total Cost} = \text{CPT} \times N_{\text{tasks}}$
+			\item Then, $\text{Total Cost} = \text{CPT}  N_{\text{tasks}}$
 		\end{itemize}
 		
 		\begin{exampleblock}{Example: Product reviews}
@@ -693,6 +707,12 @@ def calculator(expr: str) -> float:
 		\end{alertblock}
 	\end{frame}
 	
+	\begin{frame}{Proprietary Model Costs}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{proprietary-costs.png}
+		\end{figure}
+	\end{frame}
+	
 	\begin{frame}{Comparing Costs Between Options}
 		\begin{exampleblock}{Example: Social Science Experiments}
 			\begin{table}[ht]
@@ -713,14 +733,19 @@ def calculator(expr: str) -> float:
 	\end{frame}
 	
 	
-	\section{Quantization}
+	\section{Inference Optimization}
 	
 	\begin{frame}{Outline}
 		\tableofcontents[currentsection]
 	\end{frame}
 	
-	\subsection{Floating Point vs Integer Quantization}
+	\subsection{Quantization}
 	
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+		
 	\begin{frame}{Reminder: What is Quantization?}
 		\begin{columns}
 			\begin{column}{0.45\textwidth}
@@ -741,7 +766,7 @@ def calculator(expr: str) -> float:
 					floating point.
 					
 					\item Quantization can drop them to usually 4 bits,
-					resulting in \alert{$\times 8$ less} GPU memory and
+					resulting in \alert{$ 8$ less} GPU memory and
 					inference costs.
 				\end{itemize}
 			\end{column}
@@ -804,6 +829,7 @@ def calculator(expr: str) -> float:
 					\begin{itemize}
 						\item Works much like rounding numbers.
 						\item Simple, intuitive, works well with GPUs.
+						\item Many competitive techniques: AWQ, GGUF, GPTQ, ...
 					\end{itemize}
 				\end{block}
 			\end{column}
@@ -833,25 +859,152 @@ def calculator(expr: str) -> float:
 	\begin{frame}{Which to Use?}
 		\begin{columns}
 			\begin{column}{0.5\textwidth}
-				\begin{figure}
-					\includegraphics[width=\columnwidth]{quantization-fp.png}
-					\caption{\url{http://www.slideshare.net/DilumBandara/07-data-representation}}
-				\end{figure}
+				\begin{block}{Floating Point}
+					\begin{itemize}
+						\item Specialized for GPUs.
+						\item Well supported.
+						\item Smaller errors.
+					\end{itemize}	
+				\end{block}
 			\end{column}
 			\begin{column}{0.5\textwidth}
-				\begin{itemize}
-					\item Real numbers are represented as ``equations'' in computers.
-					\item 32 bits.
-					\item \textbf{Exponent}: Determines the \alert{range} of possible numbers.
-					\item \textbf{Mantissa}: Determines \alert{accuracy}.
-				\end{itemize}
+				\begin{block}{Integer}
+					\begin{itemize}
+						\item Extremely efficient in edge devices and specialized hardware.
+						\item Very efficient for CPU inference.
+						\item Not supported by GPUs.*
+						\item Generally competitive with FP quantization.
+					\end{itemize}
+				\end{block}
 			\end{column}
 		\end{columns}
 	\end{frame}
 	
 	
-	\subsection{Practical Considerations}
+	\subsection{KV Caching}
 	
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+	
+	\begin{frame}{What is it?}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{kv-cache-example.png}
+					\caption{\url{https://huggingface.co/blog/not-lain/kv-caching}}
+				\end{figure}	
+
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{The Problem}
+					\begin{itemize}
+						\item Transformers are autoregressive.
+						\item The more they generate, the harder it gets to generate.
+						\item Inference becomes burdened in long contexts.
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{What is it?}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{kv-cache-example.png}
+					\caption{\url{https://huggingface.co/blog/not-lain/kv-caching}}
+				\end{figure}	
+				
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{KV Caching}
+					\begin{itemize}
+						\item KV matrices are the same for all previous steps.
+						\item We can simply store them instead of re-computing them.
+						\item Thus; a cache for KV matrices!
+						\item \alert{Significant} speedup during inference.
+						\item \alert{Better} speedup as generation becomes \alert{longer}!
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Downsides}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{kv-cache-size.png}
+					\caption{\url{https://arxiv.org/html/2606.19746v1}}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{KV Caching}
+					\begin{itemize}
+						\item Cache size stored in GPU.
+						\item Scales linearly with context.
+						\item $KV cache (bytes) = batch\_size \times context\_length \times 2 \times num\_layers \times num\_kv\_heads \times head\_dim \times bytes\_per\_param$
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Downsides}
+		
+		\begin{block}{Formula}
+			$KV cache = batch\_size \times context\_length \times 2 \times num\_layers \times num\_kv\_heads \times head\_dim \times bytes\_per\_param$
+		\end{block}
+		
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{exampleblock}{LLaMa-8B (32K)}
+					$KV cache = 1 \times 32,768 \times 2 \times 32 \times 8 \times 128 \times 2
+					= 4,294,967,296 bytes
+					= 4.0 GB$
+				\end{exampleblock}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{exampleblock}{LLaMa-8B (128K)}
+					$KV cache = 1 \times 131,072 \times 2 \times 32 \times 8 \times 128 \times 2
+					= 17,179,869,184 bytes
+					= 16.0 GB$
+				\end{exampleblock}
+			\end{column}
+		\end{columns}
+		
+		\begin{alertblock}{Especially problematic for quantized models.}
+			LLaMa-8B 4-bit quantization: $\approx 5GB$.
+		\end{alertblock}
+	\end{frame}
+	
+	
+	\begin{frame}{Scaling Caches}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{kv-cache-quant-size.png}
+					\caption{\url{https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache}}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{KV Caching}
+					Still in experimental stages.
+					\begin{itemize}
+						\item Sliding window approach.
+						\item Context pruning.
+						\item Quantization.
+					\end{itemize}
+				\end{block}
+				
+				\begin{alertblock}{But...}
+					Perhaps, you don't need all that context in the first place!
+				\end{alertblock}
+			\end{column}
+		\end{columns}
+	\end{frame}
 	
 	
 	\section{Beyond the Money Constraints}
