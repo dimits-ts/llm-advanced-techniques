@@ -74,7 +74,7 @@ Supporting material:
 * Slides: [ion slides 50-53](https://eclass.aueb.gr/modules/document/file.php/INF210/slides_2025_26/nlp_slides_part06_nlp_with_transformers.pdf)
 
 
-## Cost, scalability, accountability (2 Hours)
+## Cost, scalability, evaluation (2 Hours)
 
 ### 00:00 - 00:30 Cost & Latency Trade-offs
 
@@ -86,7 +86,9 @@ Supporting material:
 * When should we use proprietary LLMs?
 
 
-### 00:30 - 01:00: Quantization
+### Inference Optimization
+
+#### 00:30 - 10:00 Quantization
 
 * VRAM and speed constraints
 * Quantization as a scalable solution
@@ -94,32 +96,26 @@ Supporting material:
 * Tradeoff: accuracy vs. cost
 * Connection with QLora and parameter-aware pretraining
 
+#### 01:00 - 01:30: KV-Caching
 
-### 01:00 - 01:30 Legal, ethical and practical considerations
-* Infosec sensitive information
-* Legal issues: GDPR, EU AI Act
-* Ethical issues
+### 01:30 - 02:00: System Evaluation 
+
+* Identifying the claims of the system based on this problem.
+* What inherent limitations (boundaries) are there based on model capability and architecture decisions?
+* Common trap: Believability $\neq$ realism $\neq$ replicability
+* What common metrics can we use?
+* HCI evaluation
 
 **Mini-Project Milestone**: Create a prototype of the end-to-end system using LLMs as coding and design assistants.
 
 
 ## Bringing everything together, evaluation and student presentations (2 hours)
 
-### 00:00 - 00:45: System Evaluation 
 
-* Identifying the problem to be solved (which may be different from what originally planned).
-* Identifying the claims of the system based on this problem.
-* What inherent limitations (boundaries) are there based on model capability and architecture decisions?
-* Common trap: Believability $\neq$ realism $\neq$ replicability
-* How do we quantify whether we solved the claims?
-* When is a claim sufficiently supported?
-* What common metrics can we use?
-* What happens in practise?
-
-
-### 00:45 - 01:00: Full Architecture Review
-
-Summarize the entire module and link it to previous modules.
+### 00:00 - 01:00 Legal, ethical and practical considerations
+* Infosec sensitive information
+* Legal issues: GDPR, EU AI Act
+* Ethical issues
 
 
 ### 01:00 - 02:00: Final Presentation

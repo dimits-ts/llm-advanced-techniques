@@ -270,7 +270,8 @@ def calculator(expr: str) -> float:
     """
     Evaluate a basic arithmetic expression.
     Args:
-    expr: The math expression to evaluate, such as "2 + 3 * (4 / 2)".
+    expr: The math expression to evaluate, such as 
+    "2 + 3 * (4 / 2)".
     """
     return eval(expr, {"__builtins__": None}, {})
 \end{lstlisting}
@@ -300,7 +301,9 @@ def calculator(expr: str) -> float:
         "function": {
             "name": "calculate",
             "arguments": {
-                "command": "calculator('2 + 3 * (4 / 2)')"
+                "command": "calculator(
+                '2 + 3 * (4 / 2)'
+                )"
             }
         }
     }
@@ -315,29 +318,23 @@ def calculator(expr: str) -> float:
 \begin{frame}[fragile]
 	\begin{exampleblock}{Tool calling chaining example}
 		\begin{lstlisting}
-{
-    "tool_calls": [
-         {
-            "id": "stock_call_1",
-            "function": {
-                "name": "get_stock_price",
-                "arguments": {
-                    "ticker": "TSLA"
-                }
-          }
-         },
-        {
-            "id": "news_call_2",
-            "function": {
-                "name": "fetch_news_summary",
-                "arguments": {
-                    "ticker": "TSLA",
-                    "days": 7
-			    }
-		     }
-	    }
-    ]
-}
+"tool_calls": [
+     {
+        "id": "stock_call_1",
+        "function": {
+            "name": "get_stock_price",
+            "arguments": {
+                "ticker": "TSLA"
+            }
+      }
+     },
+    {
+        "id": "news_call_2",
+        "function": {
+            "name": "fetch_news_summary",
+            "arguments": {
+                "ticker": "TSLA"
+    [...]
 		\end{lstlisting}
 	\end{exampleblock}
 \end{frame}
@@ -953,7 +950,6 @@ def calculator(expr: str) -> float:
 	\end{frame}
 	
 	\begin{frame}{Downsides}
-		
 		\begin{block}{Formula}
 			$KV cache = batch\_size \times context\_length \times 2 \times num\_layers \times num\_kv\_heads \times head\_dim \times bytes\_per\_param$
 		\end{block}
@@ -1007,11 +1003,254 @@ def calculator(expr: str) -> float:
 	\end{frame}
 	
 	
-	\section{Beyond the Money Constraints}
+	\section{Evaluation}
 	
-	\subsection{Legal \& Ethical Considerations}
+	\begin{frame}{Outline}
+		\tableofcontents[currentsection]
+	\end{frame}
 	
-	\subsection{Practical Considerations}
+	
+	\subsection{Naive Approaches}
+	
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+	
+	
+	\subsection{Quantitative Evaluation}
+	
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+	
+	
+	\subsection{HCI Evaluation}
+	
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+	
+	
+	\part{Beyond the Money Constraints}
+	
+	\begin{frame}
+		\partpage
+	\end{frame}
+	
+	
+	\section{Legal \& Ethical Considerations}
+	
+	\begin{frame}{Outline}
+		\tableofcontents[currentsection]
+	\end{frame}
+	
+	\subsection{GDPR}
+	
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+	
+	\begin{frame}{Scope}
+			\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{gdpr.jpg}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{General Data Protection Regulation}
+					\begin{itemize}
+						\item Privacy law concerning almost exclusively \alert{personal data}.
+						\item Any information relating to an identified or identifiable natural person (``data subject'').
+					\end{itemize}
+					\note{From the point of view of the nature of the information, the concept of personal data includes any sort of statements about a person. It covers "objective" information, such as the presence of a certain substance in one's blood. It also includes "subjective" information, opinions or assessments. From the point of view of the content of the information, the concept of personal data includes data providing any sort of information.}
+				\end{block}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+		\begin{frame}{Scope}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{gdpr.jpg}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{Where does it apply?}
+					If at least one is true:
+					\begin{itemize}
+						\item Data subjects are in the Union.
+						\item Their behavior takes place in the Union.
+						\item Controller or processor in the Union.\note{Due to the previous two, non-EU companies are very frequently subject to GDPR.}
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Identifiable Information}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{nyc-failure-case.jpg}
+					\note{NYC Taxi and Limousine Commission (TLC) trip and fare logs: Over 20GB of trip and fare logs from NYC taxis, containing detailed records of trips (pickup/dropoff locations and times) Contained alphanumeric codes for the driver’s license number and taxi medallion number using an MD5 hash. They adhered to highly specific, limited patterns: researchers could calculate the MD5 hash for every single possibility.}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{Direct Identification}
+					Including name, address etc.
+				\end{block}
+				
+				\begin{alertblock}{Indirect Identification}
+					\begin{itemize}
+						\item Combination of SDB characteristics.
+						\item ID number, location.
+						\item Hardware/IP address, browser fingerprinting.
+					\end{itemize}
+				\end{alertblock}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Definitions}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{Data Controller}
+					The natural or legal person, public authority, agency or other body which, alone or jointly with others, \alert{determines the purposes and means} of the processing of personal information.
+				\end{block}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{Data Processor}
+					A natural or legal person, public authority, agency or other body which \alert{processes} personal data \alert{on behalf of the controller}.
+				\end{block}
+				\pause
+				\begin{alertblock}{}
+					That's you!
+				\end{alertblock}
+			\end{column}	
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{How Should I Comply?}
+		\begin{block}{The Seven Principles}
+			\begin{enumerate}
+				\item \alert{Lawfulness, Fairness, and Transparency}
+				
+				\item \alert{Purpose Limitation:} Data must be collected for specified, explicit, and legitimate purposes.
+				\note{Any new or incompatible purpose must have a distinct legal basis; disclosure to third parties for a new purpose requires careful consideration and likely an additional legal basis.}
+				
+				\item \alert{Data Minimisation/Proportionality:} Data collected must be adequate, relevant, and strictly limited to what is necessary for the declared aim.
+				\note{The categories of data chosen must be necessary to achieve the overall aim, and controllers must strictly limit collection to directly relevant information.}
+				
+				\item \alert{Accuracy:} Personal data must be accurate and, where necessary, kept up to date.
+				\note{Every reasonable step must be taken to ensure that inaccurate data is erased or rectified without delay, mitigating potential damage to the data subject.}
+			\end{enumerate}
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}{}
+		\begin{block}{The Seven Principles}
+			\begin{enumerate}
+				\setcounter{enumi}{4}
+				\item \alert{Storage Limitation:} Data must only be kept in a form that permits identification for no longer than is necessary for the processing purpose.
+				\note{An exception applies to archiving, scientific research, or statistical purposes, provided appropriate technical measures are used to safeguard individual rights.}
+				
+				\item \alert{Integrity and Confidentiality (Security):} Data must be protected by appropriate technical and organizational measures against unauthorized access, loss, or damage.
+				\note{This principle serves as the key mechanism for preventing adverse effects for the data subject during data processing.}
+				
+				\item \alert{Accountability:} Controllers must actively implement and continuously demonstrate compliance with all data protection provisions in their activities.
+				\note{The controller is responsible for demonstrating compliance to data subjects, the public, and supervisory authorities at any time (e.g., keeping records, conducting impact assessments).}
+			\end{enumerate}
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}{How Should I Comply?}
+		\begin{block}{Data protection by design/by default}
+			\begin{itemize}
+				\item Design your data collection and analysis \alert{proactively}.
+				\item Maximum privacy is the default. Users can opt out.
+				\item Keep users informed. Keep the system user-centric.
+				\item Keeping \alert{minimal personal data} $\rightleftarrows$ minimum risk and complications.
+			\end{itemize}
+		\end{block}
+		
+		\begin{block}{Data Protection Officer (DPO)}
+			Data Controllers are typically required to have a \alert{designated expert} trained on this legislation.
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}{How Far Should I Go?}
+		\begin{alertblock}{High-risk systems}
+			\begin{itemize}
+				\item Evaluation or scoring, including profiling and predicting
+				\item Automated-decision making with legal or similar significant effect
+				\item Datasets that have been matched or combined
+				\item Data concerning vulnerable data subjects
+			\end{itemize}
+		\end{alertblock}
+	\end{frame}
+	
+	\begin{frame}{How do I Remove Personal Information?}
+		\begin{block}{Common Methods}
+			\begin{itemize}
+				\item Collect data without personal information (Data minimization principle).
+				\item Anonymize: All identifying elements are eliminated from a set of personal data so that the data subject is no longer identifiable.
+				\item Redaction/Expungement: ``Right to be forgotten''.
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	\begin{frame}{How do I Remove Personal Information?}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{nyc-failure-case.jpg}
+					\note{NYC Taxi and Limousine Commission (TLC) trip and fare logs: Over 20GB of trip and fare logs from NYC taxis, containing detailed records of trips (pickup/dropoff locations and times) Contained alphanumeric codes for the driver’s license number and taxi medallion number using an MD5 hash. They adhered to highly specific, limited patterns: researchers could calculate the MD5 hash for every single possibility.}
+				\end{figure}
+			\end{column}
+			
+			\begin{column}{0.5\textwidth}
+				\begin{alertblock}{Pseudo-anonymization is not enough}
+						Attributes, such as name, date of birth, sex, address, or other elements that could lead to identification are replaced by a pseudonym.
+				\end{alertblock}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\subsection{EU AI Act}
+	
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+	
+	
+	\section{Practical Considerations}
+	
+	\begin{frame}{Outline}
+		\tableofcontents[currentsection]
+	\end{frame}
+	
+	\subsection{Opsec}
+	
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+	
+	\subsection{Autonomy}
+	
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+	
+	
 	
 	\begin{frame}
 		content...
