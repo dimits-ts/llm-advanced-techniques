@@ -677,7 +677,7 @@ def calculator(expr: str) -> float:
 			\item There is currently no agreed-upon framework for estimating costs for LLMs.
 			\item But we can still try!
 			\item Let CPT (Cost Per Task) the cost for completing an arbitrary task.
-			\item Then, $\text{Total Cost} = \text{CPT}  N_{\text{tasks}}$
+			\item Then, $\text{Total Cost} = \text{CPT}  \times N_{\text{tasks}}$
 		\end{itemize}
 		
 		\begin{exampleblock}{Example: Product reviews}
@@ -1041,13 +1041,11 @@ def calculator(expr: str) -> float:
 	\end{frame}
 	
 	
-	\section{Legal \& Ethical Considerations}
-	
 	\begin{frame}{Outline}
 		\tableofcontents[currentsection]
 	\end{frame}
 	
-	\subsection{GDPR}
+	\section{GDPR}
 	
 	\begin{frame}
 		\sectionpage
@@ -1222,37 +1220,210 @@ def calculator(expr: str) -> float:
 		\end{columns}
 	\end{frame}
 	
-	\subsection{EU AI Act}
+	\section{EU AI Act}
 	
 	\begin{frame}
 		\sectionpage
 		\subsectionpage
 	\end{frame}
 	
-	
-	\section{Practical Considerations}
-	
-	\begin{frame}{Outline}
-		\tableofcontents[currentsection]
+	\begin{frame}{What is it?}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{ai_act.jpg}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{Purpose}
+					\begin{itemize}
+						\item Supplementary to other legislation (e.g., GDPR).
+						\item Applicable to all AI systems in the Union.
+						\item Classify systems by internal risk, restrict them appropriately.
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
 	\end{frame}
 	
-	\subsection{Opsec}
+	\begin{frame}{Scope}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{ai_act.jpg}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{Where does it apply?}
+					\begin{itemize}
+						\item \alert{Providers} placing AI systems in the Union.\note{Includes non-Union providers.}
+						\item \alert{Users} of AI systems in the Union.
+						\item Importers, distributors, manufacturers, representatives and affected persons using or operating systems whose \alert{outputs} are used within the Union.\note{Deployer: uses an AI system. Authorized representative: EU entity which has received and accepted a written mandate from a provider or developer to carry out tasks and obligations on their behalf.}
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Scope}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{ai_act.jpg}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{Where does it NOT apply?}
+					\begin{itemize}
+						\item National security \& defense.
+						\item Research / RnD (excluding live testing).
+						\item Purely personal activities.
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{What is an AI System?}
+		\begin{definition}[AI System]
+			\begin{itemize}
+				\item A \alert{machine}-based system.\note{Hardware and software, enables model training, data processing, predictive modeling, or automated decision-making at scale.}
+				\item Operate with varying levels of \alert{autonomy}.\note{Which we will talk about in later slides.}
+				\item \alert{Infers} how to generate outputs from input.\note{Includes logic- and knowledge-base approaches.}
+				\item (Optional) Adaptive after deployment
+			\end{itemize}		
+		\end{definition}
+	\end{frame}
+	
+	\begin{frame}{Restrictions}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{ai_act_risk.jpg}
+			\caption{Image by \url{https://www.frontiersin.org/journals/political-science/articles/10.3389/fpos.2024.1451601/full}, released under CC.}
+		\end{figure}
+	\end{frame}
+	
+	\begin{frame}{Restrictions: Unacceptable Risk}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{ai_act_risk.jpg}
+					\caption{Image by \url{https://www.frontiersin.org/journals/political-science/articles/10.3389/fpos.2024.1451601/full}, released under CC.}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{alertblock}{Unacceptable Risk}
+					\begin{itemize}
+						\item System directly violates core EU principals. 
+						\item \alert{Prohibited}.
+						\item Example: Emotion recognition in the workplace, unless for medical or safety reasons\note{e.g., tiredness levels of a pilot};
+					\end{itemize}
+				\end{alertblock}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Restrictions: High Risk}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=\columnwidth]{ai_act_risk.jpg}
+					\caption{Image by \url{https://www.frontiersin.org/journals/political-science/articles/10.3389/fpos.2024.1451601/full}, released under CC.}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{High Risk}
+					\begin{itemize}
+						\item Failure may endanger health and safety. 
+						\item Examples: Critical infrastructure, hiring, essential services. 
+						\item Requires development of a \alert{risk management system}.
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Restrictions: High Risk}
+		\begin{block}{A high-risk system must include:}
+			\begin{itemize}
+				\item A Risk Management System.\note{Identify misuse, risks, take measures, post-marketing monitoring.}
+				\item Data Governance.\note{Besides privacy, formulate assumptions on what the data represents.}
+				\item Technical documentation.
+				\item Logging system.
+				\item Transparency for human users.
+				\item Human oversight.\note{e.g., human UI, proportional to risks}
+				\item Minimum information use.
+				\item Ensure accuracy, robustness.\note{Coordination with EU Commission.}
+			\end{itemize}
+		\end{block}
+	\end{frame}
+	
+	
+	\section{OpSec}
 	
 	\begin{frame}
 		\sectionpage
 		\subsectionpage
 	\end{frame}
 	
-	\subsection{Autonomy}
-	
-	\begin{frame}
-		\sectionpage
-		\subsectionpage
+	\begin{frame}{What is it?}
+		\begin{definition}[OpSec]
+			NIST SP 800-53: A process by which potential adversaries can be denied information about capabilities and intentions[...].
+		\end{definition}
+		\pause
+		\begin{alertblock}{}
+			Information that your institution wants to keep secret.
+		\end{alertblock}
 	\end{frame}
 	
-	
-	
-	\begin{frame}
-		content...
+	\begin{frame}{Why do we care?}
+		\begin{alertblock}{If you are working with:}
+			\begin{itemize}
+				\item Personal data.
+				\item Medical or otherwise sensitive data.
+				\item Internal data (such as customer details).
+			\end{itemize}
+			Then it is \alert{crucial} that these data remain in your institution.\note{Throwback to GDPR}
+		\end{alertblock}
+		
+		\begin{block}{Applies both if:}
+			\begin{itemize}
+				\item Your system uses LLM agents.
+				\item You yourself use LLM agents.
+			\end{itemize}
+		\end{block}
 	\end{frame}
+	
+	\begin{frame}{Proprietary models}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=0.45\columnwidth]{claude.jpg}
+					\includegraphics[width=0.45\columnwidth]{openai.png}
+					\includegraphics[width=0.45\columnwidth]{gemini.png}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{}
+					\begin{itemize}
+						\item Many providers explicitly state that input data can be used for further model pretraining.
+						\item There is no guarantee that API-based models respect user agreements on safeguarding input.
+						\item See: Benchmark leakage.
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Solutions}
+		\begin{block}{}
+			No agreed-upon strategy.
+			\begin{itemize}
+				\item Identify attack surface. Which data do we need to keep private?
+				\item Anonymization.\note{Does not work on all data e.g., business strategies.}
+				\item Use locally hosted models for sensitive tasks.\note{Also cheaper! See: quantization}
+			\end{itemize}
+		\end{block}
+	\end{frame}
+
+	
 \end{document}
