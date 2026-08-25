@@ -15,650 +15,945 @@
 \institute{Athens University of Economics and Business \and Archimedes, Athena Research Center}
 
 \begin{document}
-    % =========================================================
-    % SLIDE 1: Transition and Defining Fine-Tuning (0:30)
-    % =========================================================
-    \begin{frame}
-        \titlepage
-    \end{frame}
 
-    \begin{frame}{What we will be talking about}
-        \tableofcontents
-    \end{frame}
+\part{Finetuning}
+
+\begin{frame}
+	\partpage
+\end{frame}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{What we will be talking about}
+    \tableofcontents
+\end{frame}
 
 
-    \section{Naively Finetuning LLMs}
-    
-    \subsection{What is finetuning?}
+\section{Naively Finetuning LLMs}
 
-    \begin{frame}{Outline}
-    	\tableofcontents[currentsection]
-    \end{frame}
-    
-    \begin{frame}
-    	\sectionpage
-    	\subsectionpage
-    \end{frame}
+\subsection{What is finetuning?}
 
-    \begin{frame}{Why finetune LLMs?}
-    	
-        \begin{itemize}
-            \item \textbf{Prompting:} Changes \alert{input behavior}. We guide
-            the model with instructions and examples. \item
-            \textbf{Fine-Tuning:} Changes \alert{model parameters}. We switch
-            the \alert{knowledge} of the model.
-        \end{itemize}
+\begin{frame}{Outline}
+   	\tableofcontents[currentsection]
+\end{frame}
 
-        \begin{block}{Reminder}
-            \textbf{Fine-Tuning (FT):} The process of further training a
-            pre-trained model on a smaller, domain-specific dataset to adapt its
-            general knowledge to a specialized task.
-        \end{block}
-    \end{frame}
-    
-    \begin{frame}{Pretraining vs Finetuning}
-    	\begin{block}{Reminder}
-    		%Link with Katerinas lesson
-    		\begin{itemize}
-    			\item \alert{Pre-training} provides the model with initial, \alert{general} knowledge by utilizing \alert{any} and all data sources. 
-    			\item \alert{Finetuning} shifts existing knowledge, to \alert{specific} domains using \alert{domain-specific} datasets.
-    		\end{itemize}
-    	\end{block}
-    \end{frame}
+\begin{frame}
+   	\sectionpage
+   	\subsectionpage
+\end{frame}
 
-    \begin{frame}{Example: Domain-specific tasks}
-        \begin{columns}
-            \begin{column}{0.45\textwidth}
-                \begin{block}{Part-of-Speech (POS) Tagging}
-                    The process of assigning grammatical categories to each word
-                    in a sentence.
-                \end{block}
-            \end{column}
+\begin{frame}{Why finetune LLMs?}
+   	
+    \begin{itemize}
+        \item \textbf{Prompting:} Changes \alert{input behavior}. We guide
+        the model with instructions and examples. \item
+        \textbf{Fine-Tuning:} Changes \alert{model parameters}. We switch
+        the \alert{knowledge} of the model.
+    \end{itemize}
 
-            \begin{column}{0.45\textwidth}
-                \begin{figure}
-                    \includegraphics[width=\columnwidth]{pos-tagging.jpg}
-                    \centering \caption{\url{https://byteiota.com/pos-tagging/}}
-                \end{figure}
-            \end{column}
-        \end{columns}
-    \end{frame}
+    \begin{block}{Reminder}
+        \textbf{Fine-Tuning (FT):} The process of further training a
+        pre-trained model on a smaller, domain-specific dataset to adapt its
+        general knowledge to a specialized task.
+    \end{block}
+\end{frame}
 
-    \begin{frame}{Example: Domain-specific tasks}
-        \begin{columns}
-            \begin{column}{0.45\textwidth}
-                \begin{block}{Biomedical POS Tagging}
-                    \begin{itemize}
-                        \item Patterns absent or rare in general-domain text.
-                        \item Prompting probably not enough due to
-                        \alert{missing knowledge}.
-                    \end{itemize}
-                \end{block}
-            \end{column}
+\begin{frame}{Pretraining vs Finetuning}
+   	\begin{block}{Reminder}
+   		%Link with Katerinas lesson
+   		\begin{itemize}
+   			\item \alert{Pre-training} provides the model with initial, \alert{general} knowledge by utilizing \alert{any} and all data sources. 
+   			\item \alert{Finetuning} shifts existing knowledge, to \alert{specific} domains using \alert{domain-specific} datasets.
+   		\end{itemize}
+   	\end{block}
+\end{frame}
 
-            \begin{column}{0.45\textwidth}
-                \begin{table}[h]
-                    \centering
-                    \begin{tabular}{cc}
-                        \toprule \textbf{Word} & \textbf{POS Tag} \\
-                        \midrule Homozygous & JJ \\
-                        null & JJ \\
-                        mutants & NNS \\
-                        die & VBP \\
-                        shortly & IN \\
-                        after & RB \\
-                        birth & NN \\
-                        \bottomrule
-                    \end{tabular}
-                    \caption{Example from the CRAFT dataset.}
-                \end{table}
-            \end{column}
-        \end{columns}
-    \end{frame}
-    
-    
-    \subsection{Why not (fully) finetune LLMs?}
-	
-	\begin{frame}
-		\sectionpage
-		\subsectionpage
-	\end{frame}
-	
-    \begin{frame}{High Resource Cost}
-        \begin{itemize}
-                \item \textbf{Computational Power:} Full FT requires
-                \alert{massive hardware requirements} and
-                \alert{thousands of compute hours} for large models (e.g.,
-                Llama-70B).
+\begin{frame}{Example: Domain-specific tasks}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \begin{block}{Part-of-Speech (POS) Tagging}
+                The process of assigning grammatical categories to each word
+                in a sentence.
+            \end{block}
+        \end{column}
 
-                \item \textbf{Storage:} Each specialized task requires a
-                separate, full copy of the massive foundational model.
-        \end{itemize}
-    \end{frame}
+        \begin{column}{0.45\textwidth}
+            \begin{figure}
+                \includegraphics[width=\columnwidth]{pos-tagging.jpg}
+                \centering \caption{\url{https://byteiota.com/pos-tagging/}}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
 
-    \begin{frame}{Operational Overhead}
-        \begin{itemize}
-          
-                \item Training is \alert{slow}. \item Deployment becomes
-                complex, managing \alert{multiple large models} for different
-                applications.
+\begin{frame}{Example: Domain-specific tasks}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \begin{block}{Biomedical POS Tagging}
                 \begin{itemize}
-                    \item A single 13B model may require 26GB of storage. \item
-                    10 finetuned models may thus require 260GB.
+                    \item Patterns absent or rare in general-domain text.
+                    \item Prompting probably not enough due to
+                    \alert{missing knowledge}.
                 \end{itemize}
-                \item High risk of \alert{Catastrophic Forgetting}---the model
-                forgets its general knowledge while learning the specific task.
-        \end{itemize}
-    \end{frame}
+            \end{block}
+        \end{column}
 
-    \begin{frame}{Scalability issues}
-        \begin{columns}
-            \begin{column}{0.45\textwidth}
-                \begin{block}{BERT}
-                    \centering
-                    \begin{itemize}
-                        \item \textbf{Model Size:} $\sim$340M Parameters \item
-                        \textbf{VRAM Requirement:} $\approx$ 8-12GB \item
-                        \textbf{Training Time:} Minutes to a few hours
-                    \end{itemize}
-                \end{block}
-            \end{column}
-
-            \begin{column}{0.45\textwidth}
-                \begin{block}{Llama 70B}
-                    \centering
-                    \begin{itemize}
-                        \item \textbf{Model Size:} $\sim$70 Billion Parameters
-                        \item \textbf{VRAM Requirement:} $\approx$1000GB+ \item
-                        \textbf{Training Time:} Days to Weeks (even with
-                        specialized hardware)
-                    \end{itemize}
-                \end{block}
-            \end{column}
-        \end{columns}
-
-        \begin{center}
-            LLMs are \alert{too large} to run full-finetuning. But do we need
-            to?
-        \end{center}
-    \end{frame}
-    
-    %Should we discuss older or not popular methods?
-    \begin{frame}{Parameter-Efficient Fine-Tuning (PEFT)}
-    	\begin{definition}
-    		\textbf{PEFT}:  A set of techniques used to adapt large pre-trained LLMs to specific tasks by updating only a \alert{small subset of their parameters}, rather than retraining the entire model.
-    	\end{definition}
-    	\vspace{2em}
-    	\begin{itemize}
-    		\item Many algorithms developed through the years (adapters, prompt/prefix tuning etc.).
-    		\item However, the \alert{LoRA}  family of methods has dominated the LLM space in the last few years.
-    	\end{itemize}
-    \end{frame}
+        \begin{column}{0.45\textwidth}
+            \begin{table}[h]
+                \centering
+                \begin{tabular}{cc}
+                    \toprule \textbf{Word} & \textbf{POS Tag} \\
+                    \midrule Homozygous & JJ \\
+                    null & JJ \\
+                    mutants & NNS \\
+                    die & VBP \\
+                    shortly & IN \\
+                    after & RB \\
+                    birth & NN \\
+                    \bottomrule
+                \end{tabular}
+                \caption{Example from the CRAFT dataset.}
+            \end{table}
+        \end{column}
+    \end{columns}
+\end{frame}
 
 
-    \section{Making finetuning practical through LoRA}
-    
-    \subsection{Understanding why LoRA works}
+\subsection{Why not (fully) finetune LLMs?}
 
-    \begin{frame}{Outline}
-    	\tableofcontents[currentsection]
-    \end{frame}
-    
-    \begin{frame}
-    	\sectionpage
-    	\subsectionpage
-    \end{frame}
+\begin{frame}
+	\sectionpage
+	\subsectionpage
+\end{frame}
 
-    \begin{frame}{PEFT: LoRA}
-        \begin{itemize}
-            \item Low-Rank (LoRA) Matrix Decomposition is a specific PEFT
-            algorithm that exploits the fact that weight updates in LLMs have a
-            \alert{``low intrinsic rank''}.
+\begin{frame}{High Resource Cost}
+    \begin{itemize}
+            \item \textbf{Computational Power:} Full FT requires
+            \alert{massive hardware requirements} and
+            \alert{thousands of compute hours} for large models (e.g.,
+            Llama-70B).
 
-            \item Low rank matrices enable us to \alert{scalably} represent
-            information.
-        \end{itemize}
-    \end{frame}
+            \item \textbf{Storage:} Each specialized task requires a
+            separate, full copy of the massive foundational model.
+    \end{itemize}
+\end{frame}
 
-    \begin{frame}{Low-rank matrices}
-        \begin{block}{What is a matrix?}
-            A matrix is essentially a organized collection of data (rows and
-            columns). For large datasets, these matrices can become incredibly
-            complex, requiring massive storage and computational power.
-        \end{block}
-
-        \begin{exampleblock}{Example: Data matrix}
-            \[
-            \begin{bmatrix}
-                2 & 4 & 6 & 8 & 10\\
-                1 & 2 & 3 & 4 & 5\\
-                3 & 6 & 9 & 12 & 15\\
-                4 & 8 & 12 & 16 & 20
-            \end{bmatrix}
-            \]
-        \end{exampleblock}
-    \end{frame}
-
-    \begin{frame}{Low-rank matrices}
-        \begin{block}{Matrix rank}
+\begin{frame}{Operational Overhead}
+    \begin{itemize}
+      
+            \item Training is \alert{slow}. \item Deployment becomes
+            complex, managing \alert{multiple large models} for different
+            applications.
             \begin{itemize}
-                \item Rank $r$ represents the number of genuinely independent columns (or rows!) within the matrix $M$.\note{Can't be inferred by the rest of the information.} \item If $M \in \mathbb{R}^{m\times n}$, then $rank(M) \leq min(m, n)$.
+                \item A single 13B model may require 26GB of storage. \item
+                10 finetuned models may thus require 260GB.
             \end{itemize}
-        \end{block}
+            \item High risk of \alert{Catastrophic Forgetting}---the model
+            forgets its general knowledge while learning the specific task.
+    \end{itemize}
+\end{frame}
 
-       	\begin{exampleblock}{Example: Music}
-	       	\begin{itemize}
-	       		\item Imagine a piano with 88 keys.
-	       		\item Most songs don't require all 88 keys; they can be described by melody, rhythm etc.
-	       		\item Low-rank updates capture changing \alert{general patterns}.
-	       	\end{itemize}
-       \end{exampleblock}
-    \end{frame}
+\begin{frame}{Scalability issues}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \begin{block}{BERT}
+                \centering
+                \begin{itemize}
+                    \item \textbf{Model Size:} $\sim$340M Parameters \item
+                    \textbf{VRAM Requirement:} $\approx$ 8-12GB \item
+                    \textbf{Training Time:} Minutes to a few hours
+                \end{itemize}
+            \end{block}
+        \end{column}
 
-    \begin{frame}{Low-rank matrices}
-        \begin{block}{Rank Factorization}
-            If a matrix $M$ has a low rank $r$, we can approximate it (or
-            exactly represent it) by factoring it into a product of two simpler
-            matrices.
-        \end{block}
+        \begin{column}{0.45\textwidth}
+            \begin{block}{Llama 70B}
+                \centering
+                \begin{itemize}
+                    \item \textbf{Model Size:} $\sim$70 Billion Parameters
+                    \item \textbf{VRAM Requirement:} $\approx$1000GB+ \item
+                    \textbf{Training Time:} Days to Weeks (even with
+                    specialized hardware)
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
 
-        \begin{exampleblock}{Example: Rank 1 matrix}
-            \[
-            \begin{bmatrix}
-                2 & 4 & 6 & 8 & 10\\
-                1 & 2 & 3 & 4 & 5\\
-                3 & 6 & 9 & 12 & 15\\
-                4 & 8 & 12 & 16 & 20
-            \end{bmatrix}
-            =
-            \begin{bmatrix}
-                2\\
-                1\\
-                3\\
-                4
-            \end{bmatrix}
-            \begin{bmatrix}
-                1 & 2 & 3 & 4 & 5
-            \end{bmatrix}.
-            \]
-        \end{exampleblock}
-    \end{frame}
-    
-    \begin{frame}{Why are LLM updates typically low-rank?}
-    	\note{This is a hypothesis of the seminal paper. These explanations originate from prior work of that paper, verified by other studies.}
-    	
-    	\begin{block}{Many possible explanations}
-    		\begin{itemize}
-    			\item Updates generally follow the direction of existing knowledge $\rightarrow$ the updates may often just be \alert{re-weighting} of existing weights.
-    			\item Underlying \alert{ML problems} are usually inherently low-rank.
-    		\end{itemize}
-    	\end{block}
-    \end{frame}
-    
-    \begin{frame}{Why are LLM updates typically low-rank?}
-    	\begin{columns}
-    		\begin{column}{0.45\columnwidth}
-    			\begin{figure}
-    				\includegraphics[width=\columnwidth]{embeddings.png}
-    				\caption{\url{https://aclanthology.org/2025.emnlp-main.1410.pdf}}
-    			\end{figure}
-    		\end{column}
-    		
-    		\begin{column}{0.45\columnwidth}
-    			\begin{block}{Large embedding spaces}
-    					Modern NLP models are \alert{over-parameterized} $\rightarrow$ not enough information to fill in higher ranks of weights.
-    			\end{block}
-    		\end{column}
-    	\end{columns}
-    \end{frame}
+    \begin{center}
+        LLMs are \alert{too large} to run full-finetuning. But do we need
+        to?
+    \end{center}
+\end{frame}
 
-    \begin{frame}{LoRA: Low-rank decomposition}
+%Should we discuss older or not popular methods?
+\begin{frame}{Parameter-Efficient Fine-Tuning (PEFT)}
+   	\begin{definition}
+   		\textbf{PEFT}:  A set of techniques used to adapt large pre-trained LLMs to specific tasks by updating only a \alert{small subset of their parameters}, rather than retraining the entire model.
+   	\end{definition}
+   	\vspace{2em}
+   	\begin{itemize}
+   		\item Many algorithms developed through the years (adapters, prompt/prefix tuning etc.).
+   		\item However, the \alert{LoRA}  family of methods has dominated the LLM space in the last few years.
+   	\end{itemize}
+\end{frame}
+
+
+\section{Making finetuning practical through LoRA}
+
+\subsection{Understanding why LoRA works}
+
+\begin{frame}{Outline}
+   	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}
+   	\sectionpage
+   	\subsectionpage
+\end{frame}
+
+\begin{frame}{PEFT: LoRA}
+    \begin{itemize}
+        \item Low-Rank (LoRA) Matrix Decomposition is a specific PEFT
+        algorithm that exploits the fact that weight updates in LLMs have a
+        \alert{``low intrinsic rank''}.
+
+        \item Low rank matrices enable us to \alert{scalably} represent
+        information.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Low-rank matrices}
+    \begin{block}{What is a matrix?}
+        A matrix is essentially a organized collection of data (rows and
+        columns). For large datasets, these matrices can become incredibly
+        complex, requiring massive storage and computational power.
+    \end{block}
+
+    \begin{exampleblock}{Example: Data matrix}
         \[
-        \underbrace{
-            A_{m \times n}
-        }_{\text{large matrix}}
-        \approx
-        \underbrace{
-            U_{m \times r}
-        }_{\text{left factors}}
-        \underbrace{
-            V_{r \times n}
-        }_{\text{right factors}},
-        \qquad r \ll \min(m,n).
+        \begin{bmatrix}
+            2 & 4 & 6 & 8 & 10\\
+            1 & 2 & 3 & 4 & 5\\
+            3 & 6 & 9 & 12 & 15\\
+            4 & 8 & 12 & 16 & 20
+        \end{bmatrix}
         \]
+    \end{exampleblock}
+\end{frame}
 
+\begin{frame}{Low-rank matrices}
+    \begin{block}{Matrix rank}
+        \begin{itemize}
+            \item Rank $r$ represents the number of genuinely independent columns (or rows!) within the matrix $M$.\note{Can't be inferred by the rest of the information.} \item If $M \in \mathbb{R}^{m\times n}$, then $rank(M) \leq min(m, n)$.
+        \end{itemize}
+    \end{block}
+
+      	\begin{exampleblock}{Example: Music}
+       	\begin{itemize}
+       		\item Imagine a piano with 88 keys.
+       		\item Most songs don't require all 88 keys; they can be described by melody, rhythm etc.
+       		\item Low-rank updates capture changing \alert{general patterns}.
+       	\end{itemize}
+   \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Low-rank matrices}
+    \begin{block}{Rank Factorization}
+        If a matrix $M$ has a low rank $r$, we can approximate it (or
+        exactly represent it) by factoring it into a product of two simpler
+        matrices.
+    \end{block}
+
+    \begin{exampleblock}{Example: Rank 1 matrix}
         \[
-        A_{10000 \times 5000}
-        \approx
-        U_{10000 \times 50}
-        V_{50 \times 5000},
+        \begin{bmatrix}
+            2 & 4 & 6 & 8 & 10\\
+            1 & 2 & 3 & 4 & 5\\
+            3 & 6 & 9 & 12 & 15\\
+            4 & 8 & 12 & 16 & 20
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            2\\
+            1\\
+            3\\
+            4
+        \end{bmatrix}
+        \begin{bmatrix}
+            1 & 2 & 3 & 4 & 5
+        \end{bmatrix}.
         \]
+    \end{exampleblock}
+\end{frame}
 
-        \[
-        \underbrace{10000 \times 5000}_{50,000,000\ \text{parameters}}
-        \;\longrightarrow\;
-        \underbrace{10000 \times 50 + 50 \times 5000}_{750,000\ \text{parameters}}.
-        \]
-    \end{frame}
+\begin{frame}{Why are LLM updates typically low-rank?}
+   	\note{This is a hypothesis of the seminal paper. These explanations originate from prior work of that paper, verified by other studies.}
+   	
+   	\begin{block}{Many possible explanations}
+   		\begin{itemize}
+   			\item Updates generally follow the direction of existing knowledge $\rightarrow$ the updates may often just be \alert{re-weighting} of existing weights.
+   			\item Underlying \alert{ML problems} are usually inherently low-rank.
+   		\end{itemize}
+   	\end{block}
+\end{frame}
 
-    \begin{frame}{LoRA: Mathematical Foundation}
-    	\begin{columns}
-    		\begin{column}{0.5\textwidth}
-    			 \begin{figure}
-    				\includegraphics[height=0.7\textheight]{lora1.drawio.png} \centering
-    			\end{figure}
-    		\end{column}
-    		
-    		\begin{column}{0.5\textwidth}
-    			\begin{block}{Full SFT}
-    					\begin{itemize}
-    					\item $W \in \mathbb{R}^{d \times k}$ weights. \item $X$ input,
-    					$h$ output.  
-    					\item Fwd pass: $h = WX$.
-    					\item Bckwd pass: $W = W + \alpha \nabla h $
-    					%\item $B  \in \mathbb{R}^{d \times r} \rightarrow$ zeros. \item	$A \in \mathbb{R}^{r \times k} \rightarrow$ Gaussian. \item $r \ll \min(d, k)$, hence $A, B$ are much smaller than $W$.
-    				\end{itemize}
-    			\end{block}
-    		\end{column}
-    	\end{columns}
-	\end{frame}
-	
-	\begin{frame}{LoRA: Mathematical Foundation}
-		\begin{columns}
-			\begin{column}{0.5\textwidth}
-				\begin{figure}
-					\includegraphics[height=0.7\textheight]{lora2.drawio.png} \centering
-				\end{figure}
-			\end{column}
+\begin{frame}{Why are LLM updates typically low-rank?}
+   	\begin{columns}
+   		\begin{column}{0.45\columnwidth}
+   			\begin{figure}
+   				\includegraphics[width=\columnwidth]{embeddings.png}
+   				\caption{\url{https://aclanthology.org/2025.emnlp-main.1410.pdf}}
+   			\end{figure}
+   		\end{column}
+   		
+   		\begin{column}{0.45\columnwidth}
+   			\begin{block}{Large embedding spaces}
+   					Modern NLP models are \alert{over-parameterized} $\rightarrow$ not enough information to fill in higher ranks of weights.
+   			\end{block}
+   		\end{column}
+   	\end{columns}
+\end{frame}
+
+\begin{frame}{LoRA: Low-rank decomposition}
+    \[
+    \underbrace{
+        A_{m \times n}
+    }_{\text{large matrix}}
+    \approx
+    \underbrace{
+        U_{m \times r}
+    }_{\text{left factors}}
+    \underbrace{
+        V_{r \times n}
+    }_{\text{right factors}},
+    \qquad r \ll \min(m,n).
+    \]
+
+    \[
+    A_{10000 \times 5000}
+    \approx
+    U_{10000 \times 50}
+    V_{50 \times 5000},
+    \]
+
+    \[
+    \underbrace{10000 \times 5000}_{50,000,000\ \text{parameters}}
+    \;\longrightarrow\;
+    \underbrace{10000 \times 50 + 50 \times 5000}_{750,000\ \text{parameters}}.
+    \]
+\end{frame}
+
+\begin{frame}{LoRA: Mathematical Foundation}
+   	\begin{columns}
+   		\begin{column}{0.5\textwidth}
+  			 \begin{figure}
+   				\includegraphics[height=0.7\textheight]{lora1.drawio.png} \centering
+   			\end{figure}
+   		\end{column}
+   		
+   		\begin{column}{0.5\textwidth}
+   			\begin{block}{Full SFT}
+   					\begin{itemize}
+   					\item $W \in \mathbb{R}^{d \times k}$ weights. \item $X$ input,
+   					$h$ output.  
+   					\item Fwd pass: $h = WX$.
+   					\item Bckwd pass: $W = W + \alpha \nabla h $
+   					%\item $B  \in \mathbb{R}^{d \times r} \rightarrow$ zeros. \item	$A \in \mathbb{R}^{r \times k} \rightarrow$ Gaussian. \item $r \ll \min(d, k)$, hence $A, B$ are much smaller than $W$.
+   				\end{itemize}
+   			\end{block}
+   		\end{column}
+   	\end{columns}
+\end{frame}
+
+\begin{frame}{LoRA: Mathematical Foundation}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[height=0.7\textheight]{lora2.drawio.png} \centering
+			\end{figure}
+		\end{column}
+		
+		\begin{column}{0.5\textwidth}
+			\begin{block}{LoRA}
+				\begin{itemize}
+					\item	$A \in \mathbb{R}^{r \times k} \rightarrow$ Gaussian.
+					\item $B  \in \mathbb{R}^{d \times r} \rightarrow$ zeros.  \item $r \ll \min(d, k)$, hence $A, B$ are much smaller than $W$.
+				\end{itemize}
+			\end{block}
 			
-			\begin{column}{0.5\textwidth}
-				\begin{block}{LoRA}
-					\begin{itemize}
-						\item	$A \in \mathbb{R}^{r \times k} \rightarrow$ Gaussian.
-						\item $B  \in \mathbb{R}^{d \times r} \rightarrow$ zeros.  \item $r \ll \min(d, k)$, hence $A, B$ are much smaller than $W$.
-					\end{itemize}
-				\end{block}
-				
-				\begin{exampleblock}{Example: Music}
-					$A$ could represent the genre of music, while $B$ the melody, rhythm etc.
-				\end{exampleblock}
-			\end{column}
-		\end{columns}
-	\end{frame}
-    
-    \begin{frame}{LoRA: Mathematical Foundation}
-    	\begin{columns}
-    		\begin{column}{0.5\textwidth}
-    			\begin{figure}
-    				\includegraphics[height=0.7\textheight]{lora3.drawio.png} \centering
-    			\end{figure}
-    		\end{column}
-    		
-    		\begin{column}{0.5\textwidth}
-    			\begin{block}{LoRA}
-    				\begin{itemize}
-    					\item During inference, we compute $H = W X + \Delta W X$.
-    					\item Alternatively, merge weights: $W' = W + \frac{\alpha}{r} (A B)$
-    				\end{itemize}
-    			\end{block}
-    		\end{column}
-    	\end{columns}
-    \end{frame}
-    
-    \begin{frame}{LoRA: Algorithm}
-    	\begin{algorithmic}
-    		\LComment{====Initialization====} \ForAll{$W \in all\_weights$}
-    		\State Set $\mathbf{W}$ to read-only
-    		\Comment{Original knowledge preserved} \EndFor
-    		
-    		\ForAll{$W_u \in target\_modules$} \State Initialize $\mathbf{A}$
-    		randomly \State Initialize $\mathbf{B} = \mathbf{0}$
-    		\Comment{Contributes zero to the output initially} \EndFor
-    		
-    		\LComment{====Backpropagation====} \ForAll{$X \in input\_embeds$}
-    		\State $\mathbf{\Delta W} = \frac{\alpha}{r} \mathbf{A} \mathbf{B}$
-    		\State $\mathbf{H} = \mathbf{W} X + \mathbf{\Delta W} X$
-    		\Comment{Output = original + adaptation} \EndFor
-    		\LComment{====End of training====} \State
-    		$\mathbf{W}' = \mathbf{W} + \frac{\alpha}{r} (\mathbf{A} \mathbf{B})$
-    		\Comment{Merge original and adaptation}
-    	\end{algorithmic}
-    \end{frame}
-    
-    \subsection{How to use LoRA}
-    
-    \begin{frame}
-    	\sectionpage
-    	\subsectionpage
-    \end{frame}
+			\begin{exampleblock}{Example: Music}
+				$A$ could represent the genre of music, while $B$ the melody, rhythm etc.
+			\end{exampleblock}
+		\end{column}
+	\end{columns}
+\end{frame}
 
-    \begin{frame}
-    {LoRA: Practical Considerations}
+\begin{frame}{LoRA: Mathematical Foundation}
+   	\begin{columns}
+   		\begin{column}{0.5\textwidth}
+   			\begin{figure}
+   				\includegraphics[height=0.7\textheight]{lora3.drawio.png} \centering
+   			\end{figure}
+   		\end{column}
+   		
+   		\begin{column}{0.5\textwidth}
+   			\begin{block}{LoRA}
+   				\begin{itemize}
+   					\item During inference, we compute $H = W X + \Delta W X$.
+   					\item Alternatively, merge weights: $W' = W + \frac{\alpha}{r} (A B)$
+   				\end{itemize}
+   			\end{block}
+   		\end{column}
+   	\end{columns}
+\end{frame}
+
+\begin{frame}{LoRA: Algorithm}
+   	\begin{algorithmic}
+   		\LComment{====Initialization====} \ForAll{$W \in all\_weights$}
+   		\State Set $\mathbf{W}$ to read-only
+   		\Comment{Original knowledge preserved} \EndFor
+   		
+   		\ForAll{$W_u \in target\_modules$} \State Initialize $\mathbf{A}$
+   		randomly \State Initialize $\mathbf{B} = \mathbf{0}$
+   		\Comment{Contributes zero to the output initially} \EndFor
+   		
+   		\LComment{====Backpropagation====} \ForAll{$X \in input\_embeds$}
+   		\State $\mathbf{\Delta W} = \frac{\alpha}{r} \mathbf{A} \mathbf{B}$
+   		\State $\mathbf{H} = \mathbf{W} X + \mathbf{\Delta W} X$
+   		\Comment{Output = original + adaptation} \EndFor
+   		\LComment{====End of training====} \State
+   		$\mathbf{W}' = \mathbf{W} + \frac{\alpha}{r} (\mathbf{A} \mathbf{B})$
+   		\Comment{Merge original and adaptation}
+   	\end{algorithmic}
+\end{frame}
+
+\subsection{How to use LoRA}
+
+\begin{frame}
+   	\sectionpage
+   	\subsectionpage
+\end{frame}
+
+\begin{frame}
+{LoRA: Practical Considerations}
+    \begin{itemize}
+        \item How many ranks do I use?
         \begin{itemize}
-            \item How many ranks do I use?
+            \item $r \in [1,16]$: fast, easy, recommended for minor
+            adjustments. \item $r \in [16,64]$: recommended for most domain
+            adaptation scenarios. \item $r \in [64, 256]$: may hit
+            computational bottlenecks, only use for dramatic shifts in
+            domain and knowledge.
+        \end{itemize}
+
+        \item How do I set $\alpha$?
+        \begin{itemize}
+            \item Usually set to a multiple of $r$ . \item Very low
+            $\alpha \rightarrow$ minimal contribution. Very high
+            $\alpha \rightarrow$ destruction of model knowledge. \item
+            $\alpha = 2r$ usually used as a starting point.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+{LoRA: Practical Considerations}
+    \begin{itemize}
+        \item What modules do I change? \item Start from the top of this
+        list and go down as required:
+        \begin{enumerate}
+            \item
+            \textbf{Query ($\text{q\_proj}$) and Value ($\text{v\_proj}$):}
+            Most frequently adapted; control \alert{how the model attends}
+            to input. \item \textbf{Key ($\text{k\_proj}$):} Increases
+            \alert{information retrieval} capacity. \item
+            \textbf{Output ($\text{o\_proj}$):} Less common, but useful for
+            modifying \alert{integrated} attended information. \item
+            \textbf{Feed-forward Networks (MLP):} Possible to adapt, but
+            generally offer less parameter benefit compared to attention
+            layers.
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+{LoRA: Practical Considerations}
+    \begin{itemize}
+        \item Should we merge the LoRA weights?
+    \end{itemize}
+
+    \begin{center}
+        $\mathbf{W}' = \mathbf{W} + \frac{\alpha}{r} (\mathbf{A} \mathbf{B})$
+    \end{center}
+
+    \begin{columns}
+        \begin{column}{0.45\columnwidth}
+            \begin{block}{Yes}
+                \begin{itemize}
+                    \item Lowers \alert{GPU memory} and execution
+                    \alert{time}.
+                    \begin{itemize}
+                        \item More significant if $r$ is large.
+                    \end{itemize}
+                    \item Deployment may be easier.
+                \end{itemize}
+            \end{block}
+        \end{column}
+
+        \begin{column}{0.45\columnwidth}
+            \begin{block}{No}
+                \begin{itemize}
+                    \item You can use the same model with \alert{many}
+                    finetuned adapters which are
+                    \alert{dynamically selected} depending on your
+                    task.\note{Mention storage requirements}
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\section{Making finetuning scalable through QLoRA}
+
+\subsection{Quantizing LLMs: Why and how?}
+
+\begin{frame}{Outline}
+   	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}
+   	\sectionpage
+   	\subsectionpage
+\end{frame}
+
+\begin{frame}{QLoRA: Quantization}
+    \begin{columns}
+       	
+       	\begin{column}{0.45\textwidth}
+       		\begin{figure}
+       			\includegraphics[width=\columnwidth]{quantization-fp.png}
+       			\centering
+       			\caption{
+       				\url{https://developer.nvidia.com/blog/model-quantization-concepts-methods-and-why-it-matters}
+       			}
+       		\end{figure}
+       	\end{column}
+       	
+        \begin{column}{0.45\textwidth}
             \begin{itemize}
-                \item $r \in [1,16]$: fast, easy, recommended for minor
-                adjustments. \item $r \in [16,64]$: recommended for most domain
-                adaptation scenarios. \item $r \in [64, 256]$: may hit
-                computational bottlenecks, only use for dramatic shifts in
-                domain and knowledge.
-            \end{itemize}
+                \item Quantization refers to dropping the size (not number)
+                of the LLM parameters.
 
-            \item How do I set $\alpha$?
+                \item Normally, each parameter is stored in a 32 bit
+                floating point.
+
+                \item Quantization can drop them to usually 4 bits,
+                resulting in \alert{$\times 8$ less} GPU memory and
+                inference costs.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QLoRA: Quantization}
+    \begin{columns}
+       	\begin{column}{0.45\textwidth}
+       		\begin{figure}
+       			\includegraphics[width=\columnwidth]{quantization-fp.png}
+       			\centering
+       			\caption{
+       				\url{https://developer.nvidia.com/blog/model-quantization-concepts-methods-and-why-it-matters}
+       			}
+       		\end{figure}
+       	\end{column}
+       	
+        \begin{column}{0.45\textwidth}
             \begin{itemize}
-                \item Usually set to a multiple of $r$ . \item Very low
-                $\alpha \rightarrow$ minimal contribution. Very high
-                $\alpha \rightarrow$ destruction of model knowledge. \item
-                $\alpha = 2r$ usually used as a starting point.
+                \item Quantization is one of the \alert{most useful tools}
+                at your disposal.
+
+                \item Allows for training and inference in consumer-grade
+                hardware.
+
+                \item We will return to this in Module 5.
             \end{itemize}
-        \end{itemize}
-    \end{frame}
-
-    \begin{frame}
-    {LoRA: Practical Considerations}
-        \begin{itemize}
-            \item What modules do I change? \item Start from the top of this
-            list and go down as required:
-            \begin{enumerate}
-                \item
-                \textbf{Query ($\text{q\_proj}$) and Value ($\text{v\_proj}$):}
-                Most frequently adapted; control \alert{how the model attends}
-                to input. \item \textbf{Key ($\text{k\_proj}$):} Increases
-                \alert{information retrieval} capacity. \item
-                \textbf{Output ($\text{o\_proj}$):} Less common, but useful for
-                modifying \alert{integrated} attended information. \item
-                \textbf{Feed-forward Networks (MLP):} Possible to adapt, but
-                generally offer less parameter benefit compared to attention
-                layers.
-            \end{enumerate}
-        \end{itemize}
-    \end{frame}
-
-    \begin{frame}
-    {LoRA: Practical Considerations}
-        \begin{itemize}
-            \item Should we merge the LoRA weights?
-        \end{itemize}
-
-        \begin{center}
-            $\mathbf{W}' = \mathbf{W} + \frac{\alpha}{r} (\mathbf{A} \mathbf{B})$
-        \end{center}
-
-        \begin{columns}
-            \begin{column}{0.45\columnwidth}
-                \begin{block}{Yes}
-                    \begin{itemize}
-                        \item Lowers \alert{GPU memory} and execution
-                        \alert{time}.
-                        \begin{itemize}
-                            \item More significant if $r$ is large.
-                        \end{itemize}
-                        \item Deployment may be easier.
-                    \end{itemize}
-                \end{block}
-            \end{column}
-
-            \begin{column}{0.45\columnwidth}
-                \begin{block}{No}
-                    \begin{itemize}
-                        \item You can use the same model with \alert{many}
-                        finetuned adapters which are
-                        \alert{dynamically selected} depending on your
-                        task.\note{Mention storage requirements}
-                    \end{itemize}
-                \end{block}
-            \end{column}
-        \end{columns}
-    \end{frame}
+        \end{column}
+    \end{columns}
+\end{frame}
 
 
-    \section{Making finetuning scalable through QLoRA}
-    
-    \subsection{Quantizing LLMs: Why and how?}
-    
-    \begin{frame}{Outline}
-    	\tableofcontents[currentsection]
-    \end{frame}
-    
-    \begin{frame}
-    	\sectionpage
-    	\subsectionpage
-    \end{frame}
+\subsection{How does it differ from LoRA?}
 
-    \begin{frame}{QLoRA: Quantization}
-        \begin{columns}
-        	
-        	\begin{column}{0.45\textwidth}
-        		\begin{figure}
-        			\includegraphics[width=\columnwidth]{quantization-fp.png}
-        			\centering
-        			\caption{
-        				\url{https://developer.nvidia.com/blog/model-quantization-concepts-methods-and-why-it-matters}
-        			}
-        		\end{figure}
-        	\end{column}
-        	
-            \begin{column}{0.45\textwidth}
+\begin{frame}
+	\sectionpage
+	\subsectionpage
+\end{frame}
+
+\begin{frame}{QLoRA: Concept}
+    \begin{columns}
+      	 \begin{column}{0.45\textwidth}
+       		\begin{figure}
+       			\includegraphics[width=\columnwidth]{qlora.drawio.png}
+       			\centering
+       		\end{figure}
+       	\end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{itemize}
+                \item Load a 4-bit quantized model using a normal
+                approximation of weights.
+
+                \item Run LoRA in full precision, \alert{dequantizing} the
+                model weights \alert{one at a time}.
+
+                \item Continue as normal.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{QLoRA: Algorithm}
+    \begin{algorithmic}
+        \LComment{====Initialization====} \LComment{Same as before}
+
+        \LComment{====Backpropagation====} \ForAll{$X \in input\_embeds$}
+        \State $\mathbf{\Delta W} = \frac{\alpha}{r} \mathbf{A} \mathbf{B}$
+        \State $\mathbf{H} =$ \alert{\Call{dequant}{$\mathbf{W}$}}
+        $X + \mathbf{\Delta W} X$ \Comment{Output = original + adaptation}
+        \EndFor \LComment{====End of training====}
+        \LComment {Only attempt dynamic merge. Ignore this advice at your own peril, or if you really know what you are doing.}
+    \end{algorithmic}
+\end{frame}
+
+\begin{frame}{QLoRA: Pros and cons}
+    \begin{columns}
+        \begin{column}{0.4\columnwidth}
+            \begin{block}{Pros}
                 \begin{itemize}
-                    \item Quantization refers to dropping the size (not number)
-                    of the LLM parameters.
-
-                    \item Normally, each parameter is stored in a 32 bit
-                    floating point.
-
-                    \item Quantization can drop them to usually 4 bits,
-                    resulting in \alert{$\times 8$ less} GPU memory and
-                    inference costs.
+                    \item Frozen weights no longer monopolize
+                    \alert{GPU memory} and inference \alert{time}. \item
+                    Allows training in \alert{consumer-grade} hardware.
+                    \item Massively \alert{reduces training} times.
                 \end{itemize}
-            \end{column}
-        \end{columns}
-    \end{frame}
+            \end{block}
+        \end{column}
 
-    \begin{frame}{QLoRA: Quantization}
-        \begin{columns}
-        	\begin{column}{0.45\textwidth}
-        		\begin{figure}
-        			\includegraphics[width=\columnwidth]{quantization-fp.png}
-        			\centering
-        			\caption{
-        				\url{https://developer.nvidia.com/blog/model-quantization-concepts-methods-and-why-it-matters}
-        			}
-        		\end{figure}
-        	\end{column}
-        	
-            \begin{column}{0.45\textwidth}
+        \begin{column}{0.4\columnwidth}
+            \begin{block}{Cons}
                 \begin{itemize}
-                    \item Quantization is one of the \alert{most useful tools}
-                    at your disposal.
-
-                    \item Allows for training and inference in consumer-grade
-                    hardware.
-
-                    \item We will return to this in Module 5.
+                    \item End-result is a quantized $\rightarrow$
+                    \alert{
+                        less
+                        powerful
+                    }
+                    model. \item Dequantization imposes a $\approx 10\%$ tax
+                    on training times. \item Merging is now much messier.
                 \end{itemize}
-            \end{column}
-        \end{columns}
-    \end{frame}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Summing up}
+
+    \begin{itemize}
+        \item Full finetuning for LLMs is out of the question. \item
+        However, weight updates are usually \alert{low-rank}. \item Thus, we
+        can \alert{approximate} full finetuning with LoRA. \item We may use
+        QLoRA instead to make it much more \alert{scalable}.
+    \end{itemize}
+\end{frame}
+
+  
+\part{Reinforcement Learning}
+
+\begin{frame}
+	\partpage
+\end{frame}
+
+\section{General RL}
+
+\begin{frame}{Outline}
+	\tableofcontents[currentsection]
+\end{frame}
+
+
+\subsection{Fundamentals}
+
+\begin{frame}
+	\sectionpage
+	\subsectionpage
+\end{frame}
+
+\begin{frame}{What is RL?}
+	\begin{definition}[Reinforcement Learning]
+		A machine learning paradigm where an Agent \alert{learns} optimal behavior through \alert{interaction}. The system learns autonomously by trial and error, maximizing a cumulative \alert{Reward Signal}.
+	\end{definition}
 	
+	\begin{exampleblock}{Example}
+		A master chess player makes a move. The choice is informed both anticipating possible replies and counterreplies and by immediate, intuitive judgments of the desirability of particular positions and moves. (Sutton \& Bartol: ``RL An Introduction'', 2nd Ed).
+	\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{Example: Tic-tac-toe}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[width=\columnwidth]{tic_tac_toe.jpg}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{exampleblock}{How would you train an agent?}
+				\begin{itemize}
+ 				\item Minimax: Thrown off due to suboptimal play.
+ 				\item Dynamic prog.: Needs a perfect configuration of the opponent.
+ 				\item A human would learn by doing (and failing).
+				\end{itemize}
+			\end{exampleblock}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Example: Tic-tac-toe}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[width=\columnwidth]{rl_values.png}
+				\caption{Sutton \& Bartol: ``RL An Introduction'', 2nd Ed}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{exampleblock}{RL}
+				\begin{itemize}
+					\item Set up a table where each cell = one possible ttt configuration.
+					\item All states where no players win are given a value of 0.5 (we do not know who would win).
+					\item All states where we win are 1, otherwise 0.
+				\end{itemize}
+			\end{exampleblock}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Example: Tic-tac-toe}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[width=\columnwidth]{rl_values.png}
+				\caption{Sutton \& Bartol: ``RL An Introduction'', 2nd Ed}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{exampleblock}{RL}
+				\begin{itemize}
+					\item At each step, consider possible moves.
+					\item Take the best one (exploitation), or a random one (exploration).
+					\item Update previous steps with results. $V[s] \leftarrow V[s] + \alpha [V[s'] - V[s]] $
+				\end{itemize}
+			\end{exampleblock}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Other methods}
+	\begin{block}{}
+		\begin{itemize}
+			\item In reality, we use much more sophisticated and optimized methods.
+			\item Most nonetheless follow the paradigm of $NewEstimate \leftarrow OldEstimate + StepSize [Target - OldEstimate]$.
+			\item The DPO and GRPO methods used in modern-day LLM training also follow it.
+			\item We obtain those estimates from the \alert{environment}.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{General method}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[width=\columnwidth]{rl_loop.png}
+				\caption{Sutton \& Bartol: ``RL An Introduction'', 2nd Ed}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{block}{The learning loop}
+				At each step (at state $S_t$):
+				\begin{itemize}
+					\item Take action $A_t$.
+					\item Move from state $S_t \rightarrow S_{t+1}$ and observe reward $R_{t+1}$.
+					\item The \alert{environment} is responsible for providing $S_{t+1}$ and $R_{t+1}$ given $A_t$.
+				\end{itemize}
+			\end{block}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{The Environment}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\begin{overprint}
+					\onslide<1>\includegraphics[width=\columnwidth]{rl_states2.png}
+					\onslide<2>\includegraphics[width=\columnwidth]{rl_states1.png}
+				\end{overprint}
+				\caption{Sutton \& Bartol: ``RL An Introduction'', 2nd Ed}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{block}{What is the environment?}
+				All interactions which the agent must \alert{not} know about.
+			\end{block}
+			
+			\begin{exampleblock}{Example: Poker}
+					The hands of other players.
+			\end{exampleblock}
+			
+			\begin{alertblock}{What the environment isn't}
+				If the agent is a paramedic,it should not immediately know the internal injuries of a victim.
+			\end{alertblock}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{The Reward}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[width=\columnwidth]{rl_rewards.png}
+				\caption{Sutton \& Bartol: ``RL An Introduction'', 2nd Ed}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{definition}[Reward $r_t$]
+				A numerical value representing degrees of success given at time $t$.\note{Usually 0, 1, -1 at the end nodes.}
+			\end{definition}
+			
+			\begin{definition}[Return $G_t$]
+				\begin{itemize}
+					\item Discounted returns over $t$ steps.
+					\item $G_t = \sum^\infty_{k=0} \gamma^k R_{t+k+1}$.
+					\item As $\gamma \rightarrow 1$ the agent prioritizes future rewards.
+				\end{itemize}
+			 \note{Explain discounting, why we use it, that older actions are given more importance.}
+			\end{definition}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Policies and state-value-actions}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[width=0.7\columnwidth]{rl_policies.png}
+				\caption{Sutton \& Bartol: ``RL An Introduction'', 2nd Ed}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\only<1>{
+				\begin{definition}[Policy $\pi$]
+					The agent's strategy, which dictates the behavior by specifying the probability of taking every possible action when the agent finds itself in a specific state.
+				\end{definition}
+			}
+			\only<2>{
+				\begin{definition}[Value State Function $V$]
+					Estimates the expected future discounted reward an agent will accumulate starting from a particular state, assuming it follows a specific policy. 
+				\end{definition}
+			}
+			
+			\only<3>{
+				\begin{definition}[Value-Action State Function $Q$]
+					Estimates the expected future discounted reward an agent will accumulate starting from a particular state and immediately taking a specific action.
+				\end{definition}
+			}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Generalizing the RL Loop}
+	\begin{block}{}
+		\begin{algorithmic}[1]
+			\State Initialize policy $\pi$ and value/Q-function $V/\text{Q}$
+			\State Initialize Experience Buffer $\mathcal{D} \gets \emptyset$
+			\While{$D$ not satisfied (e.g., episodes remaining)}
+				\LComment{Interaction / Data Collection}
+				\While{$s$ not terminal}
+					\State Select action $\alpha \gets \pi(s)$
+					\State $r, new\_s \gets environment(s, \alpha)$
+					\State $\mathcal{D} \gets \mathcal{D} \cup \{(s, \alpha, r, new\_s)\}$
+					\State $s \gets new\_s$
+				\EndWhile
+				\LComment{Learning / Parameter Update}
+				\State Sample a batch of experiences $\mathcal{B}$ from $\mathcal{D}$
+				\State $\text{UpdateParameters}(\mathcal{B}, \text{Algorithm Specific Rules})$
+				\State $\text{DiscountRewardEstimate} \leftarrow \text{Calculate}( \mathcal{B})$
+			\EndWhile
+		\end{algorithmic}
+	\end{block}
+\end{frame}
+
+
+\subsection{Finetuning vs RL}
+
+\begin{frame}{RL for LLMs}
+	\begin{block}{When training LLMs}
+		We learn a policy $\pi(s \lvert \alpha)$ where:
+		\begin{itemize}
+			\item $\alpha$ is an action (here next chunk of text).
+			\item $s$ is the state (partial generation process for next token).
+		\end{itemize}
+		Instead of explicit $V$ or $Q$ functions we use an \alert{Advantage function} as a \alert{gradient}, which estimates how better an action is given the current state (discounted at time-step $t$  in the future).
+	\end{block}
+\end{frame}
+
+\begin{frame}{Finetuning}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{exampleblock}{Pros}
+				\begin{itemize}
+					\item Very easy to implement ---continuation of pretraining phase.
+					\item Techniques such as LoRA alleviate drawbacks.
+					\item Model learns to comply with task-specific guidelines, requirements, formats.
+				\end{itemize}
+			\end{exampleblock}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{alertblock}{Cons}
+				\begin{itemize}
+					\item Computationally heavy.
+					\item Relies on high-quality, human-curated/created data.
+					\item Overfitting.
+				\end{itemize}
+			\end{alertblock}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Reinforcement Learning}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{exampleblock}{Pros}
+				\begin{itemize}
+					\item Not as computationally heavy as SFT.
+					\item Factual accuracy.
+					\item Adaptability.
+				\end{itemize}
+			\end{exampleblock}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{alertblock}{Cons}
+				\begin{itemize}
+					\item ``State'' is evolving text sequence.
+					\item Feedback is sparse, delayed and subjective.
+					\item Multiple conflicting objectives.
+				\end{itemize}
+			\end{alertblock}
+		\end{column}
+	\end{columns}
 	
-	\subsection{How does it differ from LoRA?}
-	
-	\begin{frame}
-		\sectionpage
-		\subsectionpage
-	\end{frame}
-	
-    \begin{frame}{QLoRA: Concept}
-        \begin{columns}
-        	 \begin{column}{0.45\textwidth}
-        		\begin{figure}
-        			\includegraphics[width=\columnwidth]{qlora.drawio.png}
-        			\centering
-        		\end{figure}
-        	\end{column}
-            \begin{column}{0.45\textwidth}
-                \begin{itemize}
-                    \item Load a 4-bit quantized model using a normal
-                    approximation of weights.
+	\begin{block}{}
+		RL has greater potential, but requires careful planning, since LLMs are \alert{not ideal targets} for RL.
+	\end{block}
+\end{frame}
 
-                    \item Run LoRA in full precision, \alert{dequantizing} the
-                    model weights \alert{one at a time}.
-
-                    \item Continue as normal.
-                \end{itemize}
-            \end{column}
-        \end{columns}
-    \end{frame}
-
-    \begin{frame}{QLoRA: Algorithm}
-        \begin{algorithmic}
-            \LComment{====Initialization====} \LComment{Same as before}
-
-            \LComment{====Backpropagation====} \ForAll{$X \in input\_embeds$}
-            \State $\mathbf{\Delta W} = \frac{\alpha}{r} \mathbf{A} \mathbf{B}$
-            \State $\mathbf{H} =$ \alert{\Call{dequant}{$\mathbf{W}$}}
-            $X + \mathbf{\Delta W} X$ \Comment{Output = original + adaptation}
-            \EndFor \LComment{====End of training====}
-            \LComment {Only attempt dynamic merge. Ignore this advice at your own peril, or if you really know what you are doing.}
-        \end{algorithmic}
-    \end{frame}
-
-    \begin{frame}{QLoRA: Pros and cons}
-        \begin{columns}
-            \begin{column}{0.4\columnwidth}
-                \begin{block}{Pros}
-                    \begin{itemize}
-                        \item Frozen weights no longer monopolize
-                        \alert{GPU memory} and inference \alert{time}. \item
-                        Allows training in \alert{consumer-grade} hardware.
-                        \item Massively \alert{reduces training} times.
-                    \end{itemize}
-                \end{block}
-            \end{column}
-
-            \begin{column}{0.4\columnwidth}
-                \begin{block}{Cons}
-                    \begin{itemize}
-                        \item End-result is a quantized $\rightarrow$
-                        \alert{
-                            less
-                            powerful
-                        }
-                        model. \item Dequantization imposes a $\approx 10\%$ tax
-                        on training times. \item Merging is now much messier.
-                    \end{itemize}
-                \end{block}
-            \end{column}
-        \end{columns}
-    \end{frame}
-
-    \begin{frame}{Summing up}
-
-        \begin{itemize}
-            \item Full finetuning for LLMs is out of the question. \item
-            However, weight updates are usually \alert{low-rank}. \item Thus, we
-            can \alert{approximate} full finetuning with LoRA. \item We may use
-            QLoRA instead to make it much more \alert{scalable}.
-        \end{itemize}
-    \end{frame}
 \end{document}
