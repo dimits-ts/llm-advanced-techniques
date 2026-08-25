@@ -72,14 +72,14 @@
 
 \begin{frame}{Example: Domain-specific tasks}
     \begin{columns}
-        \begin{column}{0.45\textwidth}
+        \begin{column}{0.5\textwidth}
             \begin{block}{Part-of-Speech (POS) Tagging}
                 The process of assigning grammatical categories to each word
                 in a sentence.
             \end{block}
         \end{column}
 
-        \begin{column}{0.45\textwidth}
+        \begin{column}{0.5\textwidth}
             \begin{figure}
                 \includegraphics[width=\columnwidth]{pos-tagging.jpg}
                 \centering \caption{\url{https://byteiota.com/pos-tagging/}}
@@ -90,7 +90,7 @@
 
 \begin{frame}{Example: Domain-specific tasks}
     \begin{columns}
-        \begin{column}{0.45\textwidth}
+        \begin{column}{0.5\textwidth}
             \begin{block}{Biomedical POS Tagging}
                 \begin{itemize}
                     \item Patterns absent or rare in general-domain text.
@@ -100,7 +100,7 @@
             \end{block}
         \end{column}
 
-        \begin{column}{0.45\textwidth}
+        \begin{column}{0.5\textwidth}
             \begin{table}[h]
                 \centering
                 \begin{tabular}{cc}
@@ -157,7 +157,7 @@
 
 \begin{frame}{Scalability issues}
     \begin{columns}
-        \begin{column}{0.45\textwidth}
+        \begin{column}{0.5\textwidth}
             \begin{block}{BERT}
                 \centering
                 \begin{itemize}
@@ -168,7 +168,7 @@
             \end{block}
         \end{column}
 
-        \begin{column}{0.45\textwidth}
+        \begin{column}{0.5\textwidth}
             \begin{block}{Llama 70B}
                 \centering
                 \begin{itemize}
@@ -529,57 +529,43 @@
    	\subsectionpage
 \end{frame}
 
+% Update this if changed in module 5
 \begin{frame}{QLoRA: Quantization}
     \begin{columns}
-       	
-       	\begin{column}{0.45\textwidth}
-       		\begin{figure}
-       			\includegraphics[width=\columnwidth]{quantization-fp.png}
-       			\centering
-       			\caption{
-       				\url{https://developer.nvidia.com/blog/model-quantization-concepts-methods-and-why-it-matters}
-       			}
-       		\end{figure}
-       	\end{column}
-       	
-        \begin{column}{0.45\textwidth}
-            \begin{itemize}
-                \item Quantization refers to dropping the size (not number)
-                of the LLM parameters.
-
-                \item Normally, each parameter is stored in a 32 bit
-                floating point.
-
-                \item Quantization can drop them to usually 4 bits,
-                resulting in \alert{$\times 8$ less} GPU memory and
-                inference costs.
-            \end{itemize}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-\begin{frame}{QLoRA: Quantization}
-    \begin{columns}
-       	\begin{column}{0.45\textwidth}
-       		\begin{figure}
-       			\includegraphics[width=\columnwidth]{quantization-fp.png}
-       			\centering
-       			\caption{
-       				\url{https://developer.nvidia.com/blog/model-quantization-concepts-methods-and-why-it-matters}
-       			}
-       		\end{figure}
-       	\end{column}
-       	
-        \begin{column}{0.45\textwidth}
-            \begin{itemize}
-                \item Quantization is one of the \alert{most useful tools}
-                at your disposal.
-
-                \item Allows for training and inference in consumer-grade
-                hardware.
-
-                \item We will return to this in Module 5.
-            \end{itemize}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[width=\columnwidth]{quantization-fp.png}
+				\centering
+				\caption{
+					\url{https://developer.nvidia.com/blog/model-quantization-concepts-methods-and-why-it-matters}
+				}
+			\end{figure}
+       \end{column}
+        \begin{column}{0.5\textwidth}
+        	\only<1>{
+        		\begin{itemize}
+        			\item Quantization refers to dropping the size (not number)
+        			of the LLM parameters.
+        			
+        			\item Normally, each parameter is stored in a 32 bit
+        			floating point.
+        			
+        			\item Quantization can drop them to usually 4 bits,
+        			resulting in \alert{$\times 8$ less} GPU memory and
+        			inference costs.
+        		\end{itemize}
+        	}
+        	\only<2>{
+        		  \begin{itemize}
+        			\item Quantization is one of the \alert{most useful tools}
+        			at your disposal.
+        			
+        			\item Allows for training and inference in consumer-grade
+        			hardware.
+        			
+        			\item We will return to this in Module 5.
+        		\end{itemize}
+        	}
         \end{column}
     \end{columns}
 \end{frame}
@@ -594,13 +580,13 @@
 
 \begin{frame}{QLoRA: Concept}
     \begin{columns}
-      	 \begin{column}{0.45\textwidth}
+      	 \begin{column}{0.5\textwidth}
        		\begin{figure}
        			\includegraphics[width=\columnwidth]{qlora.drawio.png}
        			\centering
        		\end{figure}
        	\end{column}
-        \begin{column}{0.45\textwidth}
+        \begin{column}{0.5\textwidth}
             \begin{itemize}
                 \item Load a 4-bit quantized model using a normal
                 approximation of weights.
@@ -629,19 +615,18 @@
 
 \begin{frame}{QLoRA: Pros and cons}
     \begin{columns}
-        \begin{column}{0.4\columnwidth}
-            \begin{block}{Pros}
+        \begin{column}{0.5\columnwidth}
+            \begin{exampleblock}{Pros}
                 \begin{itemize}
                     \item Frozen weights no longer monopolize
                     \alert{GPU memory} and inference \alert{time}. \item
                     Allows training in \alert{consumer-grade} hardware.
                     \item Massively \alert{reduces training} times.
                 \end{itemize}
-            \end{block}
+            \end{exampleblock}
         \end{column}
-
-        \begin{column}{0.4\columnwidth}
-            \begin{block}{Cons}
+        \begin{column}{0.5\columnwidth}
+            \begin{alertblock}{Cons}
                 \begin{itemize}
                     \item End-result is a quantized $\rightarrow$
                     \alert{
@@ -651,20 +636,21 @@
                     model. \item Dequantization imposes a $\approx 10\%$ tax
                     on training times. \item Merging is now much messier.
                 \end{itemize}
-            \end{block}
+            \end{alertblock}
         \end{column}
     \end{columns}
 \end{frame}
 
 \begin{frame}{Summing up}
-
-    \begin{itemize}
-        \item Full finetuning for LLMs is out of the question. \item
-        However, weight updates are usually \alert{low-rank}. \item Thus, we
-        can \alert{approximate} full finetuning with LoRA. \item We may use
-        QLoRA instead to make it much more \alert{scalable}.
-    \end{itemize}
-\end{frame}
+	\begin{block}{}
+		\begin{itemize}
+			\item Full finetuning for LLMs is out of the question. \item
+			However, weight updates are usually \alert{low-rank}. \item Thus, we
+			can \alert{approximate} full finetuning with LoRA. \item We may use
+			QLoRA instead to make it much more \alert{scalable}.
+		\end{itemize}
+	\end{block}
+{}\end{frame}
 
   
 \part{Reinforcement Learning}
@@ -726,32 +712,21 @@
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
-			\begin{exampleblock}{RL}
-				\begin{itemize}
-					\item Set up a table where each cell = one possible ttt configuration.
-					\item All states where no players win are given a value of 0.5 (we do not know who would win).
-					\item All states where we win are 1, otherwise 0.
-				\end{itemize}
-			\end{exampleblock}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}{Example: Tic-tac-toe}
-	\begin{columns}
-		\begin{column}{0.5\textwidth}
-			\begin{figure}
-				\includegraphics[width=\columnwidth]{rl_values.png}
-				\caption{Sutton \& Bartol: ``RL An Introduction'', 2nd Ed}
-			\end{figure}
-		\end{column}
-		\begin{column}{0.5\textwidth}
-			\begin{exampleblock}{RL}
-				\begin{itemize}
-					\item At each step, consider possible moves.
-					\item Take the best one (exploitation), or a random one (exploration).
-					\item Update previous steps with results. $V[s] \leftarrow V[s] + \alpha [V[s'] - V[s]] $
-				\end{itemize}
+			\begin{exampleblock}{Running simulations}
+				\only<1> {
+					\begin{itemize}
+						\item Set up a table where each cell = one possible ttt configuration.
+						\item All states where no players win are given a value of 0.5 (we do not know who would win).
+						\item All states where we win are 1, otherwise 0.
+					\end{itemize}
+				}
+				\only<2>{
+					\begin{itemize}
+						\item At each step, consider possible moves.
+						\item Take the best one (exploitation), or a random one (exploration).
+						\item Update previous steps with results. $V[s] \leftarrow V[s] + \alpha [V[s'] - V[s]] $
+					\end{itemize}
+				}
 			\end{exampleblock}
 		\end{column}
 	\end{columns}
@@ -860,7 +835,6 @@
 					Estimates the expected future discounted reward an agent will accumulate starting from a particular state, assuming it follows a specific policy. 
 				\end{definition}
 			}
-			
 			\only<3>{
 				\begin{definition}[Value-Action State Function $Q$]
 					Estimates the expected future discounted reward an agent will accumulate starting from a particular state and immediately taking a specific action.
