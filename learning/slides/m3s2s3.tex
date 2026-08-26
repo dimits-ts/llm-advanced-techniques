@@ -45,14 +45,16 @@
 \end{frame}
 
 \begin{frame}{Why finetune LLMs?}
-   	
-    \begin{itemize}
-        \item \textbf{Prompting:} Changes \alert{input behavior}. We guide
-        the model with instructions and examples. \item
-        \textbf{Fine-Tuning:} Changes \alert{model parameters}. We switch
-        the \alert{knowledge} of the model.
-    \end{itemize}
-
+   
+   \begin{block}{Prompting vs finetuning}
+	   \begin{itemize}
+			\item \textbf{Prompting:} Changes \alert{input behavior}. We guide
+			the model with instructions and examples. \item
+			\textbf{Fine-Tuning:} Changes \alert{model parameters}. We switch
+			the \alert{knowledge} of the model.
+	   \end{itemize}
+   \end{block}
+    
     \begin{block}{Reminder}
         \textbf{Fine-Tuning (FT):} The process of further training a
         pre-trained model on a smaller, domain-specific dataset to adapt its
@@ -64,8 +66,8 @@
    	\begin{block}{Reminder}
    		%Link with Katerinas lesson
    		\begin{itemize}
-   			\item \alert{Pre-training} provides the model with initial, \alert{general} knowledge by utilizing \alert{any} and all data sources. 
-   			\item \alert{Finetuning} shifts existing knowledge, to \alert{specific} domains using \alert{domain-specific} datasets.
+   			\item \textbf{Pre-training} provides the model with initial, \alert{general} knowledge by utilizing \alert{any} and all data sources. 
+   			\item \textbf{Finetuning} shifts existing knowledge, to \alert{specific} domains using \alert{domain-specific} datasets.
    		\end{itemize}
    	\end{block}
 \end{frame}
@@ -128,31 +130,36 @@
 	\subsectionpage
 \end{frame}
 
-\begin{frame}{High Resource Cost}
-    \begin{itemize}
-            \item \textbf{Computational Power:} Full FT requires
-            \alert{massive hardware requirements} and
-            \alert{thousands of compute hours} for large models (e.g.,
-            Llama-70B).
-
-            \item \textbf{Storage:} Each specialized task requires a
-            separate, full copy of the massive foundational model.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Operational Overhead}
-    \begin{itemize}
-      
-            \item Training is \alert{slow}. \item Deployment becomes
-            complex, managing \alert{multiple large models} for different
-            applications.
-            \begin{itemize}
-                \item A single 13B model may require 26GB of storage. \item
-                10 finetuned models may thus require 260GB.
-            \end{itemize}
-            \item High risk of \alert{Catastrophic Forgetting}---the model
-            forgets its general knowledge while learning the specific task.
-    \end{itemize}
+\begin{frame}{Full finetuning}
+	\only<1>{
+		\begin{block}{Power and Storage}
+			\begin{itemize}
+				\item \textbf{Computational Power:} Full FT requires
+				\alert{massive hardware requirements} and
+				\alert{thousands of compute hours} for large models (e.g.,
+				Llama-70B).
+				
+				\item \textbf{Storage:} Each specialized task requires a
+				separate, full copy of the massive foundational model.
+			\end{itemize}
+		\end{block}
+	}
+	\only<2>{
+		\begin{block}{Training and deployment}
+			\begin{itemize}
+				
+				\item Training is \alert{slow}. \item Deployment becomes
+				complex, managing \alert{multiple large models} for different
+				applications.
+				\begin{itemize}
+					\item A single 13B model may require 26GB of storage. \item
+					10 finetuned models may thus require 260GB.
+				\end{itemize}
+				\item High risk of \alert{Catastrophic Forgetting}---the model
+				forgets its general knowledge while learning the specific task.
+			\end{itemize}
+		\end{block}
+	}
 \end{frame}
 
 \begin{frame}{Scalability issues}
@@ -187,18 +194,28 @@
     \end{center}
 \end{frame}
 
-%Should we discuss older or not popular methods?
+%TODO: Should we discuss older or not popular methods?
 \begin{frame}{Parameter-Efficient Fine-Tuning (PEFT)}
-   	\begin{definition}
-   		\textbf{PEFT}:  A set of techniques used to adapt large pre-trained LLMs to specific tasks by updating only a \alert{small subset of their parameters}, rather than retraining the entire model.
-   	\end{definition}
-   	\vspace{2em}
-   	\begin{itemize}
-   		\item Many algorithms developed through the years (adapters, prompt/prefix tuning etc.).
-   		\item However, the \alert{LoRA}  family of methods has dominated the LLM space in the last few years.
-   	\end{itemize}
+	\begin{definition}[PEFT]
+		\textbf{Parameter-Efficient Fine-Tuning}:  A set of techniques used to adapt large pre-trained LLMs to specific tasks by updating only a \alert{small subset of their parameters}, rather than retraining the entire model.
+	\end{definition}
+	\begin{block}{How many such methods are used?}
+		\begin{itemize}
+			\item Many algorithms developed through the years (adapters, prompt/prefix tuning etc.).
+			\item However, the \alert{LoRA}  family of methods has dominated the LLM space in the last few years.
+		\end{itemize}
+	\end{block}
 \end{frame}
 
+\begin{frame}{Summing up}
+	\begin{block}{Why efficient finetuning is needed}
+		\begin{itemize}
+			\item We need finetuning to provide new knowledge to the model.
+			\item However, further pretraining the model is prohibitively expensive.\note{unless you have 100mil venture capital}
+			\item There are optimized methods for finetuning using a fraction of compute called PEFT.
+		\end{itemize}
+	\end{block}
+\end{frame}
 
 \section{Making finetuning practical through LoRA}
 
@@ -214,21 +231,19 @@
 \end{frame}
 
 \begin{frame}{PEFT: LoRA}
-    \begin{itemize}
-        \item Low-Rank (LoRA) Matrix Decomposition is a specific PEFT
-        algorithm that exploits the fact that weight updates in LLMs have a
-        \alert{``low intrinsic rank''}.
-
-        \item Low rank matrices enable us to \alert{scalably} represent
-        information.
-    \end{itemize}
+    \begin{definition}[LoRA]
+    	Low-Rank Adaptation is a specific PEFT
+    	algorithm that exploits the fact that weight updates in LLMs have a
+    	\alert{``low intrinsic rank''}.
+    \end{definition}
 \end{frame}
 
 \begin{frame}{Low-rank matrices}
     \begin{block}{What is a matrix?}
         A matrix is essentially a organized collection of data (rows and
         columns). For large datasets, these matrices can become incredibly
-        complex, requiring massive storage and computational power.
+        complex. However, low rank matrices enable us to \alert{scalably} represent
+        information.
     \end{block}
 
     \begin{exampleblock}{Example: Data matrix}
@@ -436,83 +451,89 @@
    	\subsectionpage
 \end{frame}
 
-\begin{frame}
-{LoRA: Practical Considerations}
-    \begin{itemize}
-        \item How many ranks do I use?
-        \begin{itemize}
-            \item $r \in [1,16]$: fast, easy, recommended for minor
-            adjustments. \item $r \in [16,64]$: recommended for most domain
-            adaptation scenarios. \item $r \in [64, 256]$: may hit
-            computational bottlenecks, only use for dramatic shifts in
-            domain and knowledge.
-        \end{itemize}
-
-        \item How do I set $\alpha$?
-        \begin{itemize}
-            \item Usually set to a multiple of $r$ . \item Very low
-            $\alpha \rightarrow$ minimal contribution. Very high
-            $\alpha \rightarrow$ destruction of model knowledge. \item
-            $\alpha = 2r$ usually used as a starting point.
-        \end{itemize}
-    \end{itemize}
+\begin{frame}{LoRA: Practical Considerations}
+	\only<1>{
+		 \begin{block}{How many ranks do I use?}
+			\begin{itemize}
+				\item $r \in [1,16]$: fast, easy, recommended for minor
+				adjustments. \item $r \in [16,64]$: recommended for most domain
+				adaptation scenarios. \item $r \in [64, 256]$: may hit
+				computational bottlenecks, only use for dramatic shifts in
+				domain and knowledge.
+			\end{itemize}
+		\end{block}
+	}
+   \only<2>{
+		\begin{block}{How do I set $\alpha$?}
+			\begin{itemize}
+				\item Usually set to a multiple of $r$ . \item Very low
+				$\alpha \rightarrow$ minimal contribution. Very high
+				$\alpha \rightarrow$ destruction of model knowledge. \item
+				$\alpha = 2r$ usually used as a starting point.
+			\end{itemize}
+		\end{block}
+   }
+  \only<3>{
+		\begin{block}{What modules do I change?}
+			Start from the top of this list and go down as required:
+			\begin{enumerate}
+				\item
+				\textbf{Query ($\text{q\_proj}$) and Value ($\text{v\_proj}$):}
+				Most frequently adapted; control \alert{how the model attends}
+				to input. \item \textbf{Key ($\text{k\_proj}$):} Increases
+				\alert{information retrieval} capacity. \item
+				\textbf{Output ($\text{o\_proj}$):} Less common, but useful for
+				modifying \alert{integrated} attended information. \item
+				\textbf{Feed-forward Networks (MLP):} Possible to adapt, but
+				generally offer less parameter benefit compared to attention
+				layers.
+			\end{enumerate}
+		\end{block}
+	}
+	\only<4>{
+		\begin{block}{Should we merge the LoRA weights?}
+			\begin{center}
+				$\mathbf{W}' = \mathbf{W} + \frac{\alpha}{r} (\mathbf{A} \mathbf{B})$
+			\end{center}
+			
+			\begin{columns}
+				\begin{column}{0.45\columnwidth}
+					\begin{exampleblock}{Yes}
+						\begin{itemize}
+							\item Lowers \alert{GPU memory} and execution
+							\alert{time}.
+							\begin{itemize}
+								\item More significant if $r$ is large.
+							\end{itemize}
+							\item Deployment may be easier.
+						\end{itemize}
+					\end{exampleblock}
+				\end{column}
+				
+				\begin{column}{0.45\columnwidth}
+					\begin{alertblock}{No}
+						\begin{itemize}
+							\item You can use the same model with \alert{many}
+							finetuned adapters which are
+							\alert{dynamically selected} depending on your
+							task.\note{Mention storage requirements}
+						\end{itemize}
+					\end{alertblock}
+				\end{column}
+			\end{columns}
+		\end{block}
+	}
 \end{frame}
 
-\begin{frame}
-{LoRA: Practical Considerations}
-    \begin{itemize}
-        \item What modules do I change? \item Start from the top of this
-        list and go down as required:
-        \begin{enumerate}
-            \item
-            \textbf{Query ($\text{q\_proj}$) and Value ($\text{v\_proj}$):}
-            Most frequently adapted; control \alert{how the model attends}
-            to input. \item \textbf{Key ($\text{k\_proj}$):} Increases
-            \alert{information retrieval} capacity. \item
-            \textbf{Output ($\text{o\_proj}$):} Less common, but useful for
-            modifying \alert{integrated} attended information. \item
-            \textbf{Feed-forward Networks (MLP):} Possible to adapt, but
-            generally offer less parameter benefit compared to attention
-            layers.
-        \end{enumerate}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-{LoRA: Practical Considerations}
-    \begin{itemize}
-        \item Should we merge the LoRA weights?
-    \end{itemize}
-
-    \begin{center}
-        $\mathbf{W}' = \mathbf{W} + \frac{\alpha}{r} (\mathbf{A} \mathbf{B})$
-    \end{center}
-
-    \begin{columns}
-        \begin{column}{0.45\columnwidth}
-            \begin{block}{Yes}
-                \begin{itemize}
-                    \item Lowers \alert{GPU memory} and execution
-                    \alert{time}.
-                    \begin{itemize}
-                        \item More significant if $r$ is large.
-                    \end{itemize}
-                    \item Deployment may be easier.
-                \end{itemize}
-            \end{block}
-        \end{column}
-
-        \begin{column}{0.45\columnwidth}
-            \begin{block}{No}
-                \begin{itemize}
-                    \item You can use the same model with \alert{many}
-                    finetuned adapters which are
-                    \alert{dynamically selected} depending on your
-                    task.\note{Mention storage requirements}
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
+\begin{frame}{Summing up}
+	\begin{block}{LoRA}
+		\begin{itemize}
+			\item Weight updates in LLMs are generally low-rank.
+			\item LoRA exploits this fact to create new, much smaller weights, updated through finetuning.
+			\item We can adjust the rank of these matrices to tune how much finetuning is desirable, although compute increases significantly for high ranks.
+			\item Merging weights may be desirable in some specific cases.
+		\end{itemize}
+	\end{block}
 \end{frame}
 
 
@@ -543,28 +564,33 @@
        \end{column}
         \begin{column}{0.5\textwidth}
         	\only<1>{
-        		\begin{itemize}
-        			\item Quantization refers to dropping the size (not number)
-        			of the LLM parameters.
-        			
-        			\item Normally, each parameter is stored in a 32 bit
-        			floating point.
-        			
-        			\item Quantization can drop them to usually 4 bits,
-        			resulting in \alert{$\times 8$ less} GPU memory and
-        			inference costs.
-        		\end{itemize}
+        		\begin{block}{What is it?}
+        			\begin{itemize}
+        				\item Quantization refers to dropping the size (not number)
+        				of the LLM parameters.
+        				
+        				\item Normally, each parameter is stored in a 32 bit
+        				floating point.
+        				
+        				\item Quantization can drop them to usually 4 bits,
+        				resulting in \alert{$\times 8$ less} GPU memory and
+        				inference costs.
+        			\end{itemize}
+        		\end{block}
+        	
         	}
         	\only<2>{
-        		  \begin{itemize}
-        			\item Quantization is one of the \alert{most useful tools}
-        			at your disposal.
-        			
-        			\item Allows for training and inference in consumer-grade
-        			hardware.
-        			
-        			\item We will return to this in Module 5.
-        		\end{itemize}
+        		\begin{block}{Why is it useful?}
+        			 \begin{itemize}
+        				\item Quantization is one of the \alert{most useful tools}
+        				at your disposal.
+        				
+        				\item Allows for training and inference in consumer-grade
+        				hardware.
+        				
+        				\item We will return to this in Module 5.
+        			\end{itemize}
+        		\end{block}
         	}
         \end{column}
     \end{columns}
@@ -642,7 +668,18 @@
 \end{frame}
 
 \begin{frame}{Summing up}
-	\begin{block}{}
+	\begin{block}{QLoRA}
+		\begin{itemize}
+			\item Quantization is a mathematical methodology that reduces the size of LLM parameters.
+			\item QLoRA uses quantization on the LLM weights while retaining the original LoRA adapter weights.
+			\item Due to quantization, smaller models can be finetuned even on commercial hardware.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+
+\begin{frame}{What did we learn?}
+	\begin{block}{Finetuning}
 		\begin{itemize}
 			\item Full finetuning for LLMs is out of the question. \item
 			However, weight updates are usually \alert{low-rank}. \item Thus, we
@@ -650,7 +687,7 @@
 			QLoRA instead to make it much more \alert{scalable}.
 		\end{itemize}
 	\end{block}
-{}\end{frame}
+\end{frame}
 
   
 \part{Reinforcement Learning}
@@ -845,25 +882,23 @@
 \end{frame}
 
 \begin{frame}{Generalizing the RL Loop}
-	\begin{block}{}
-		\begin{algorithmic}[1]
-			\State Initialize policy $\pi$ and value/Q-function $V/\text{Q}$
-			\State Initialize Experience Buffer $\mathcal{D} \gets \emptyset$
-			\While{$D$ not satisfied (e.g., episodes remaining)}
-				\LComment{Interaction / Data Collection}
-				\While{$s$ not terminal}
-					\State Select action $\alpha \gets \pi(s)$
-					\State $r, new\_s \gets environment(s, \alpha)$
-					\State $\mathcal{D} \gets \mathcal{D} \cup \{(s, \alpha, r, new\_s)\}$
-					\State $s \gets new\_s$
-				\EndWhile
-				\LComment{Learning / Parameter Update}
-				\State Sample a batch of experiences $\mathcal{B}$ from $\mathcal{D}$
-				\State $\text{UpdateParameters}(\mathcal{B}, \text{Algorithm Specific Rules})$
-				\State $\text{DiscountRewardEstimate} \leftarrow \text{Calculate}( \mathcal{B})$
+	\begin{algorithmic}[1]
+		\State Initialize policy $\pi$ and value/Q-function $V/\text{Q}$
+		\State Initialize Experience Buffer $\mathcal{D} \gets \emptyset$
+		\While{$D$ not satisfied (e.g., episodes remaining)}
+			\LComment{Interaction / Data Collection}
+			\While{$s$ not terminal}
+				\State Select action $\alpha \gets \pi(s)$
+				\State $r, new\_s \gets environment(s, \alpha)$
+				\State $\mathcal{D} \gets \mathcal{D} \cup \{(s, \alpha, r, new\_s)\}$
+				\State $s \gets new\_s$
 			\EndWhile
-		\end{algorithmic}
-	\end{block}
+			\LComment{Learning / Parameter Update}
+			\State Sample a batch of experiences $\mathcal{B}$ from $\mathcal{D}$
+			\State $\text{UpdateParameters}(\mathcal{B}, \text{Algorithm Specific Rules})$
+			\State $\text{DiscountRewardEstimate} \leftarrow \text{Calculate}( \mathcal{B})$
+		\EndWhile
+	\end{algorithmic}
 \end{frame}
 
 
@@ -927,6 +962,18 @@
 	
 	\begin{block}{}
 		RL has greater potential, but requires careful planning, since LLMs are \alert{not ideal targets} for RL.
+	\end{block}
+\end{frame}
+
+\begin{frame}{Summing up}
+	\begin{block}{Reinforcement Learning}
+		\begin{itemize}
+			\item RL allows an agent to learn by themselves by interacting with their environment.
+			\item The agent takes actions permitted by the environment and receives feedback.
+			\item The feedback is used to calculate values for each possible state (or state-action pair).
+			\item The agent iteratively learns using the updated value estimates.
+			\item While the underlying learning mechanism is similar for LLMs RL may not be as effective as finetuning due to their nature.
+		\end{itemize}
 	\end{block}
 \end{frame}
 

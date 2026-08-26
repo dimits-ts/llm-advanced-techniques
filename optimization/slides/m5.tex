@@ -42,14 +42,8 @@
    	\partpage
 \end{frame}
 
-\begin{frame}
-    \frametitle{What we will be talking about}
 
-    \tableofcontents	
-\end{frame}
-
-
-\section{The LLM as a System Component}
+\section{LLMs as System Components}
 
  \begin{frame}{Outline}
    	\tableofcontents[currentsection]
@@ -63,7 +57,7 @@
 \end{frame}
 
 \begin{frame}{Mathematics}
-	\begin{block}{LLMs are really bad at math}
+	\begin{block}{LLMs are terrible at math}
 		\begin{itemize}
 			\item Predict the most likely sequence of tokens, not the logically necessary derivation.
 			\item Probabilistic nature $\rightarrow$ prone to hallucinations.
@@ -246,6 +240,15 @@ model.prompt("How many 'r's are in 'carr'?")
 	\end{exampleblock}
 \end{frame}
 
+\begin{frame}{Summing up}
+	\begin{block}{LLMs as system components}
+		\begin{itemize}
+			\item Ordinary tasks that are trivial to humans or through programming may be exceptionally hard for LLMs.
+			\item This fact motivates us to combine them with standard tools instead of relying on them for everything.
+			\item Generally, LLMs should be thought of as functions which can adapt to the input.
+		\end{itemize}
+	\end{block}
+\end{frame}
 
 \section{Tool-Based Reasoning using ReAct}
 
@@ -510,6 +513,15 @@ def calculator(expr: str) -> float:
 	\end{columns}
 \end{frame}
 
+\begin{frame}{Summing up}
+	\begin{block}{ReACT}
+		\item The ReACT methodology was developed to allow autonomous use of tools by LLMs.
+		\item This methodology combines a sandbox environment with standard and CoT prompting.
+		\item Further standardization led to LLM agents with increasing autonomy as well as dedicated software architectures.
+		\item The MCP architecture is the go-to modern solution for LLM tool use.
+	\end{block}
+\end{frame}
+
 
 \section{Agent-to-Agent Interaction}
 
@@ -523,6 +535,11 @@ def calculator(expr: str) -> float:
 
 \subsection{What do we actually need?}
 
+\begin{frame}{Summing up}
+	\begin{block}{Agent-to-Agent Interaction}
+		\item We must select 
+	\end{block}
+\end{frame}
 
 \part{Cost, Scalability, Accountability}
 
@@ -713,30 +730,33 @@ def calculator(expr: str) -> float:
 				}
 			\end{figure}
 		\end{column}
-		\begin{column}{0.5\textwidth}
+		 \begin{column}{0.5\textwidth}
 			\only<1>{
-				\begin{itemize}
-					\item Quantization refers to dropping the size (not number)
-					of the LLM parameters.
-					
-					\item Normally, each parameter is stored in a 32 bit
-					floating point.
-					
-					\item Quantization can drop them to usually 4 bits,
-					resulting in \alert{$\times 8$ less} GPU memory and
-					inference costs.
-				\end{itemize}
+				\begin{block}{What is it?}
+					\begin{itemize}
+						\item Quantization refers to dropping the size (not number)
+						of the LLM parameters.
+						
+						\item Normally, each parameter is stored in a 32 bit
+						floating point.
+						
+						\item Quantization can drop them to usually 4 bits,
+						resulting in \alert{$\times 8$ less} GPU memory and
+						inference costs.
+					\end{itemize}
+				\end{block}
+				
 			}
 			\only<2>{
-				\begin{itemize}
-					\item Quantization is one of the \alert{most useful tools}
-					at your disposal.
-					
-					\item Allows for training and inference in consumer-grade
-					hardware.
-					
-					\item We will return to this in Module 5.
-				\end{itemize}
+				\begin{block}{Why is it useful?}
+					\begin{itemize}
+						\item Quantization is one of the \alert{most useful tools}
+						at your disposal.
+						
+						\item Allows for training and inference in consumer-grade
+						hardware.
+					\end{itemize}
+				\end{block}
 			}
 		\end{column}
 	\end{columns}
