@@ -167,18 +167,18 @@ model.prompt("How many 'r's are in 'carr'?")
 \end{frame}
 
 \begin{frame}{A Note on Benchmarks}
-	\begin{block}{Benchmaxxing}
+	\begin{definition}[Benchmaxxing]
 		Optimizing a LLM's performance primarily for high scores on public \alert{leaderboards} and \alert{benchmarks}, rather than practical, and reliable real-world capability. 
-	\end{block}
+	\end{definition}
 	
-	\begin{block}{How?}
-		\begin{itemize}
-			\item Training Data Contamination.
-			\item Format Overfitting.\note{A model fine-tuned heavily on the specific format of the benchmark learns to exploit statistical quirks—such as predicting that the correct answer is disproportionately in position 'C', or applying specific elimination heuristics—rather than improving its underlying knowledge or reasoning ability. }
-			\item Checkpoint Cherry-Picking.
-			\item Prompt Engineering.\note{A lab can tune the evaluation ""harness""—the system prompts, the chain-of-thought templates, and the answer extraction methods—to maximize the score on a specific benchmark, potentially adding several percentage points without changing the model's actual underlying weights.}
-		\end{itemize}
-	\end{block}
+	How?
+	\begin{itemize}
+		\item Training Data Contamination.
+		\item Format Overfitting.\note{A model fine-tuned heavily on the specific format of the benchmark learns to exploit statistical quirks—such as predicting that the correct answer is disproportionately in position 'C', or applying specific elimination heuristics—rather than improving its underlying knowledge or reasoning ability. }
+		\item Checkpoint Cherry-Picking.
+		\item Prompt Engineering.\note{A lab can tune the evaluation ""harness""—the system prompts, the chain-of-thought templates, and the answer extraction methods—to maximize the score on a specific benchmark, potentially adding several percentage points without changing the model's actual underlying weights.}
+	\end{itemize}
+
 \end{frame}
 
 
@@ -198,10 +198,8 @@ model.prompt("How many 'r's are in 'carr'?")
 \end{frame}
 
 \begin{frame}{When you are holding a hammer...}
-	\begin{itemize}
-		\item Suppose you are given the following task, with appropriate resources from management.
-	\end{itemize}
-	\begin{exampleblock}{Use case}
+	Suppose you are given the following task, with appropriate resources from management.
+	\begin{exampleblock}{}
 		Find all reviews that concern competitors of our product, and tell us what percentage of them mention it.
 	\end{exampleblock}
 \end{frame}
@@ -423,13 +421,12 @@ def calculator(expr: str) -> float:
 				\end{definition}
 			}
 			\only<2>{
-				\begin{block}{Components}
-					\begin{itemize}
-						\item \textbf{MCP Server}: Backend executing standardized API calls.
-						\item \textbf{MCP Client}: Translates LLM command to the MCP server.
-						\item \textbf{MCP Host}: The LLM and UI.
-					\end{itemize}
-				\end{block}
+				Components:
+				\begin{itemize}
+					\item \textbf{MCP Server}: Backend executing standardized API calls.
+					\item \textbf{MCP Client}: Translates LLM command to the MCP server.
+					\item \textbf{MCP Host}: The LLM and UI.
+				\end{itemize}
 			}
 		\end{column}
 	\end{columns}
@@ -515,10 +512,12 @@ def calculator(expr: str) -> float:
 
 \begin{frame}{Summing up}
 	\begin{block}{ReACT}
-		\item The ReACT methodology was developed to allow autonomous use of tools by LLMs.
-		\item This methodology combines a sandbox environment with standard and CoT prompting.
-		\item Further standardization led to LLM agents with increasing autonomy as well as dedicated software architectures.
-		\item The MCP architecture is the go-to modern solution for LLM tool use.
+		\begin{itemize}
+			\item The ReACT methodology was developed to allow autonomous use of tools by LLMs.
+			\item This methodology combines a sandbox environment with standard and CoT prompting.
+			\item Further standardization led to LLM agents with increasing autonomy as well as dedicated software architectures.
+			\item The MCP architecture is the go-to modern solution for LLM tool use.
+		\end{itemize}
 	\end{block}
 \end{frame}
 
@@ -537,9 +536,15 @@ def calculator(expr: str) -> float:
 
 \begin{frame}{Summing up}
 	\begin{block}{Agent-to-Agent Interaction}
-		\item We must select 
+		\begin{itemize}
+			\item Using simple prompting may not be enough for less well-defined tasks.
+			\item Agent-prompting provides the models with a new frame of reference.
+			\item Sometimes, it may be needed to use multiple frames of reference, necessitating multiple agents.
+			\item When multiple agents are present, we need to establish a communication protocol to coordinate them.
+		\end{itemize}
 	\end{block}
 \end{frame}
+
 
 \part{Cost, Scalability, Accountability}
 
@@ -704,6 +709,17 @@ def calculator(expr: str) -> float:
 	\end{exampleblock}
 \end{frame}
 
+\begin{frame}{Summing up}
+	\begin{block}{OpEx vs CapEx in LLM systems}
+		\begin{itemize}
+			\item Choosing an LLM platform requires a trade-off between immediate, fixed costs and constant, rolling costs.
+			\item Locally hosted LLMs require dedicated infrastructure, but are very cheap to run.
+			\item Cloud-based LLMs require no infrastructure, but are much more expensive to run.
+			\item There is no reliable formula for calculating costs, but an estimation with clear assumptions is invaluable for planning.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
 
 \section{Inference Optimization}
 
@@ -790,13 +806,11 @@ def calculator(expr: str) -> float:
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
-			\begin{block}{FP Quantization}
-				\begin{itemize}
-					\item Works much like rounding numbers.
-					\item Simple, intuitive, works well with GPUs.
-					\item Many competitive techniques: AWQ, GGUF, GPTQ, ...
-				\end{itemize}
-			\end{block}
+			\begin{itemize}
+				\item Works much like rounding numbers.
+				\item Simple, intuitive, works well with GPUs.
+				\item Many competitive techniques: AWQ, GGUF, GPTQ, ...
+			\end{itemize}
 		\end{column}
 	\end{columns}
 \end{frame}
@@ -810,13 +824,11 @@ def calculator(expr: str) -> float:
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
-			\begin{block}{INT Quantization}
 				\begin{itemize}
 					\item Maps each float to an integer grid.
 					\item Two kinds of errors: \textbf{rounding} error (float $\rightarrow$ int), and \textbf{clipping} error (int $\rightarrow$ grid range).\note{Grid range = $x_{min} or x_{max}$}
 					\item Extremely efficient with CPUs and specialized hardware.\note{Mention ``fake quantization'' when ran on GPUs}
 				\end{itemize}
-			\end{block}
 		\end{column}
 	\end{columns}
 \end{frame}
@@ -864,62 +876,61 @@ def calculator(expr: str) -> float:
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			\only<1>{
-				\begin{block}{The Problem}
-					\begin{itemize}
-						\item Transformers are autoregressive.
-						\item The more they generate, the harder it gets to generate.
-						\item Inference becomes burdened in long contexts.
-					\end{itemize}
-				\end{block}
+				The problem:
+				\begin{itemize}
+					\item Transformers are autoregressive.
+					\item The more they generate, the harder it gets to generate.
+					\item Inference becomes burdened in long contexts.
+				\end{itemize}
+
 			}
 			\only<2>{
-				\begin{block}{KV Caching}
-					\begin{itemize}
-						\item KV matrices are the same for all previous steps.
-						\item We can simply store them instead of re-computing them.
-						\item Thus; a cache for KV matrices!
-						\item \alert{Significant} speedup during inference.
-						\item \alert{Better} speedup as generation becomes \alert{longer}!
-					\end{itemize}
-				\end{block}
+				However:
+				\begin{itemize}
+					\item KV matrices are same for all previous steps.
+					\item We can simply store them instead of re-computing them.
+					\item Thus; a cache for KV matrices!
+				\end{itemize}
 			}
 			\only<3>{
-				\begin{block}{KV Caching}
-					\begin{itemize}
-						\item Cache size stored in GPU.
-						\item Scales linearly with context.
-						\item $KV cache (bytes) = batch\_size \times context\_length \times 2 \times num\_layers \times num\_kv\_heads \times head\_dim \times bytes\_per\_param$
-					\end{itemize}
-				\end{block}
+				KV caching:
+				\begin{itemize}
+					\item Cache size stored in GPU.
+					\item Scales linearly with context.
+					\item $KV\_cache (bytes) = batch\_size \times context\_length \times 2 \times num\_layers \times num\_kv\_heads \times head\_dim \times bytes\_per\_param$
+				\end{itemize}
+			}
+			\only<4>{
+				Upsides:
+				\begin{itemize}
+					\item \alert{Significant} speedup during inference.
+					\item \alert{Better} speedup as generation becomes \alert{longer}!
+				\end{itemize}
 			}
 		\end{column}
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Downsides}
-	\begin{block}{Formula}
-		$KV cache = batch\_size \times context\_length \times 2 \times num\_layers \times num\_kv\_heads \times head\_dim \times bytes\_per\_param$
-	\end{block}
-	
+\begin{frame}{Downsides}	
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
 			\begin{exampleblock}{LLaMa-8B (32K)}
-				$KV cache = 1 \times 32,768 \times 2 \times 32 \times 8 \times 128 \times 2
-				= 4,294,967,296 bytes
-				= 4.0 GB$
+				$\textit{KV\_cache} = 1 \times 32,768 \times 2 \times 32 \times 8 \times 128 \times 2
+				= 4,294,967,296 \textit{ bytes }
+				= 4.0 \textit{ GB }$
 			\end{exampleblock}
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			\begin{exampleblock}{LLaMa-8B (128K)}
-				$KV cache = 1 \times 131,072 \times 2 \times 32 \times 8 \times 128 \times 2
-				= 17,179,869,184 bytes
-				= 16.0 GB$
+				$\textit{KV\_cache} = 1 \times 131,072 \times 2 \times 32 \times 8 \times 128 \times 2
+				= 17,179,869,184 \textit{ bytes }
+				= 16.0 \textit{ GB }$
 			\end{exampleblock}
 		\end{column}
 	\end{columns}
 	
-	\begin{alertblock}{Especially problematic for quantized models.}
-		LLaMa-8B 4-bit quantization: $\approx 5GB$.
+	\begin{alertblock}{Especially problematic for quantized models}
+		LLaMa-8B 4-bit quantization: $\approx 5 \textit{ GB }$.
 	\end{alertblock}
 \end{frame}
 
@@ -933,20 +944,29 @@ def calculator(expr: str) -> float:
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
-			\begin{block}{KV Caching}
-				Still in experimental stages.
-				\begin{itemize}
-					\item Sliding window approach.
-					\item Context pruning.
-					\item Quantization.
-				\end{itemize}
-			\end{block}
+			Still in experimental stages.
+			\begin{itemize}
+				\item Sliding window approach.
+				\item Context pruning.
+				\item Quantization.
+			\end{itemize}
+			\pause
 			
 			\begin{alertblock}{But...}
 				Perhaps, you don't need all that context in the first place!
 			\end{alertblock}
 		\end{column}
 	\end{columns}
+\end{frame}
+
+\begin{frame}{Summing up}
+	\begin{block}{Inference Optimization}
+		Two main ways of reducing runtime costs:
+		\begin{enumerate}
+			\item \textbf{Quantization} makes the model smaller. The level and type of quantization is a trade-off between capabilities and costs. Integer quantization is the most efficient type, but requires specialized hardware.
+			\item \textbf{KV-caching} is model-agnostic and can be deployed at no initial cost. It trades GPU VRAM for GPU compute. Always recommended to some degree, although the size should be tuned to the needs of the application.
+		\end{enumerate}
+	\end{block}
 \end{frame}
 
 
@@ -1009,23 +1029,21 @@ def calculator(expr: str) -> float:
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			\only<1>{
-				\begin{block}{General Data Protection Regulation}
+				General Data Protection Regulation
 					\begin{itemize}
 						\item Privacy law concerning almost exclusively \alert{personal data}.
 						\item Any information relating to an identified or identifiable natural person (``data subject'').
 					\end{itemize}
 					\note{From the point of view of the nature of the information, the concept of personal data includes any sort of statements about a person. It covers "objective" information, such as the presence of a certain substance in one's blood. It also includes "subjective" information, opinions or assessments. From the point of view of the content of the information, the concept of personal data includes data providing any sort of information.}
-				\end{block}
+
 			}
 			\only<2>{
-				\begin{block}{Where does it apply?}
-					If at least one is true:
+					Where does it apply? If any are true:
 					\begin{itemize}
 						\item Data subjects are in the Union.
 						\item Their behavior takes place in the Union.
 						\item Controller or processor in the Union.\note{Due to the previous two, non-EU companies are very frequently subject to GDPR.}
 					\end{itemize}
-				\end{block}
 			}
 		\end{column}
 	\end{columns}
@@ -1055,17 +1073,17 @@ def calculator(expr: str) -> float:
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Definitions}
+\begin{frame}{Frontline roles}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
-			\begin{block}{Data Controller}
+			\begin{definition}[Data Controller]
 				The natural or legal person, public authority, agency or other body which, alone or jointly with others, \alert{determines the purposes and means} of the processing of personal information.
-			\end{block}
+			\end{definition}
 		\end{column}
 		\begin{column}{0.5\textwidth}
-			\begin{block}{Data Processor}
+			\begin{definition}[Data Processor]
 				A natural or legal person, public authority, agency or other body which \alert{processes} personal data \alert{on behalf of the controller}.
-			\end{block}
+			\end{definition}
 			\pause
 			\begin{alertblock}{}
 				That's you!
@@ -1141,13 +1159,11 @@ def calculator(expr: str) -> float:
 \end{frame}
 
 \begin{frame}{How do I Remove Personal Information?}
-	\begin{block}{Common Methods}
-		\begin{itemize}
-			\item Collect data without personal information (Data minimization principle).
-			\item Anonymize: All identifying elements are eliminated from a set of personal data so that the data subject is no longer identifiable.
-			\item Redaction/Expungement: ``Right to be forgotten''.
-		\end{itemize}
-	\end{block}
+	\begin{itemize}
+		\item Collect data without personal information (Data minimization principle).
+		\item Anonymize: All identifying elements are eliminated from a set of personal data so that the data subject is no longer identifiable.
+		\item Redaction/Expungement: ``Right to be forgotten''.
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{How do I Remove Personal Information?}
@@ -1167,6 +1183,17 @@ def calculator(expr: str) -> float:
 	\end{columns}
 \end{frame}
 
+\begin{frame}{Summing up}
+	\begin{block}{GDPR}
+		\begin{itemize}
+			\item Privacy regulation in the EU but not limited inside its borders.
+			\item Places constraints on what data you, as Data Processors, can store and use.
+			\item Generally avoid collecting any personal data.
+			\item If you can not, anonymize them.
+			\item If you can not, follow established principles and procedures. Talk to your DPO.
+		\end{itemize}
+	\end{block}
+\end{frame}
 
 \section{EU AI Act}
 
@@ -1189,13 +1216,11 @@ def calculator(expr: str) -> float:
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
-			\begin{block}{Purpose}
-				\begin{itemize}
-					\item Supplementary to other legislation (e.g., GDPR).
-					\item Applicable to all AI systems in the Union.
-					\item Classify systems by internal risk, restrict them appropriately.
-				\end{itemize}
-			\end{block}
+			\begin{itemize}
+				\item Supplementary to other legislation (e.g., GDPR).
+				\item Applicable to all AI systems in the Union.
+				\item Classify systems by internal risk, restrict them appropriately.
+			\end{itemize}
 		\end{column}
 	\end{columns}
 \end{frame}
@@ -1209,22 +1234,20 @@ def calculator(expr: str) -> float:
 		\end{column}
 		\begin{column}{0.5\textwidth}
 			\only<1>{
-				\begin{block}{Where does it apply?}
-					\begin{itemize}
-						\item \alert{Providers} placing AI systems in the Union.\note{Includes non-Union providers.}
-						\item \alert{Users} of AI systems in the Union.
-						\item Importers, distributors, manufacturers, representatives and affected persons using or operating systems whose \alert{outputs} are used within the Union.\note{Deployer: uses an AI system. Authorized representative: EU entity which has received and accepted a written mandate from a provider or developer to carry out tasks and obligations on their behalf.}
-					\end{itemize}
-				\end{block}
+				Where does it apply?
+				\begin{itemize}
+					\item \alert{Providers} placing AI systems in the Union.\note{Includes non-Union providers.}
+					\item \alert{Users} of AI systems in the Union.
+					\item Importers, distributors, manufacturers, representatives and affected persons using or operating systems whose \alert{outputs} are used within the Union.\note{Deployer: uses an AI system. Authorized representative: EU entity which has received and accepted a written mandate from a provider or developer to carry out tasks and obligations on their behalf.}
+				\end{itemize}
 			}
 			\only<2>{
-				\begin{block}{Where does it NOT apply?}
-					\begin{itemize}
-						\item National security \& defense.
-						\item Research / RnD (excluding live testing).
-						\item Purely personal activities.
-					\end{itemize}
-				\end{block}
+				Where does it NOT apply?
+				\begin{itemize}
+					\item National security \& defense.
+					\item Research / RnD (excluding live testing).
+					\item Purely personal activities.
+				\end{itemize}
 			}
 		\end{column}
 	\end{columns}
@@ -1300,7 +1323,17 @@ def calculator(expr: str) -> float:
 		\end{itemize}
 	\end{block}
 \end{frame}
-	
+
+\begin{frame}{Summing up}
+	\begin{block}{EU AIA}
+		\begin{itemize}
+			\item Supplementary regulation to GDPR, only applies to AI systems.
+			\item Unlike GDPR, you can not avoid it.
+			\item Ensure your system is not classified as Unacceptable Risk.\note{More common than you think.}
+			\item If your system could possibly be classified as High Risk, administrative, technical and procedural measures must be implemented.
+		\end{itemize}
+	\end{block}
+\end{frame}
 	
 \section{OpSec}
 
