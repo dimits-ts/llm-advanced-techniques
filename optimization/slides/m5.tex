@@ -26,6 +26,25 @@
 
 \newcommand{\code}[1]{\texttt{#1}}
 
+\newcommand{\partslide}{
+	\begin{frame}
+		\partpage
+	\end{frame}
+}
+
+\newcommand{\sectionslide}{
+	\begin{frame}{Outline}
+		\tableofcontents[currentsection]
+\end{frame}
+}
+
+\newcommand{\subsectionslide}{
+	 \begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+}
+
 \title[LLM Optimization]{Creating and Deploying Production-Ready Agentic Systems}
 \author{Dimitris Tsirmpas} \date{\today}
 \institute{Athens University of Economics and Business \and Archimedes, Athena Research Center}
@@ -37,24 +56,13 @@
 \end{frame}
 
 \part{Autonomous LLM Agents}
-
-\begin{frame}
-   	\partpage
-\end{frame}
-
+\partslide
 
 \section{LLMs as System Components}
-
- \begin{frame}{Outline}
-   	\tableofcontents[currentsection]
-\end{frame}
+\sectionslide
 
 \subsection{Inherent LLM limitations}
-
- \begin{frame}
-   	\sectionpage
-   	\subsectionpage
-\end{frame}
+\subsectionslide
 
 \begin{frame}{Mathematics}
 	\begin{block}{LLMs are terrible at math}
@@ -122,12 +130,12 @@ model.prompt("How many 'r's are in 'carr'?")
 	\end{block}
 \end{frame}
 
-\begin{frame}{A Note on Benchmarks}
+\begin{frame}[label=benchmaxing1]{A Note on Benchmarks}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
 				\includegraphics[width=\textwidth]{contamination.png}
-				\caption{Credit to Electra Maria Papadopoulou---generated with Gemini.}
+				\caption{Credit: Electra Maria Papadopoulou.}
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
@@ -149,10 +157,8 @@ model.prompt("How many 'r's are in 'carr'?")
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
 				\includegraphics[width=\textwidth]{milgram.jpg}
-				\caption{Credit to Electra Maria Papadopoulou---generated with Gemini.}
 			\end{figure}
 		\end{column}
-		
 		\begin{column}{0.5\textwidth}
 		\begin{exampleblock}{Behavior replication}
 			\begin{itemize}
@@ -166,7 +172,7 @@ model.prompt("How many 'r's are in 'carr'?")
 	\end{columns}
 \end{frame}
 
-\begin{frame}{A Note on Benchmarks}
+\begin{frame}[label=benchmaxing2]{A Note on Benchmarks}
 	\begin{definition}[Benchmaxxing]
 		Optimizing a LLM's performance primarily for high scores on public \alert{leaderboards} and \alert{benchmarks}, rather than practical, and reliable real-world capability. 
 	\end{definition}
@@ -183,11 +189,7 @@ model.prompt("How many 'r's are in 'carr'?")
 
 
 \subsection{When to use LLMs?}
-
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
+\subsectionslide
 
 \begin{frame}{LLMs are not just task-specific tools}
 	\begin{itemize}
@@ -229,16 +231,15 @@ model.prompt("How many 'r's are in 'carr'?")
 \end{frame}
 
 \begin{frame}{But maybe we can do better}
-	\begin{block}{The system solution}
-		We use a traditional scrapper to find relevant reviews. For each page, we instruct the LLM to extract the reviews. We then run \code{reviews.str.contains(product\_name).sum()}.
-	\end{block}
-	
-	\begin{exampleblock}{Result}
-		Code is deployed within \alert{two days}. Management is billed \alert{20\euro} in a week.
+	\begin{exampleblock}{Example: Scraping}
+		\begin{itemize}
+			\item We use a traditional scrapper to find relevant reviews. For each page, we instruct the LLM to extract the reviews. We then run \code{reviews.str.contains(product\_name).sum()}.
+			\item \textbf{Result}: Code is deployed within \alert{two days}. Management is billed \alert{20\euro} in a week.
+		\end{itemize}	
 	\end{exampleblock}
 \end{frame}
 
-\begin{frame}{Summing up}
+\begin{frame}[label=llms-components]{Summing up}
 	\begin{block}{LLMs as system components}
 		\begin{itemize}
 			\item Ordinary tasks that are trivial to humans or through programming may be exceptionally hard for LLMs.
@@ -248,18 +249,14 @@ model.prompt("How many 'r's are in 'carr'?")
 	\end{block}
 \end{frame}
 
+
 \section{Tool-Based Reasoning using ReAct}
 
-\begin{frame}{Outline}
-   	\tableofcontents[currentsection]
-\end{frame}
+\sectionslide
 
 \subsection{Thought, Action, Observation}
 
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
+\subsectionslide
 
 \begin{frame}[fragile]{Tool-Calling}
 	\begin{exampleblock}{Tool example}
@@ -394,10 +391,7 @@ def calculator(expr: str) -> float:
 
 \subsection{Standardization}
 
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
+\subsectionslide
 
 \begin{frame}{Agency levels}
 	\begin{figure}
@@ -524,11 +518,9 @@ def calculator(expr: str) -> float:
 
 \section{Agent-to-Agent Interaction}
 
-\subsection{Single-Agent vs. Multi-Agent}
+\sectionslide
 
-\begin{frame}{Outline}
-	\tableofcontents[currentsection]
-\end{frame}
+\subsection{Single-Agent vs. Multi-Agent}
 
 \subsection{Orchestrating Interaction}
 
@@ -547,24 +539,14 @@ def calculator(expr: str) -> float:
 
 
 \part{Cost, Scalability, Accountability}
-
-\begin{frame}
-	\partpage
-\end{frame}
-
+\partslide
 
 \section{Opex vs capex in LLM systems}
-
-\begin{frame}{What we will be talking about}
-   	\tableofcontents
-\end{frame}
+\sectionslide
 
 
 \subsection{Local vs. Cloud Models}
-
-\begin{frame}{Outline}
-	\tableofcontents[currentsection]
-\end{frame}
+\subsectionslide
 
 \begin{frame}{Different Cost Profiles}
 	\begin{table}[ht]
@@ -619,7 +601,6 @@ def calculator(expr: str) -> float:
 	\end{alertblock}
 \end{frame}
 
-
 \begin{frame}{Analyzing Costs}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
@@ -646,11 +627,7 @@ def calculator(expr: str) -> float:
 
 
 \subsection{Estimating Costs}
-
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
+\subsectionslide
 
 \begin{frame}{A Framework for Estimating Costs}
 	\begin{itemize}
@@ -722,17 +699,10 @@ def calculator(expr: str) -> float:
 
 
 \section{Inference Optimization}
-
-\begin{frame}{Outline}
-	\tableofcontents[currentsection]
-\end{frame}
+\sectionslide
 
 \subsection{Quantization}
-
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
+\subsectionslide
 
 % Update this if changed in module 3
 \begin{frame}{Reminder: What is Quantization?}
@@ -859,11 +829,7 @@ def calculator(expr: str) -> float:
 
 
 \subsection{KV Caching}
-
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
+\subsectionslide
 
 \begin{frame}{What is it?}
 	\begin{columns}
@@ -930,10 +896,9 @@ def calculator(expr: str) -> float:
 	\end{columns}
 	
 	\begin{alertblock}{Especially problematic for quantized models}
-		LLaMa-8B 4-bit quantization: $\approx 5 \textit{ GB }$.
+		LLaMa-8B 4-bit qua	ntization: $\approx 5 \textit{ GB }$.
 	\end{alertblock}
 \end{frame}
-
 
 \begin{frame}{Scaling Caches}
 	\begin{columns}
@@ -970,55 +935,11 @@ def calculator(expr: str) -> float:
 \end{frame}
 
 
-\section{Evaluation}
+\section{Beyond the Money Constraints}
+\sectionslide
 
-\begin{frame}{Outline}
-	\tableofcontents[currentsection]
-\end{frame}
-
-
-\subsection{Naive Approaches}
-
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
-
-
-\subsection{Quantitative Evaluation}
-
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
-
-
-\subsection{HCI Evaluation}
-
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
-
-
-\part{Beyond the Money Constraints}
-
-\begin{frame}
-	\partpage
-\end{frame}
-
-\section{GDPR}
-
-\begin{frame}{Outline}
-	\tableofcontents[currentsection]
-\end{frame}
-
-\subsection{What is it?}
-
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
+\subsection{GDPR}
+\subsectionslide
 
 \begin{frame}{GDPR}
 		\begin{columns}
@@ -1092,8 +1013,6 @@ def calculator(expr: str) -> float:
 	\end{columns}
 \end{frame}
 
-
-\subsection{Working with GDPR}
 
 \begin{frame}
 	\sectionpage
@@ -1195,18 +1114,9 @@ def calculator(expr: str) -> float:
 	\end{block}
 \end{frame}
 
-\section{EU AI Act}
 
-\begin{frame}{Outline}
-	\tableofcontents[currentsection]
-\end{frame}
-
-\subsection{What is it?}
-
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
+\subsection{EU AI Act}
+\subsectionslide
 
 \begin{frame}{EU AIA}
 	\begin{columns}
@@ -1263,8 +1173,6 @@ def calculator(expr: str) -> float:
 		\end{itemize}		
 	\end{definition}
 \end{frame}
-
-\subsection{Working with the EU AIA}
 
 \begin{frame}
 	\sectionpage
@@ -1334,12 +1242,10 @@ def calculator(expr: str) -> float:
 		\end{itemize}
 	\end{block}
 \end{frame}
-	
-\section{OpSec}
 
-\begin{frame}{Outline}
-	\tableofcontents[currentsection]
-\end{frame}
+
+\subsection{OpSec}
+\subsectionslide
 
 \begin{frame}{What is it?}
 	\begin{definition}[OpSec]
@@ -1379,13 +1285,11 @@ def calculator(expr: str) -> float:
 			\end{figure}
 		\end{column}
 		\begin{column}{0.5\textwidth}
-			\begin{block}{}
-				\begin{itemize}
-					\item Many providers explicitly state that input data can be used for further model pretraining.
-					\item There is no guarantee that API-based models respect user agreements on safeguarding input.
-					\item See: Benchmark leakage.
-				\end{itemize}
-			\end{block}
+			\begin{itemize}
+				\item Many providers explicitly state that input data can be used for further model pretraining.
+				\item There is no guarantee that API-based models respect user agreements on safeguarding input.
+				\item See: Benchmark leakage.
+			\end{itemize}
 		\end{column}
 	\end{columns}
 \end{frame}
@@ -1399,6 +1303,367 @@ def calculator(expr: str) -> float:
 			\item Use locally hosted models for sensitive tasks.\note{Also cheaper! See: quantization}
 		\end{itemize}
 	\end{block}
+\end{frame}
+
+
+\part{System Evaluation}
+\partslide
+
+\section{General Methodologies}
+\sectionslide
+
+\subsection{Why Evaluate?}
+\subsectionslide
+
+\begin{frame}{Reasons for evaluation}
+	LLMs:
+	\begin{itemize}
+		\item Are unpredictable.\note{Link to slide talking about the agent searching for the weather in Seoul.}
+		\item LLMs make mistakes, even in tasks that seem easy to us.\note{Link to slides in Inherent LLM limitations}
+		\item Unlike rule-based and traditional ML systems, they can give us \alert{any kind} of output.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Naive approaches}
+	Some commonly used approaches:
+	\begin{itemize}
+		\item Use standardized benchmarks.
+		\item Use extremely large models.\note{Link to cost studies in this module.}
+		\item Run believability studies.
+		\item Do not run evaluation.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Unexpected failures}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[width=\columnwidth]{annotation.png}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{exampleblock}{Example: Annotation}
+				\begin{itemize}
+					\item Output: set of integers.
+					\item LLM output could be any kind of string.
+					\item Safety tuning may prohibit the model from running the task.
+				\end{itemize}
+			\end{exampleblock}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+\subsection{Objectives, Criteria and Metrics}
+\subsectionslide
+
+\begin{frame}{Objectives}
+	The first step towards evaluating a system is identifying what it is trying to achieve.
+	\begin{itemize}
+		\item Is it used as a chatbot-assistant? For internal or external use?
+		\item Is it used as a step in a processing pipeline?
+		\item Is it completely automated? Does it interface with human operators?
+		\item Is it used for simulations?
+	\end{itemize}
+	
+	\begin{exampleblock}{Example: LLM for internal documentation}
+		\textbf{Objective}: Give guidance to team members for internal information.
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Criteria}
+	For each of your objectives find a set of criteria which measure whether that objective is satisfied.\note{Connect with EU AIA.}
+	\begin{exampleblock}{Example: LLM for internal documentation}
+		\textbf{Criteria}:
+		\begin{itemize}
+			\item Does the LLM demonstrate knowledge of facts private to the organization?
+			\item Are outputs updated when new knowledge is inserted?
+			\item Is sensitive information only given to authorized users?
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Metrics}
+	For each of your criteria find a set of metrics to measure whether the criteria are satisfied.
+	\begin{exampleblock}{Example: LLM for internal documentation}
+		\textbf{Criterion}: Does the LLM demonstrate knowledge of facts private to the organization?\\
+		\textbf{Metrics}:
+		\begin{itemize}
+			\item F1 for retrieved documents.\note{Connect with RAG.}
+			\item \% test queries whose answers contain non-public knowledge. 
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
+
+\subsection{Implementation}
+\subsectionslide
+
+\againframe{llms-components}
+
+\begin{frame}{How do we implement testing?}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}
+				\includegraphics[width=\columnwidth]{software-tests.png}
+				\caption{\url{https://symflower.com/en/company/blog/2023/unit-testing-vs-integration-testing/}}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\only<1>{
+					If LLMs can be thought of as functions, they can be tested as such. We can verify:
+					\begin{enumerate}
+						\item Basic input/output using \alert{unit} testing.
+						\item Interactions with other components through \alert{integration} testing.
+						\item System behavior and environmental interaction through \alert{system} testing. 
+					\end{enumerate}
+			}
+			\only<2>{
+				\begin{block}{Unit Testing}
+					\begin{itemize}
+						\item Give sample instructions to the LLM and inspect whether output is well-formed.\note{Is it inside a range of acceptable values? Is the JSON output malformed?}
+						\item Test what happens under faulty/no output.
+						\item Provide some questions whose answer is unambiguous.
+					\end{itemize}
+				\end{block}
+			}
+			\only<3>{
+				\begin{block}{Integration Testing}
+					Think of the LLM as an API endpoint.\note{Indeed, sometimes it is, even when hosting locally}
+					\begin{itemize}
+						\item What happens if the LLM doesn't respond quickly enough?
+						\item Or when it doesn't respond at all?
+						\item Create adapter classes for testing components interacting with the LLM.				
+					\end{itemize}
+				\end{block}
+			}
+			\only<4>{
+				\begin{block}{System Testing}
+					\begin{itemize}
+						\item Execute the whole system.
+						\item If completely automated, run the pipeline with realistic data.
+						\item Observe whether the system functions correctly w.r.t. results, speed, cost etc.
+					\end{itemize}
+				\end{block}
+			}
+			\only<5>{
+				\begin{itemize}
+					\item Testing should be performed continuously, before each deployment and during development. 
+					\item Due to LLM's computational constraints, some tests may not be able to run continuously.
+					\item It may be necessary to swap to smaller models for speed and cost efficiency.
+				\end{itemize}
+			}
+			\end{column}
+	\end{columns}
+\end{frame}
+
+
+
+\begin{frame}{HCI Evaluation}
+	\only<1>{
+		\begin{itemize}
+			\item If your system includes any kind of human interaction, it is advisable to also use Human Computer Interaction (HCI) testing.
+			\item These tests should cover both the front-end aspects of your system (UI/command line) and the model's overall interaction with the user.
+		\end{itemize}
+	}
+	\only<2>{
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{definition}[HCI]
+					\begin{itemize}
+						\item HCI Evaluation tests the quality of the interface between human and system.
+						\item It ensures the technology is not just functional, but also usable and satisfying.
+					\end{itemize}
+				\end{definition}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{block}{Goals}
+					\begin{itemize}
+						\item Assess system functionality and efficiency.
+						\item Identify specific design problems (pain points).
+						\item Measure overall user experience and satisfaction.
+					\end{itemize}
+				\end{block}
+			\end{column}
+		\end{columns}
+	}
+	\only<3>{
+		\textbf{Expert-Based Reviews}:
+		\begin{itemize}
+			\item Heuristic Evaluation: Experts check the UI against established usability principles. (Fast, cheap)
+			\item Cognitive Walkthrough: Experts simulate user learning paths for specific tasks.
+			\item \textbf{Upside}: Ideal for early-stage design; quick detection of systemic flaws.
+			\item \textbf{Drawback}: Lacks real-world context; findings are subjective.
+		\end{itemize}
+	}
+	\only<4>{
+		\textbf{User-Based Testing}:
+		\begin{itemize}
+			\item Usability Testing: Users perform tasks while verbalizing their thoughts (Think-Aloud).
+			\item SUS Score: A standardized questionnaire that measures perceived overall usability.
+			\item \textbf{Upside:} Provides rich, realistic data on actual user friction.
+			\item \textbf{Drawback:} Can be costly; results may be influenced by conscious user behavior.
+		\end{itemize}
+	}
+	\only<5>{
+		\textbf{Contextual Insight}:
+		\begin{itemize}
+			\item Field Studies: Observing users in their actual environment (real context).
+			\item Interviews: Deep, one-on-one discussions to uncover motivations and unmet needs.
+			\item \textbf{Upside:} Provides deep, rich insight into the full workflow (ecological validity).
+			\item \textbf{Drawback:} Very time-intensive; difficult to generalize findings broadly.
+		\end{itemize}
+	}
+	\only<6>{
+		\begin{block}{Choosing the Right Strategy}
+			\begin{itemize}
+				\item Formative Evaluation: During design, use experts and qualitative methods.
+				\item Summative Evaluation: After design, use quantitative and user testing.
+				\item Decision Factors: Consider time, resources, desired objectivity, and evaluation stage.
+				\item Summary: Combining methods ensures a holistic and comprehensive assessment.
+			\end{itemize}
+		\end{block}
+	}
+\end{frame}
+
+\begin{frame}{Summing up}
+	\begin{block}{General Evaluation Methodologies}
+		\begin{itemize}
+			\item Evaluation is needed, since LLMs are by their nature volatile and unpredictable.
+			\item We first need to find the objectives of our system, then criteria to judge these objectives, and metrics to measure the adherence to our criteria.
+			\item We implement the metrics using unit, integration and system tests. If humans are involved in the system, we should also consider HCI testing.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+
+\section{Use Cases}
+\sectionslide
+
+\subsection{Benchmarking}
+\subsectionslide
+
+\againframe{benchmaxing1}
+\againframe{benchmaxing2}
+
+\begin{frame}{What Are Benchmarks For?}
+	\begin{itemize}
+		\item Use benchmarks primarily for \alert{standardized, relative comparison}.\note{\url{https://dl.acm.org/doi/full/10.1145/3708359.3712152} \url{https://link.springer.com/article/10.1007/s10462-026-11571-0}}
+		\item Ask: \emph{``Is this system better on the capability being measured?''}
+		\item Treat scores as \alert{signals}, not comprehensive measures of capability.
+		\item Check whether the benchmark reflects the intended users, tasks, and context.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Look Beyond the Score}
+	\begin{itemize}
+		\item Do not equate benchmark success with real-world usefulness.
+		\item Examine what the metric \alert{omits}: cost, safety, robustness, quality, workflow integration.
+		\item Prefer \alert{multiple complementary evaluations} over a single score.
+		\item Use domain expertise and human evaluation where automated metrics are insufficient.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Use Cases}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{block}{Research}
+				\begin{itemize}
+					\item Purpose: \alert{measure research progress}.
+					\item Enable comparison across methods and studies.
+					\item Interpret results within the benchmark's scope.
+				\end{itemize}
+			\end{block}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{block}{Deployment}
+				\begin{itemize}
+					\item Purpose: \alert{screen candidates}.
+					\item Start with public benchmarks, then test domain-specific \alert{actual use cases}.
+					\item Use continuous evaluation where appropriate.
+				\end{itemize}
+			\end{block}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+\subsection{LLM Simulations}
+\subsectionslide
+
+\begin{frame}{Why use LLMs?}
+	\only<1>{
+		\begin{itemize}
+			\item LLMs offer scalable, low-cost solutions for generating large volumes of simulated data.\note{Connect with costs.}
+			\item They handle complex instructions and subjective decision-making naturally.
+			\item This overcomes traditional limitations of human subject data collection (cost, time, scarcity).
+		\end{itemize}
+	}
+	\only<2>{
+		\begin{exampleblock}{Examples}
+			\begin{itemize}
+				\item We want to test how users will click through a website.
+				\item We want to test an advertisement targeting specific demographics.
+				\item We research how human users react to a specific post in online fora.
+			\end{itemize}
+		\end{exampleblock}
+	}
+\end{frame}
+
+\begin{frame}{LLM vs. Traditional ABM}
+	\begin{itemize}
+		\item Classic ABM (Agent-Based Modeling) relies on pre-defined, simple interaction rules.
+		\item LLM agents surpass this by enabling flexible, natural-language-based behavior modeling.
+		\item LLMs allow for richer simulation of subjective human thought and diverse reasoning.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Inherent LLM Limitations}
+	\begin{itemize}
+		\item LLMs tend toward generating ``average personas''.\note{Statistical models.}
+		\item Their training maximizes high-frequency responses, limiting the capture of rare behaviors.
+		\item LLMs inherit and amplify social and demographic biases from training data.
+		\item They struggle to accurately model minority groups or specific cultural subgroups.
+		\item Using biased data risks reinforcing existing inequalities and misrepresenting populations.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Foundational Validation}
+	\begin{itemize}
+		\item \textbf{Data Analytics:} Essential for ensuring input/output data integrity and relevance.
+		\item \textbf{Empirical Validation:} Compares simulation output against real-world observations.
+		\item \textbf{Sampling \& Visualization:} Used to explore the simulation space and visualize emergent patterns.
+		\item \textbf{Docking:} Aligns GABM outputs with those of other state-of-the-art models.
+	\end{itemize}
+	\vspace{0.5em}
+	\small These methods establish baseline structural soundness and predictive capacity.
+\end{frame}
+
+\begin{frame}{Microface Validation}
+	\begin{itemize}
+		\item Checks if individual agent actions and properties align with human reality.
+		\item For GABMs, this requires two distinct validations:
+		\begin{itemize}
+			\item Assessing the coherency of decision-making processes.
+			\item Validating the realism and consistency of natural language interactions.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Macroface Validation}
+	\begin{itemize}
+		\item Assesses if the emergent system-wide patterns correspond to real-world phenomena.
+		\item Techniques include Bootstrapping, Causal Analysis.
+		\item This is necessary for systems with thousands of agents where individual checks are impractical.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Face Validation}
+	\begin{itemize}
+		\item \textbf{Animation Assessment:} Experts review simulation replays for dynamic realism.
+		\item \textbf{Output Assessment:} Human experts check the plausibility and coherence of the simulation outputs.
+		\item \textbf{Immersive Assessment:} Validators impersonate agents to directly evaluate believability and reaction complexity.
+	\end{itemize}
 \end{frame}
 
 \end{document}
