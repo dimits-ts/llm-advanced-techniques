@@ -10,42 +10,46 @@
 \setbeamerfont{caption}{size=\tiny} 
 \graphicspath{{resources}}
 
+\newcommand{\partslide}{
+	\begin{frame}
+		\partpage
+	\end{frame}
+}
+
+\newcommand{\sectionslide}{
+	\begin{frame}{Outline}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+
+\newcommand{\subsectionslide}{
+	\begin{frame}
+		\sectionpage
+		\subsectionpage
+	\end{frame}
+}
+
 \title[LLM Learning]{Fine-tuning, Reinforcement Learning and Parameter-Efficient Adaptation}
 \author{Dimitris Tsirmpas} \date{\today}
 \institute{Athens University of Economics and Business \and Archimedes, Athena Research Center}
 
 \begin{document}
+	
+\begin{frame}
+	\titlepage
+\end{frame}
 
 \part{Finetuning}
-
-\begin{frame}
-	\partpage
-\end{frame}
-
-\begin{frame}
-    \titlepage
-\end{frame}
-
-\begin{frame}{What we will be talking about}
-    \tableofcontents
-\end{frame}
+\partslide
 
 
 \section{Naively Finetuning LLMs}
+\sectionslide
 
 \subsection{What is finetuning?}
-
-\begin{frame}{Outline}
-   	\tableofcontents[currentsection]
-\end{frame}
-
-\begin{frame}
-   	\sectionpage
-   	\subsectionpage
-\end{frame}
+\subsectionslide
 
 \begin{frame}{Why finetune LLMs?}
-   
    \begin{block}{Prompting vs finetuning}
 	   \begin{itemize}
 			\item \textbf{Prompting:} Changes \alert{input behavior}. We guide
@@ -54,7 +58,6 @@
 			the \alert{knowledge} of the model.
 	   \end{itemize}
    \end{block}
-    
     \begin{block}{Reminder}
         \textbf{Fine-Tuning (FT):} The process of further training a
         pre-trained model on a smaller, domain-specific dataset to adapt its
@@ -80,7 +83,6 @@
                 in a sentence.
             \end{block}
         \end{column}
-
         \begin{column}{0.5\textwidth}
             \begin{figure}
                 \includegraphics[width=\columnwidth]{pos-tagging.jpg}
@@ -101,7 +103,6 @@
                 \end{itemize}
             \end{block}
         \end{column}
-
         \begin{column}{0.5\textwidth}
             \begin{table}[h]
                 \centering
@@ -124,11 +125,7 @@
 
 
 \subsection{Why not (fully) finetune LLMs?}
-
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
+\subsectionslide
 
 \begin{frame}{Full finetuning}
 	\only<1>{
@@ -218,17 +215,10 @@
 \end{frame}
 
 \section{Making finetuning practical through LoRA}
+\sectionslide
 
 \subsection{Understanding why LoRA works}
-
-\begin{frame}{Outline}
-   	\tableofcontents[currentsection]
-\end{frame}
-
-\begin{frame}
-   	\sectionpage
-   	\subsectionpage
-\end{frame}
+\subsectionslide
 
 \begin{frame}{PEFT: LoRA}
     \begin{definition}[LoRA]
@@ -445,11 +435,7 @@
 \end{frame}
 
 \subsection{How to use LoRA}
-
-\begin{frame}
-   	\sectionpage
-   	\subsectionpage
-\end{frame}
+\subsectionslide
 
 \begin{frame}{LoRA: Practical Considerations}
 	\only<1>{
@@ -538,17 +524,10 @@
 
 
 \section{Making finetuning scalable through QLoRA}
+\sectionslide
 
 \subsection{Quantizing LLMs: Why and how?}
-
-\begin{frame}{Outline}
-   	\tableofcontents[currentsection]
-\end{frame}
-
-\begin{frame}
-   	\sectionpage
-   	\subsectionpage
-\end{frame}
+\subsectionslide
 
 % Update this if changed in module 5
 \begin{frame}{QLoRA: Quantization}
@@ -598,11 +577,7 @@
 
 
 \subsection{How does it differ from LoRA?}
-
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
+\subsectionslide
 
 \begin{frame}{QLoRA: Concept}
     \begin{columns}
@@ -691,24 +666,13 @@
 
   
 \part{Reinforcement Learning}
-
-\begin{frame}
-	\partpage
-\end{frame}
+\partslide
 
 \section{General RL}
-
-\begin{frame}{Outline}
-	\tableofcontents[currentsection]
-\end{frame}
-
+\sectionslide
 
 \subsection{Fundamentals}
-
-\begin{frame}
-	\sectionpage
-	\subsectionpage
-\end{frame}
+\subsectionslide
 
 \begin{frame}{What is RL?}
 	\begin{definition}[Reinforcement Learning]
@@ -719,7 +683,6 @@
 		A master chess player makes a move. The choice is informed both anticipating possible replies and counterreplies and by immediate, intuitive judgments of the desirability of particular positions and moves. (Sutton \& Bartol: ``RL An Introduction'', 2nd Ed).
 	\end{exampleblock}
 \end{frame}
-
 
 \begin{frame}{Example: Tic-tac-toe}
 	\begin{columns}
@@ -779,6 +742,10 @@
 		\end{itemize}
 	\end{block}
 \end{frame}
+
+
+\subsection{Core Concepts}
+\subsectionslide
 
 \begin{frame}{General method}
 	\begin{columns}
@@ -902,7 +869,11 @@
 \end{frame}
 
 
-\subsection{Finetuning vs RL}
+\section{LLM RL}
+\sectionslide
+
+\subsection{LLM RL vs general RL}
+\subsectionslide
 
 \begin{frame}{RL for LLMs}
 	\begin{block}{When training LLMs}
@@ -914,6 +885,100 @@
 		Instead of explicit $V$ or $Q$ functions we use an \alert{Advantage function} as a \alert{gradient}, which estimates how better an action is given the current state (discounted at time-step $t$  in the future).
 	\end{block}
 \end{frame}
+
+\begin{frame}{Reward modeling}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{block}{Pairwise Preference}
+				\begin{itemize}
+					\item Response a is better than response b
+					\item Loss: Bradley–Terry Model (Pairwise)
+				\end{itemize}
+			\end{block}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{block}{Rankings}
+				\begin{itemize}
+					\item Response $a > b > c > \ldots$
+					\item Loss: Plackett–Luce Model1 (Rankings)
+				\end{itemize}
+			\end{block}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Reward modeling types}
+	\only<1>{
+		\begin{enumerate}
+			\item Explicit Reward Modeling.
+			\item Implicit Reward Modeling
+			\item Outcome Reward Modeling (ORM)
+			\item Process Reward Modeling (PRM)
+			\item Iterative RL with Adaptive Reward Models
+		\end{enumerate}
+	}
+	\only<2>{
+		\textbf{Explicit Reward Modeling}:
+		\begin{itemize}
+			\item Directly defines the reward function.
+			\item Human annotations, automated metrics, heuristics, A.I. modules…
+			\item Pros: Precise reward estimates.
+			\item Cons: Time consuming, expensive.
+		\end{itemize}
+	}
+	\only<3>{
+		\textbf{Implicit Reward Modeling}:
+		\begin{itemize}
+			\item Observes secondary indicators from which it infers rewards.
+			\item e.g., Comment quality by upvote count or click-through rate.
+			\item Pros: Can easily build vast training datasets.
+			\item Cons: The model may learn how to “cheat” by maximizing the indicators, instead of the actual goal.
+		\end{itemize}
+	}
+	\only<4>{
+		\textbf{Outcome Reward Modeling (ORM)}:
+		\begin{itemize}
+			\item Just measures the end result.
+			\item Example: Our Tic-tac-toe example!
+			\item Pros: As straightforward as it gets.
+			\item Cons: Credit assignment problem: The model does not know why its responses work.\note{Explain why it's ok for problems such as TTT.}
+		\end{itemize}
+	}
+	\only<5>{
+		\textbf{Process Reward Modeling (PRM)}:
+		\begin{itemize}
+			\item Like ORM but assigns reward at in-between steps.
+			\item Improves step-by-step reasoning: helps in many domains (math, legal, code), transparent
+			\item Pros: Precise reward estimates.
+			\item Cons: Difficult annotation process: Limited datasets
+		\end{itemize}
+	}
+	\only<6>{
+		\textbf{Iterative RL with Adaptive Reward Models}:
+		\begin{itemize}
+			\item Reward function is dynamic.
+			\item Bypasses reward hacking and reward model drift.
+			\item More on that later!
+		\end{itemize}
+	}	
+\end{frame}
+
+\begin{frame}{Policy Optimization}
+
+	\begin{itemize}
+		\item Given a trained reward model, learns relative preferences.
+		\item Learn a policy $\pi(\alpha \lvert s)$ where:
+		\begin{itemize}
+			\item $\alpha$ are actions (here next tokens).
+			\item $s$ is the state (partial generation process for next token)
+		\end{itemize}
+		\item We can use the \alert{Advantage} function as a gradient, which estimates how better an action is given the current state, discounted at time-step t  in the future.
+	\end{itemize}
+\end{frame}
+
+
+\subsection{Finetuning vs RL}
+\subsectionslide
 
 \begin{frame}{Finetuning}
 	\begin{columns}
@@ -976,5 +1041,7 @@
 		\end{itemize}
 	\end{block}
 \end{frame}
+
+
 
 \end{document}
