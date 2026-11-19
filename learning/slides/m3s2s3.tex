@@ -744,10 +744,10 @@
 \end{frame}
 
 
-\subsection{Core Concepts}
+\subsection{Main Concepts}
 \subsectionslide
 
-\begin{frame}{General method}
+\begin{frame}{General Method}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
@@ -820,7 +820,7 @@
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Policies and state-value-actions}
+\begin{frame}{Policies and State-Value-Actions}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
@@ -868,6 +868,39 @@
 	\end{algorithmic}
 \end{frame}
 
+\begin{frame}{On-Policy vs. Off-Policy}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{block}{On-Policy Methods}
+				\begin{itemize}
+					\item Use policy $\pi$ to improve policy $\pi$.
+					\item The agent explores the action-space based on its own choices.
+					\item \alert{Agent needs to run in order to learn}.
+				\end{itemize}
+			\end{block}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{block}{Off-Policy Methods}
+				\begin{itemize}
+					\item Use policy $\mu$ to improve policy $\pi$.
+					\item $\mu$ needs to \alert{cover} $\pi$: each action $\pi$ could take \alert{must} also be reachable by $\mu$.
+					\item Can learn from historical data or other RL agents.
+				\end{itemize}
+			\end{block}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{On-Policy vs. Off-Policy}
+	\begin{exampleblock}{Q-Learning}
+		\begin{itemize}
+			\item $Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha \left[ R_{t+1} + \gamma \max_{a} Q(S_{t+1}, a) - Q(S_t, A_t) \right]$
+			\item What assumptions does this learning method make?
+			\item Is it an \alert{on-policy} or \alert{off-policy} method?
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+
 
 \section{LLM RL}
 \sectionslide
@@ -886,7 +919,7 @@
 	\end{block}
 \end{frame}
 
-\begin{frame}{Reward modeling}
+\begin{frame}{Reward Modeling}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
 			\begin{block}{Pairwise Preference}
@@ -907,7 +940,7 @@
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Reward modeling types}
+\begin{frame}{Reward Modeling Types}
 	\only<1>{
 		\begin{enumerate}
 			\item Explicit Reward Modeling.
@@ -964,7 +997,6 @@
 \end{frame}
 
 \begin{frame}{Policy Optimization}
-
 	\begin{itemize}
 		\item Given a trained reward model, learns relative preferences.
 		\item Learn a policy $\pi(\alpha \lvert s)$ where:
@@ -1028,6 +1060,33 @@
 	\begin{block}{}
 		RL has greater potential, but requires careful planning, since LLMs are \alert{not ideal targets} for RL.
 	\end{block}
+\end{frame}
+
+
+\begin{frame}{Under the Hood}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{block}{REINFORCE}
+				\begin{itemize}
+					\item $\theta_{k+1} = \theta_k + \gamma \nabla_{\theta_k} \log \pi_\theta(a_k \mid s_k)\, \mathcal{R}(a_k, s_k)$
+					\item Action chosen by the \alert{learner} (on-policy), reward changes accordingly.
+				\end{itemize}
+			\end{block}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{block}{SFT}
+				\begin{itemize}
+					\item $\theta_{k+1} = \theta_k + \gamma \nabla_{\theta_k} \log \pi_\theta(\textcolor{orange}{a^{*}} \mid s_k)\, \textcolor{orange}{1}$
+					\item Action chosen by the supervisor (off-policy, ground truth, distillation teacher, …).
+					\item Reward is always 1.
+				\end{itemize}
+			\end{block}
+		\end{column}
+	\end{columns}
+	
+	\begin{alertblock}{}
+		At the end of the day, just different ways to define gradient updates.
+	\end{alertblock}
 \end{frame}
 
 \begin{frame}{Summing up}
