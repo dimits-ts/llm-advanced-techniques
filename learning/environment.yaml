@@ -6,8 +6,10 @@ dependencies:
   - scikit-learn
   - datasets
   - python
-  - ipykernel
+  - ipywidgets
   - notebook
+  - matplotlib
+  - seaborn
   - pip
   - pip:
     - transformers
